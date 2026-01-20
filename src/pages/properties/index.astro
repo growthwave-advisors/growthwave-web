@@ -1,0 +1,74 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Header from '../../components/shared/Header.astro';
+import Footer from '../../components/shared/Footer.astro';
+import Button from '../../components/shared/Button.astro';
+---
+
+<BaseLayout
+  title="GrowthWave Properties | Multifamily Investment Partnerships"
+  description="Partner with experienced operators on value-add multifamily properties across the Midwest."
+  brand="properties"
+>
+  <Header brand="properties" currentPath="/properties" />
+
+  <main>
+    <!-- Hero Section -->
+    <section class="section-padding bg-gradient-to-b from-white to-gray-50">
+      <div class="container-custom text-center">
+        <h1 class="mb-6">Strategic Multifamily Partnerships in the Midwest</h1>
+        <p class="text-xl text-neutral-gray mb-8 max-w-3xl mx-auto">
+          Partner with experienced operators on professionally managed, cash-flowing properties. 
+          You bring the capital, we bring the deals and expertise.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <Button href="/properties/contact" brand="properties" size="lg">
+            Join Our Investor List
+          </Button>
+          <Button href="/properties/approach" brand="properties" size="lg">
+            View Our Approach
+          </Button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Brand Colors Test -->
+    <section class="section-padding">
+      <div class="container-custom">
+        <h2 class="text-center mb-12">GrowthWave Brand System</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="card">
+            <div class="w-full h-24 bg-properties-coral rounded-lg mb-4"></div>
+            <h3 class="text-properties-coral mb-2">Properties Coral</h3>
+            <p class="text-sm text-neutral-gray">#FF6B4A</p>
+          </div>
+          <div class="card">
+            <div class="w-full h-24 bg-capital-purple rounded-lg mb-4"></div>
+            <h3 class="text-capital-purple mb-2">Capital Purple</h3>
+            <p class="text-sm text-neutral-gray">#7C3AED</p>
+          </div>
+          <div class="card">
+            <div class="w-full h-24 bg-ocean-blue rounded-lg mb-4"></div>
+            <h3 class="text-ocean-blue mb-2">Ocean Blue</h3>
+            <p class="text-sm text-neutral-gray">#265077</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Typography Test -->
+    <section class="section-padding bg-gray-50">
+      <div class="container-custom">
+        <h2 class="text-center mb-12">Typography System</h2>
+        <div class="space-y-4 max-w-3xl mx-auto">
+          <h1>Heading 1 - Outfit Font</h1>
+          <h2>Heading 2 - Outfit Font</h2>
+          <h3>Heading 3 - Outfit Font</h3>
+          <p>Body text in Outfit Regular. This should be clean, modern, and highly readable. The font should feel professional yet approachable.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer brand="properties" />
+</BaseLayout>

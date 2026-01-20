@@ -1,0 +1,21 @@
+{
+  "name": "GrowthWave Capital",
+  "short_name": "GW Capital",
+  "description": "Fueling Your Business Growth Through Strategic Financing Solutions",
+  "icons": [
+    {
+      "src": "/favicon/capital/android-chrome-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/favicon/capital/android-chrome-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#265077",
+  "background_color": "#ffffff",
+  "display": "standalone",
+  "start_url": "/capital/"
+}

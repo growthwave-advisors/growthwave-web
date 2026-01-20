@@ -1,0 +1,219 @@
+---
+/**
+ * @fileoverview Base Layout Component for GrowthWave Websites
+ * @description Master layout providing HTML structure, SEO meta tags,
+ * favicon links, and global styles. All pages should use this as their
+ * root layout component.
+ *
+ * @example
+ * ```astro
+ * ---
+ * import BaseLayout from '@layouts/BaseLayout.astro';
+ * ---
+ * <BaseLayout
+ *   brand="properties"
+ *   title="About Us"
+ *   description="Learn about our investment approach"
+ * >
+ *   <main>Page content here</main>
+ * </BaseLayout>
+ * ```
+ *
+ * @author GrowthWave Development Team
+ * @version 1.0.0
+ */
+
+import type { BaseLayoutProps } from "../types/brand";
+import { getBrandConfig, getFullPageTitle } from "../config/brands";
+import "../styles/global.css";
+
+// ---------------------------------------------------------------------------
+// Props & Configuration
+// ---------------------------------------------------------------------------
+
+interface Props extends BaseLayoutProps {}
+
+const {
+  brand,
+  title,
+  description,
+  canonicalUrl,
+  ogImage,
+  noIndex = false,
+} = Astro.props;
+
+const brandConfig = getBrandConfig(brand);
+const fullTitle = getFullPageTitle(title, brand);
+const metaDescription = description || brandConfig.seo.description;
+const socialImage = ogImage || brandConfig.seo.ogImage;
+const currentUrl = canonicalUrl || Astro.url.href;
+
+// ---------------------------------------------------------------------------
+// Computed Values
+// ---------------------------------------------------------------------------
+
+/** Theme color for browser chrome and PWA */
+const themeColor = brandConfig.colors.accent;
+
+/** Robots meta content based on noIndex flag */
+const robotsContent = noIndex ? "noindex, nofollow" : "index, follow";
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <!-- ===================================================================
+         Character Set & Viewport
+         =================================================================== -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- ===================================================================
+         Primary Meta Tags
+         =================================================================== -->
+    <title>{fullTitle}</title>
+    <meta name="title" content={fullTitle} />
+    <meta name="description" content={metaDescription} />
+    <meta name="robots" content={robotsContent} />
+    <meta name="author" content="GrowthWave Advisors LLC" />
+
+    <!-- ===================================================================
+         Canonical URL
+         =================================================================== -->
+    <link rel="canonical" href={currentUrl} />
+
+    <!-- ===================================================================
+         Favicons & App Icons (Brand-Specific)
+         =================================================================== -->
+    <link rel="icon" type="image/x-icon" href={brandConfig.favicons.ico} />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="16x16"
+      href={brandConfig.favicons.png16}
+    />
+    <link
+      rel="icon"
+      type="image/png"
+      sizes="32x32"
+      href={brandConfig.favicons.png32}
+    />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href={brandConfig.favicons.appleTouchIcon}
+    />
+    <link rel="manifest" href={brandConfig.favicons.manifest} />
+
+    <!-- ===================================================================
+         Theme & Browser Chrome Colors
+         =================================================================== -->
+    <meta name="theme-color" content={themeColor} />
+    <meta name="msapplication-TileColor" content={themeColor} />
+
+    <!-- ===================================================================
+         Open Graph / Facebook
+         =================================================================== -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content={currentUrl} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={metaDescription} />
+    <meta property="og:site_name" content={brandConfig.name} />
+    {socialImage && <meta property="og:image" content={socialImage} />}
+
+    <!-- ===================================================================
+         Twitter Card
+         =================================================================== -->
+    <meta
+      name="twitter:card"
+      content={brandConfig.seo.twitterCard || "summary_large_image"}
+    />
+    <meta name="twitter:url" content={currentUrl} />
+    <meta name="twitter:title" content={fullTitle} />
+    <meta name="twitter:description" content={metaDescription} />
+    {socialImage && <meta name="twitter:image" content={socialImage} />}
+
+    <!-- ===================================================================
+         Performance Hints
+         =================================================================== -->
+    <!-- Preconnect to Google Fonts for faster font loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <!-- Google Fonts - Outfit (Primary Typography) -->
+    <link
+      href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- DNS prefetch for external resources -->
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+
+    <!-- ===================================================================
+         Generator Meta (Astro)
+         =================================================================== -->
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- ===================================================================
+         Additional Head Content (via slot)
+         =================================================================== -->
+    <slot name="head" />
+  </head>
+
+  <body class="min-h-screen flex flex-col antialiased" data-brand={brand}>
+    <!-- 
+      Skip to main content link for accessibility.
+      Visible only on keyboard focus.
+    -->
+    <a
+      href="#main-content"
+      class="sr-only focus:not-sr-only focus:absolute focus:top-4 focus:left-4 focus:z-50 focus:px-4 focus:py-2 focus:bg-white focus:text-gray-900 focus:rounded-lg focus:shadow-lg"
+    >
+      Skip to main content
+    </a>
+
+    <!-- 
+      Main content slot.
+      Pages should include Header, main, and Footer components.
+    -->
+    <slot />
+
+    <!-- ===================================================================
+         Schema.org Structured Data
+         =================================================================== -->
+    <script
+      is:inline
+      type="application/ld+json"
+      set:html={JSON.stringify({
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        name: brandConfig.name,
+        url: `https://${brandConfig.domain}`,
+        logo: `https://${brandConfig.domain}${brandConfig.logos.primary}`,
+        description: brandConfig.seo.description,
+        email: brandConfig.email,
+        parentOrganization: {
+          "@type": "Organization",
+          name: "GrowthWave Advisors LLC",
+          url: "https://growthwaveadvisors.com",
+        },
+      })}
+    />
+  </body>
+</html>
+
+<style is:global>
+  /* 
+   * Ensure body takes full viewport height and 
+   * allows footer to stick to bottom on short pages.
+   */
+  body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  main {
+    flex: 1;
+  }
+</style>

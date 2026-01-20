@@ -1,0 +1,44 @@
+---
+// src/components/shared/Footer.astro
+interface Props {
+  brand: 'properties' | 'capital' | 'advisors';
+}
+
+const { brand } = Astro.props;
+const currentYear = new Date().getFullYear();
+
+const brandConfig = {
+  properties: {
+    name: 'GrowthWave Properties',
+    tagline: 'Building Wealth Through Real Estate',
+  },
+  capital: {
+    name: 'GrowthWave Capital',
+    tagline: 'Fueling Your Business Growth',
+  },
+  advisors: {
+    name: 'GrowthWave Advisors',
+    tagline: 'Integrated Financial Services for Real Estate Investors',
+  },
+};
+
+const config = brandConfig[brand];
+---
+
+<footer class="bg-dark-navy text-white mt-auto">
+  <div class="container-custom section-padding">
+    <div class="text-center">
+      <h3 class="text-2xl font-bold text-white mb-2">{config.name}</h3>
+      <p class="text-gray-300 mb-4">{config.tagline}</p>
+    </div>
+
+    <div class="border-t border-gray-700 mt-12 pt-8 text-center">
+      <p class="text-gray-400 text-sm">
+        © {currentYear} GrowthWave Advisors LLC. All rights reserved.
+      </p>
+      <p class="text-gray-500 text-xs mt-4">
+        Investment opportunities subject to availability and qualification. Past performance does not guarantee future results.
+      </p>
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,88 @@
+---
+// Button.astro - Reusable button component with brand-specific styling
+interface Props {
+  href?: string;
+  brand: 'properties' | 'capital' | 'advisors';
+  variant?: 'primary' | 'secondary';
+  size?: 'sm' | 'md' | 'lg';
+  class?: string;
+  type?: 'button' | 'submit';
+}
+
+const {
+  href,
+  brand,
+  variant = 'primary',
+  size = 'md',
+  class: className = '',
+  type = 'button',
+} = Astro.props;
+
+// Brand colors
+const brandColors = {
+  properties: '#FF6B4A',
+  capital: '#7C3AED',
+  advisors: '#265077',
+};
+
+const accentColor = brandColors[brand];
+
+// Size configurations
+const sizeStyles = {
+  sm: 'padding: 0.5rem 1rem; font-size: 0.875rem;',
+  md: 'padding: 0.75rem 1.5rem; font-size: 1rem;',
+  lg: 'padding: 1rem 2rem; font-size: 1.125rem;',
+};
+
+// Variant styles
+const getVariantStyle = () => {
+  if (variant === 'primary') {
+    return `background-color: ${accentColor}; color: #ffffff; border: 2px solid ${accentColor};`;
+  } else {
+    return `background-color: #ffffff; color: ${accentColor}; border: 2px solid ${accentColor};`;
+  }
+};
+
+const baseStyle = `
+  display: inline-block;
+  font-weight: 600;
+  border-radius: 0.5rem;
+  transition: all 200ms ease;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
+  font-family: 'Outfit', sans-serif;
+  ${sizeStyles[size]}
+  ${getVariantStyle()}
+`;
+
+const hoverBehavior = variant === 'primary'
+  ? `this.style.opacity='0.9'; this.style.transform='translateY(-1px)'; this.style.boxShadow='0 10px 15px -3px rgba(0, 0, 0, 0.1)'`
+  : `this.style.backgroundColor='${accentColor}'; this.style.color='#ffffff'`;
+
+const resetBehavior = variant === 'primary'
+  ? `this.style.opacity='1'; this.style.transform='translateY(0)'; this.style.boxShadow='none'`
+  : `this.style.backgroundColor='#ffffff'; this.style.color='${accentColor}'`;
+---
+
+{href ? (
+  <a
+    href={href}
+    style={baseStyle}
+    class={className}
+    onmouseover={hoverBehavior}
+    onmouseout={resetBehavior}
+  >
+    <slot />
+  </a>
+) : (
+  <button
+    type={type}
+    style={baseStyle}
+    class={className}
+    onmouseover={hoverBehavior}
+    onmouseout={resetBehavior}
+  >
+    <slot />
+  </button>
+)}

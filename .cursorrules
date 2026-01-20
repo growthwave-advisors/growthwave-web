@@ -1,0 +1,116 @@
+# Navigate to project root
+cd ~/r/GrowthWave/growthwave-web
+
+# Create .cursorrules file
+cat > .cursorrules << 'EOF'
+# GrowthWave Websites - Cursor AI Instructions
+
+## Project Context
+- Multi-domain Astro project (Properties, Capital, Advisors)
+- Tailwind CSS v4 (uses @theme in global.css, NO tailwind.config.mjs)
+- Single codebase with shared components
+- Brand: Ocean Blue #265077 (primary), Coral #FF6B4A (Properties), Purple #7C3AED (Capital)
+- Font: Outfit from Google Fonts
+
+## Website Copy Location
+All approved copy is located at:
+/Users/wmemorgan/Library/CloudStorage/GoogleDrive-wmemorgan@gmail.com/.tmp/432675/03_FINANCIAL_AND_BUSINESS_SERVICES/GrowthWave Advisors LLC/[Active-Projects-GrowthWave-Advisors]/GrowthWave Launch/Websites
+
+Key files:
+- GrowthWave_Properties_Website_Copy_MASTER.md (complete copy)
+- GrowthWave_Advisors_Website_Copy_COMPLETED.md (complete copy)
+- GrowthWave_Capital_Context_File_REFERENCE.md (context + guidelines)
+
+## File Structure
+src/
+├── layouts/BaseLayout.astro (imports global.css)
+├── components/shared/ (Header, Footer, Button - brand-aware)
+├── pages/
+│   ├── properties/ (5 pages planned)
+│   ├── capital/ (4 pages planned)
+│   └── advisors/ (5 pages planned)
+└── styles/global.css (Tailwind v4 with @theme)
+
+## Brand Guidelines
+- NO "LLC" in customer copy (only legal footer)
+- NO partner names (Rehab Reserves, Impruvu, CMN, RMFIA)
+- Enterprise-grade tech positioning
+- Educational first, sales second
+- Benefit-focused messaging (feature → because → benefit)
+
+## Component Usage Patterns
+- BaseLayout: title, description, brand props required
+- Header/Footer: brand prop ('properties'|'capital'|'advisors')
+- Button: href, brand, size ('sm'|'md'|'lg'), variant optional
+- All pages: Import BaseLayout, Header, Footer at minimum
+
+## Tailwind v4 Brand Colors (available now)
+- bg-ocean-blue / text-ocean-blue / border-ocean-blue
+- bg-dark-navy / text-dark-navy
+- bg-properties-coral / text-properties-coral
+- bg-capital-purple / text-capital-purple
+- bg-neutral-gray / text-neutral-gray
+- font-outfit (already default on body)
+
+## Custom Utility Classes
+- .container-custom (max-width + responsive padding)
+- .section-padding (responsive vertical padding)
+- .card (white bg, shadow, hover effect)
+- .btn-primary / .btn-properties / .btn-capital / .btn-advisors
+
+## Page Creation Checklist
+1. Import BaseLayout with correct props
+2. Import Header, Footer, Button
+3. Use approved copy from Google Drive location
+4. Apply brand colors correctly (Properties=Coral, Capital=Purple, Advisors=Blue)
+5. Mobile-first responsive design
+6. Semantic HTML structure
+7. Accessibility (alt text, aria labels)
+
+## When Creating New Pages
+- Reference website copy files for exact copy
+- Follow existing page structure (see properties/index.astro)
+- Keep consistent spacing (section-padding class)
+- Use container-custom for width constraints
+- Multiple CTAs per page (different entry points)
+
+## SEO Requirements
+- Unique meta title (under 60 chars)
+- Meta description (150-160 chars)
+- Descriptive alt text for images
+- Semantic heading structure (h1 → h2 → h3)
+- Canonical URLs (BaseLayout handles this)
+EOF
+
+echo "✅ .cursorrules created!"
+```
+
+---
+
+## 🎨 OPTIMIZED CURSOR WORKFLOW
+
+### **Method 1: Reference-Based Generation** (RECOMMENDED)
+
+When you want Cursor to create a page:
+
+**You ask Cursor:**
+```
+Create src/pages/properties/about.astro following these requirements:
+
+1. Reference the approved copy from:
+   /Users/wmemorgan/Library/CloudStorage/GoogleDrive-wmemorgan@gmail.com/.tmp/432675/03_FINANCIAL_AND_BUSINESS_SERVICES/GrowthWave Advisors LLC/[Active-Projects-GrowthWave-Advisors]/GrowthWave Launch/Websites/GrowthWave_Properties_Website_Copy_MASTER.md
+
+2. Use the "About Page" section from that document
+
+3. Structure:
+   - Import BaseLayout, Header, Footer
+   - Hero section with headline
+   - Origin story (2-3 paragraphs)
+   - Leadership credentials
+   - 6 core principles
+   - Market focus
+   - Commitment section
+
+4. Apply Properties branding (Coral accent #FF6B4A)
+
+5. Use existing components from project

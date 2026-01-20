@@ -1,0 +1,44 @@
+---
+// src/components/shared/Button.astro
+interface Props {
+  href?: string;
+  brand: 'properties' | 'capital' | 'advisors';
+  variant?: 'primary' | 'secondary';
+  size?: 'sm' | 'md' | 'lg';
+  class?: string;
+}
+
+const {
+  href,
+  brand,
+  variant = 'primary',
+  size = 'md',
+  class: className = '',
+} = Astro.props;
+
+const brandColors = {
+  properties: 'bg-properties-coral',
+  capital: 'bg-capital-purple',
+  advisors: 'bg-ocean-blue',
+};
+
+const bgColor = brandColors[brand];
+
+const sizeClasses = {
+  sm: 'px-4 py-2 text-sm',
+  md: 'px-6 py-3 text-base',
+  lg: 'px-8 py-4 text-lg',
+};
+
+const baseClasses = `inline-block font-semibold rounded-lg transition-all duration-200 text-center text-white hover:opacity-90 ${bgColor} ${sizeClasses[size]} ${className}`;
+---
+
+{href ? (
+  <a href={href} class={baseClasses}>
+    <slot />
+  </a>
+) : (
+  <button class={baseClasses}>
+    <slot />
+  </button>
+)}
