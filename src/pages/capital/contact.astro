@@ -1,0 +1,578 @@
+---
+/**
+ * GrowthWave Capital - Contact Page
+ * ==================================
+ * Updated: January 2026
+ * 
+ * BUILT to match approved wireframe (capital-wireframe-viewer-v2.jsx ContactPage)
+ * 
+ * Design System Compliance:
+ * - Two-layer "Fixed Island" pattern on all sections
+ * - Typography stops at lg breakpoint (no xl: or 2xl:)
+ * - Responsive padding: px-4 lg:px-8
+ * - Body content: max-w-7xl (1280px)
+ * - Royal Purple #7C3AED accent color
+ * 
+ * Key Features:
+ * - Three pathway cards (Pre-Qual, Consultation, Message)
+ * - Live activity indicator in hero
+ * - Credit Sculpt Graduate special pathway
+ * - URL parameter support for pre-selection
+ * - Calendly placeholder for scheduling
+ * 
+ * URL Parameters Supported:
+ * - ?type=prequalify → Highlight Pre-Qualification card
+ * - ?type=consultation → Highlight Consultation card
+ * - ?type=businesscreditcards → Pre-select in product dropdown
+ * - ?type=linesofcredit → Pre-select in product dropdown
+ * - ?type=dscrloans → Pre-select in product dropdown
+ * - ?type=bridgefinancing → Pre-select in product dropdown
+ * - ?type=termloans → Pre-select in product dropdown
+ * - ?type=graduate → Show Credit Sculpt Graduate pathway
+ * 
+ * @see capital-wireframe-viewer-v2.jsx (approved wireframe - ContactPage lines 708-810)
+ * @see GrowthWave_Capital_Contact_FINAL.md (copy source)
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import Button from '@components/Button.astro';
+
+// Brand Colors - Capital uses Royal Purple accent
+const colors = {
+  purple: '#7C3AED',
+  purpleLight: '#8B5CF6',
+  purpleBg: 'rgba(124,58,237,0.15)',
+  purpleBgLight: 'rgba(124,58,237,0.08)',
+  ocean: '#265077',
+  midnight: '#022140',
+  gray50: '#f9fafb',
+  gray100: '#f3f4f6',
+  gray200: '#e5e7eb',
+  gray300: '#d1d5db',
+  gray400: '#9ca3af',
+  gray500: '#6b7280',
+  gray600: '#4b5563',
+  gray700: '#374151',
+  gray800: '#1f2937',
+  // Division colors
+  creditGreen: '#10B981',
+  propertiesCoral: '#FF6B4A',
+};
+
+// Product dropdown options
+const productOptions = [
+  { value: '', label: "I'm interested in..." },
+  { value: 'businesscreditcards', label: 'Business Credit Cards' },
+  { value: 'linesofcredit', label: 'Lines of Credit' },
+  { value: 'dscrloans', label: 'DSCR Loans' },
+  { value: 'bridgefinancing', label: 'Bridge Financing' },
+  { value: 'termloans', label: 'Term Loans' },
+  { value: 'general', label: 'General Inquiry / Not Sure Yet' },
+];
+
+// Direct contact info
+const contactInfo = [
+  { icon: '📧', label: 'info@growthwavecapital.com', type: 'email' },
+  { icon: '📍', label: 'Orlando, Florida', type: 'location' },
+  { icon: '⏰', label: 'Response within 24 hours', type: 'response' },
+];
+---
+
+<BaseLayout
+  brand="capital"
+  title="Contact GrowthWave Capital | Schedule Your Free Consultation"
+  description="Get started in minutes with automated pre-qualification or schedule a free consultation. Available 24/7—no office hours, no waiting. Start building your capital strategy now."
+>
+  <Header brand="capital" activePage="Contact" />
+
+  <main>
+    <!-- ============================================
+         HERO SECTION
+         - Gradient background (full-width)
+         - Centered headline with live activity indicator
+         ============================================ -->
+    <section 
+      class="w-full"
+      style={`background: linear-gradient(135deg, ${colors.midnight} 0%, ${colors.ocean} 100%);`}
+    >
+      <div class="max-w-5xl mx-auto px-4 lg:px-8 py-12 lg:py-20 text-center">
+        <!-- Headline -->
+        <h1 class="text-3xl lg:text-4xl font-bold text-white leading-tight mb-5">
+          Start Building Your Capital Strategy—<span style={`color: ${colors.purple};`}>Right Now</span>
+        </h1>
+        
+        <!-- Subheadline -->
+        <p class="text-lg text-gray-300 mb-6">
+          No office hours. Our systems work 24/7 so you can take action when you're ready.
+        </p>
+        
+        <!-- Live Activity Indicator -->
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20">
+          <div class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
+          <span class="text-base text-gray-300">
+            <strong class="text-white" id="consultations-count">3</strong> consultations today • Last booking <strong class="text-white" id="last-booking">14 min ago</strong>
+          </span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         THREE PATHWAY CARDS SECTION
+         - Pre-Qual (purple - FEATURED)
+         - Consultation (ocean blue)
+         - Message (white/gray)
+         ============================================ -->
+    <section class="w-full py-14 lg:py-20 px-4 lg:px-8 bg-white">
+      <div class="max-w-6xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+          
+          <!-- CARD 1: Instant Pre-Qualification (FEATURED - Purple) -->
+          <div 
+            id="prequal-card"
+            class="rounded-2xl p-6 text-white relative pathway-card"
+            style={`background-color: ${colors.purple};`}
+          >
+            <!-- FASTEST Badge -->
+            <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-white/20 text-sm font-bold">
+              ⚡ FASTEST
+            </div>
+            
+            <!-- Icon -->
+            <div class="text-4xl mb-4">⚡</div>
+            
+            <!-- Title -->
+            <h2 class="text-xl font-bold mb-3">Instant Pre-Qualification</h2>
+            
+            <!-- Description -->
+            <p class="text-white/80 text-base mb-5 leading-relaxed">
+              Know within 3 minutes which products you qualify for, realistic amounts, and timelines.
+            </p>
+            
+            <!-- How It Works Box -->
+            <div class="bg-white/10 rounded-lg p-4 mb-5">
+              <p class="font-bold text-base mb-2">How It Works:</p>
+              <p class="text-white/70 text-base">8-10 questions → System analysis → Instant results</p>
+            </div>
+            
+            <!-- CTA Button -->
+            <a 
+              href="#"
+              class="block w-full py-3.5 rounded-lg font-bold text-base bg-white text-center transition-transform hover:scale-[1.02]"
+              style={`color: ${colors.purple};`}
+            >
+              START PRE-QUALIFICATION
+            </a>
+            
+            <!-- Response Time -->
+            <p class="text-center text-sm text-white/60 mt-3 italic">Takes 3 minutes</p>
+          </div>
+
+          <!-- CARD 2: Schedule Consultation (Ocean Blue) -->
+          <div 
+            id="consultation-card"
+            class="rounded-2xl p-6 text-white pathway-card"
+            style={`background-color: ${colors.ocean};`}
+          >
+            <!-- Icon -->
+            <div class="text-4xl mb-4">📅</div>
+            
+            <!-- Title -->
+            <h2 class="text-xl font-bold mb-3">Schedule Consultation</h2>
+            
+            <!-- Description -->
+            <p class="text-white/80 text-base mb-5 leading-relaxed">
+              Pick your time, get instant confirmation. 30-45 minute strategic discussion.
+            </p>
+            
+            <!-- Calendly Placeholder -->
+            <div 
+              id="calendly-embed" 
+              class="bg-white/10 rounded-lg p-4 mb-5 border-2 border-dashed border-white/30 text-center min-h-[100px] flex flex-col items-center justify-center"
+            >
+              <div class="text-2xl mb-2">📆</div>
+              <p class="text-sm text-white/60">[Calendly Widget]</p>
+              <!-- Calendly embed will be added when account is ready -->
+            </div>
+            
+            <!-- CTA Button -->
+            <a 
+              href="https://calendly.com/wilfred-morgan"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="block w-full py-3.5 rounded-lg font-bold text-base bg-white text-center transition-transform hover:scale-[1.02]"
+              style={`color: ${colors.ocean};`}
+            >
+              PICK YOUR TIME
+            </a>
+            
+            <!-- Response Time -->
+            <p class="text-center text-sm text-white/60 mt-3 italic">Most slots within 48 hours</p>
+          </div>
+
+          <!-- CARD 3: Send a Message (White/Gray) -->
+          <div 
+            id="message-card"
+            class="rounded-2xl p-6 bg-gray-100 border border-gray-200 pathway-card"
+          >
+            <!-- Icon -->
+            <div class="text-4xl mb-4">💬</div>
+            
+            <!-- Title -->
+            <h2 class="text-xl font-bold mb-3" style={`color: ${colors.midnight};`}>
+              Send a Message
+            </h2>
+            
+            <!-- Description -->
+            <p class="text-gray-600 text-base mb-5">
+              Response within 24 hours (usually much faster).
+            </p>
+            
+            <!-- Contact Form -->
+            <form id="contact-form" class="space-y-3">
+              <!-- Product Dropdown -->
+              <select 
+                id="product-select"
+                name="product"
+                class="w-full px-4 py-3 rounded-lg border border-gray-300 text-base bg-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              >
+                {productOptions.map((option) => (
+                  <option value={option.value}>{option.label}</option>
+                ))}
+              </select>
+              
+              <!-- Name -->
+              <input 
+                type="text" 
+                name="name"
+                placeholder="Name *" 
+                required
+                class="w-full px-4 py-3 rounded-lg border border-gray-300 text-base focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              />
+              
+              <!-- Email -->
+              <input 
+                type="email" 
+                name="email"
+                placeholder="Email *" 
+                required
+                class="w-full px-4 py-3 rounded-lg border border-gray-300 text-base focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              />
+              
+              <!-- Message -->
+              <textarea 
+                name="message"
+                placeholder="Message..." 
+                rows="3"
+                class="w-full px-4 py-3 rounded-lg border border-gray-300 text-base resize-none focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              ></textarea>
+              
+              <!-- Submit Button -->
+              <button 
+                type="submit"
+                class="w-full py-3.5 rounded-lg font-bold text-base text-white transition-transform hover:scale-[1.02]"
+                style={`background-color: ${colors.ocean};`}
+              >
+                GET MY ANSWERS →
+              </button>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         CREDIT SCULPT GRADUATE CTA
+         - Green border callout
+         - Desktop: Icon left, content left-aligned (wireframe match)
+         - Mobile: Stacked, centered
+         ============================================ -->
+    <section id="graduate-section" class="w-full py-10 px-4 lg:px-8 bg-white">
+      <div class="max-w-4xl mx-auto">
+        <div 
+          id="graduate-card"
+          class="p-6 rounded-2xl border-2"
+          style={`border-color: ${colors.creditGreen}; background-color: ${colors.creditGreen}08;`}
+        >
+          <!-- Icon -->
+          <div id="graduate-icon" class="text-5xl">🎓</div>
+          
+          <!-- Content -->
+          <div id="graduate-content" class="flex-1">
+            <h3 
+              class="text-lg font-bold mb-2"
+              style={`color: ${colors.midnight};`}
+            >
+              Credit Sculpt Graduate?
+            </h3>
+            <p class="text-base text-gray-600 mb-4">
+              Your improved credit is ready to become business capital. Special pathway for Stage 1 completers.
+            </p>
+            <a 
+              href="#"
+              class="inline-block px-5 py-3 rounded-lg font-semibold text-white text-base transition-transform hover:scale-[1.02]"
+              style={`background-color: ${colors.creditGreen};`}
+            >
+              Graduate Fast-Track →
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         DIRECT CONTACT INFO
+         - Email with response time assurance
+         - Simplified single-element layout
+         ============================================ -->
+    <section 
+      class="w-full px-4 lg:px-8" 
+      style={`background-color: ${colors.gray50}; padding-top: 4rem; padding-bottom: 2.5rem;`}
+    >
+      <div class="max-w-4xl mx-auto text-center">
+        <h3 
+          class="text-lg font-bold" 
+          style={`color: ${colors.midnight}; margin-bottom: 0.25rem;`}
+        >
+          Prefer Traditional Contact?
+        </h3>
+        
+        <div style="font-size: 1.5rem; margin-bottom: 0.125rem;">📧</div>
+        <a 
+          href="mailto:info@growthwavecapital.com"
+          class="text-lg font-medium transition-opacity hover:opacity-80"
+          style={`color: ${colors.purple};`}
+        >
+          info@growthwavecapital.com
+        </a>
+        <p class="text-base text-gray-600" style="margin-top: 0.5rem;">
+          Response within 24 hours—usually much faster.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================
+         LEGAL DISCLAIMER
+         ============================================ -->
+    <section class="w-full py-6 px-4 lg:px-8" style={`background-color: ${colors.gray50};`}>
+      <div class="max-w-4xl mx-auto">
+        <p class="text-sm text-gray-500 text-center leading-relaxed">
+          GrowthWave Capital provides consulting services and lender placement. We are not a direct lender. 
+          Financing subject to lender approval and qualification. No guarantee of approval, specific amounts, or exact terms.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <Footer brand="capital" />
+</BaseLayout>
+
+<style>
+  /* Glass-morphism icon container - Purple (default) */
+  .icon-glass {
+    background: linear-gradient(135deg, rgba(124,58,237,0.15) 0%, rgba(124,58,237,0.05) 100%);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(124,58,237,0.2);
+  }
+  
+  /* Glass-morphism icon container - Light (for dark backgrounds) */
+  .icon-glass-light {
+    background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.05) 100%);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+  
+  /* Glass-morphism icon container - Green (for Credit Sculpt) */
+  .icon-glass-green {
+    background: linear-gradient(135deg, rgba(16,185,129,0.2) 0%, rgba(16,185,129,0.05) 100%);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(16,185,129,0.3);
+  }
+  
+  /* Pathway card highlight state */
+  .pathway-card.highlighted {
+    transform: scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Pulse animation for live indicator */
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+  
+  .animate-pulse {
+    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+  }
+  
+  /* ============================================
+     GRADUATE CARD - Explicit responsive styles
+     Mobile: Stacked, centered
+     Desktop (768px+): Horizontal, left-aligned
+     ============================================ */
+  
+  /* Mobile default: stacked, centered */
+  #graduate-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
+  }
+  
+  #graduate-icon {
+    margin-bottom: 0;
+  }
+  
+  /* Desktop: horizontal, left-aligned */
+  @media (min-width: 768px) {
+    #graduate-card {
+      flex-direction: row;
+      align-items: center;
+      text-align: left;
+      gap: 1.5rem;
+    }
+    
+    #graduate-content {
+      text-align: left;
+    }
+  }
+</style>
+
+<script>
+  /**
+   * Contact Page Client-Side Functionality
+   * - URL parameter handling for pre-selection
+   * - Form submission handling
+   * - Live activity indicator updates
+   */
+  
+  document.addEventListener('DOMContentLoaded', () => {
+    // ============================================
+    // URL PARAMETER HANDLING
+    // ============================================
+    const urlParams = new URLSearchParams(window.location.search);
+    const typeParam = urlParams.get('type');
+    
+    if (typeParam) {
+      // Map URL params to actions
+      const productMapping = {
+        'businesscreditcards': 'businesscreditcards',
+        'linesofcredit': 'linesofcredit',
+        'dscrloans': 'dscrloans',
+        'bridgefinancing': 'bridgefinancing',
+        'termloans': 'termloans',
+      };
+      
+      // Handle pathway highlighting
+      if (typeParam === 'prequalify') {
+        highlightCard('prequal-card');
+        scrollToCard('prequal-card');
+      } else if (typeParam === 'consultation') {
+        highlightCard('consultation-card');
+        scrollToCard('consultation-card');
+      } else if (typeParam === 'graduate') {
+        // Scroll to and highlight graduate section
+        const graduateSection = document.getElementById('graduate-section');
+        if (graduateSection) {
+          graduateSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          graduateSection.querySelector('div').style.boxShadow = '0 0 0 3px #10B981';
+        }
+      } else if (productMapping[typeParam]) {
+        // Pre-select product in dropdown
+        const productSelect = document.getElementById('product-select');
+        if (productSelect) {
+          productSelect.value = productMapping[typeParam];
+        }
+        highlightCard('message-card');
+        scrollToCard('message-card');
+      }
+    }
+    
+    function highlightCard(cardId) {
+      const card = document.getElementById(cardId);
+      if (card) {
+        card.classList.add('highlighted');
+        // Remove highlight after 3 seconds
+        setTimeout(() => {
+          card.classList.remove('highlighted');
+        }, 3000);
+      }
+    }
+    
+    function scrollToCard(cardId) {
+      const card = document.getElementById(cardId);
+      if (card) {
+        setTimeout(() => {
+          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }, 100);
+      }
+    }
+    
+    // ============================================
+    // LIVE ACTIVITY INDICATOR
+    // Simulated data - would connect to real API
+    // ============================================
+    function updateActivityIndicator() {
+      // Simulate varying consultation counts (would be real data)
+      const consultationsToday = Math.floor(Math.random() * 5) + 2;
+      const lastBookingMinutes = Math.floor(Math.random() * 30) + 5;
+      
+      const countElement = document.getElementById('consultations-count');
+      const lastBookingElement = document.getElementById('last-booking');
+      
+      if (countElement) {
+        countElement.textContent = consultationsToday;
+      }
+      if (lastBookingElement) {
+        lastBookingElement.textContent = lastBookingMinutes + ' min ago';
+      }
+    }
+    
+    // Update every 60 seconds (for demo - production would use real data)
+    // updateActivityIndicator();
+    // setInterval(updateActivityIndicator, 60000);
+    
+    // ============================================
+    // FORM SUBMISSION HANDLING
+    // ============================================
+    const contactForm = document.getElementById('contact-form');
+    
+    if (contactForm) {
+      contactForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        
+        const formData = new FormData(contactForm);
+        const data = {
+          product: formData.get('product'),
+          name: formData.get('name'),
+          email: formData.get('email'),
+          message: formData.get('message'),
+        };
+        
+        // For now, show a thank you message
+        // In production, this would submit to Go High Level or similar
+        const submitButton = contactForm.querySelector('button[type="submit"]');
+        const originalText = submitButton.textContent;
+        
+        submitButton.textContent = 'SENDING...';
+        submitButton.disabled = true;
+        
+        // Simulate API call
+        setTimeout(() => {
+          // Replace form with thank you message
+          contactForm.innerHTML = `
+            <div class="text-center py-8">
+              <div class="text-4xl mb-4">✅</div>
+              <h3 class="text-xl font-bold mb-2" style="color: #022140;">Message Received!</h3>
+              <p class="text-gray-600 mb-4">We'll respond within 24 hours—usually much faster.</p>
+              <p class="text-sm text-gray-500 italic">Smart move. While others are "thinking about it," you're taking action.</p>
+            </div>
+          `;
+        }, 1500);
+      });
+    }
+  });
+</script>

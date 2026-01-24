@@ -1,0 +1,493 @@
+---
+/**
+ * GrowthWave Capital - About Page
+ * ================================
+ * Updated: January 2026
+ * 
+ * BUILT to match approved wireframe (capital-wireframe-viewer-v2.jsx AboutPage)
+ * 
+ * Design System Compliance:
+ * - Two-layer "Fixed Island" pattern on all sections
+ * - Typography stops at lg breakpoint (no xl: or 2xl:)
+ * - Responsive padding: px-4 lg:px-8
+ * - Body content: max-w-7xl (1280px)
+ * - Royal Purple #7C3AED accent color
+ * - Styled icons with glass-morphism containers
+ * - Institutional voice (no founder name)
+ * 
+ * @see capital-wireframe-viewer-v2.jsx (approved wireframe - AboutPage lines 385-528)
+ * @see GrowthWave_Capital_About_FINAL.md (copy source - wireframe takes precedence)
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import Button from '@components/Button.astro';
+
+// Brand Colors - Capital uses Royal Purple accent
+const colors = {
+  purple: '#7C3AED',
+  purpleLight: '#8B5CF6',
+  purpleBg: 'rgba(124,58,237,0.15)',
+  purpleBgLight: 'rgba(124,58,237,0.08)',
+  ocean: '#265077',
+  midnight: '#022140',
+  gray50: '#f9fafb',
+  gray100: '#f3f4f6',
+  gray200: '#e5e7eb',
+  gray300: '#d1d5db',
+  gray400: '#9ca3af',
+  gray500: '#6b7280',
+  gray600: '#4b5563',
+  gray700: '#374151',
+  gray800: '#1f2937',
+};
+
+// McKinsey-style institutional stats
+const stats = [
+  { value: '15+', label: 'Years in Financial Services', sublabel: 'Banking & technology leadership' },
+  { value: 'Deep', label: 'Institutional Expertise', sublabel: 'Executive-level operations experience' },
+  { value: 'Enterprise', label: 'Grade Technology', sublabel: 'Data-driven analysis & automation' },
+];
+
+// Core Competencies - 4 items with Lucide icon names
+const competencies = [
+  { 
+    icon: 'landmark', 
+    title: 'Financial Services Leadership', 
+    desc: '15+ years of banking operations experience, including executive technology roles with direct lending oversight. Deep understanding of how institutions assess risk and structure products.' 
+  },
+  { 
+    icon: 'server', 
+    title: 'Enterprise Technology', 
+    desc: 'Cloud architecture expertise and AI certification enable sophisticated automation. We build systems that rival major institutionsâ€”tailored specifically for investor needs.' 
+  },
+  { 
+    icon: 'home', 
+    title: 'Active Investment Practice', 
+    desc: 'Direct experience as multifamily investors using the same financing products we help clients access. We understand the strategies because we execute them ourselves.' 
+  },
+  { 
+    icon: 'workflow', 
+    title: 'Integrated Platform', 
+    desc: 'Part of GrowthWave Advisors ecosystem connecting credit optimization, business financing, and investment opportunities. Clients benefit from accumulated knowledge across stages.' 
+  },
+];
+
+// Operating Principles - 6 items for 3-column grid
+const principles = [
+  { 
+    icon: 'ðŸ“Š', 
+    title: 'Data-Driven Decisions', 
+    desc: 'Every client engagement begins with comprehensive profile analysis. We leverage technology to match clients with optimal financing products based on quantitative criteria.' 
+  },
+  { 
+    icon: 'âš¡', 
+    title: 'Technology-Enabled Operations', 
+    desc: 'From automated pre-qualification to real-time status portals, we deploy enterprise-grade systems that multiply effectiveness and eliminate traditional bottlenecks.' 
+  },
+  { 
+    icon: 'ðŸŽ¯', 
+    title: 'Strategic Lender Matching', 
+    desc: 'Our network relationships and underwriting expertise position applications for maximum approval probability. We speak both lender and investor languages fluently.' 
+  },
+  { 
+    icon: 'ðŸ”§', 
+    title: 'Credit as Strategic Tool', 
+    desc: 'We help clients transition from credit consumption to credit leverageâ€”using financing strategically for asset acquisition rather than lifestyle maintenance.' 
+  },
+  { 
+    icon: 'ðŸ“ˆ', 
+    title: 'Transparent Expectations', 
+    desc: 'No guaranteed approvals or inflated promises. We provide honest assessments, realistic timelines, and clear explanations of product requirements.' 
+  },
+  { 
+    icon: 'ðŸ”„', 
+    title: 'Integrated Platform Approach', 
+    desc: 'As part of GrowthWave Advisors, we connect credit optimization with investment opportunities. Clients progress through stages with accumulated knowledgeâ€”no starting over.' 
+  },
+];
+---
+
+<BaseLayout
+  brand="capital"
+  title="About GrowthWave Capital | Banking Expertise Meets Technology Innovation"
+  description="Learn about GrowthWave Capital's mission to provide business financing for economic pioneers. Former banking executives who understand both sides of the lending table."
+>
+  <Header brand="capital" activePage="About" />
+
+  <main>
+    <!-- ============================================
+         HERO SECTION - Stats-focused
+         - Gray background (full-width)
+         - Centered headline + subheadline
+         - 3 stat cards
+         - Badge at bottom
+         ============================================ -->
+    <section class="w-full" style={`background-color: ${colors.gray50};`}>
+      <div class="max-w-7xl mx-auto px-4 lg:px-8 py-14 lg:py-20">
+        
+        <!-- Content -->
+        <div class="text-center mb-12">
+          <h1 
+            class="text-3xl lg:text-4xl font-bold mb-5"
+            style={`color: ${colors.midnight};`}
+          >
+            Banking Expertise Meets Technology Innovation
+          </h1>
+          <p 
+            class="text-lg max-w-3xl mx-auto leading-relaxed"
+            style={`color: ${colors.gray500};`}
+          >
+            GrowthWave Capital combines deep financial services experience with enterprise-grade 
+            technology to deliver institutional-quality financing access for real estate investors 
+            and business owners.
+          </p>
+        </div>
+        
+        <!-- Stats Cards with Glass Icons -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
+          <!-- Stat 1: Years in Financial Services -->
+          <div 
+            class="text-center p-6 lg:p-8 rounded-xl bg-white border"
+            style="border-color: #e5e7eb; box-shadow: 0 4px 20px rgba(0,0,0,0.06);"
+          >
+            <div 
+              class="w-14 h-14 rounded-xl mx-auto mb-4 flex items-center justify-center"
+              style={`background: linear-gradient(135deg, ${colors.purpleBg} 0%, ${colors.purpleBgLight} 100%); border: 1px solid rgba(124,58,237,0.25); box-shadow: 0 4px 16px rgba(124,58,237,0.15);`}
+            >
+              <!-- Landmark/Bank Icon -->
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="22" x2="21" y2="22"></line>
+                <line x1="6" y1="18" x2="6" y2="11"></line>
+                <line x1="10" y1="18" x2="10" y2="11"></line>
+                <line x1="14" y1="18" x2="14" y2="11"></line>
+                <line x1="18" y1="18" x2="18" y2="11"></line>
+                <polygon points="12 2 20 7 4 7"></polygon>
+              </svg>
+            </div>
+            <div 
+              class="text-4xl lg:text-[44px] font-bold mb-1"
+              style={`color: ${colors.purple};`}
+            >
+              15+
+            </div>
+            <div 
+              class="text-base font-semibold mb-1"
+              style={`color: ${colors.midnight};`}
+            >
+              Years Financial Services
+            </div>
+            <div class="text-sm text-gray-500">Banking & technology leadership</div>
+          </div>
+          
+          <!-- Stat 2: Institutional Expertise -->
+          <div 
+            class="text-center p-6 lg:p-8 rounded-xl bg-white border"
+            style="border-color: #e5e7eb; box-shadow: 0 4px 20px rgba(0,0,0,0.06);"
+          >
+            <div 
+              class="w-14 h-14 rounded-xl mx-auto mb-4 flex items-center justify-center"
+              style={`background: linear-gradient(135deg, ${colors.purpleBg} 0%, ${colors.purpleBgLight} 100%); border: 1px solid rgba(124,58,237,0.25); box-shadow: 0 4px 16px rgba(124,58,237,0.15);`}
+            >
+              <!-- Layers Icon -->
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                <polyline points="2 17 12 22 22 17"></polyline>
+                <polyline points="2 12 12 17 22 12"></polyline>
+              </svg>
+            </div>
+            <div 
+              class="text-4xl lg:text-[44px] font-bold mb-1"
+              style={`color: ${colors.purple};`}
+            >
+              Deep
+            </div>
+            <div 
+              class="text-base font-semibold mb-1"
+              style={`color: ${colors.midnight};`}
+            >
+              Institutional Expertise
+            </div>
+            <div class="text-sm text-gray-500">Executive-level operations experience</div>
+          </div>
+          
+          <!-- Stat 3: Enterprise Grade Technology -->
+          <div 
+            class="text-center p-6 lg:p-8 rounded-xl bg-white border"
+            style="border-color: #e5e7eb; box-shadow: 0 4px 20px rgba(0,0,0,0.06);"
+          >
+            <div 
+              class="w-14 h-14 rounded-xl mx-auto mb-4 flex items-center justify-center"
+              style={`background: linear-gradient(135deg, ${colors.purpleBg} 0%, ${colors.purpleBgLight} 100%); border: 1px solid rgba(124,58,237,0.25); box-shadow: 0 4px 16px rgba(124,58,237,0.15);`}
+            >
+              <!-- Server Icon -->
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+                <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+                <line x1="6" y1="6" x2="6.01" y2="6"></line>
+                <line x1="6" y1="18" x2="6.01" y2="18"></line>
+              </svg>
+            </div>
+            <div 
+              class="text-4xl lg:text-[44px] font-bold mb-1"
+              style={`color: ${colors.purple};`}
+            >
+              Enterprise
+            </div>
+            <div 
+              class="text-base font-semibold mb-1"
+              style={`color: ${colors.midnight};`}
+            >
+              Grade Technology
+            </div>
+            <div class="text-sm text-gray-500">Data-driven analysis & automation</div>
+          </div>
+        </div>
+        
+        <!-- Badge -->
+        <div class="mt-10 text-center">
+          <span 
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-base font-medium"
+            style={`background-color: ${colors.purpleBg}; color: ${colors.purple};`}
+          >
+            <!-- Target Icon -->
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <circle cx="12" cy="12" r="6"></circle>
+              <circle cx="12" cy="12" r="2"></circle>
+            </svg>
+            Specialized in non-W-2 income financing
+          </span>
+        </div>
+        
+      </div>
+    </section>
+
+    <!-- ============================================
+         MISSION SECTION
+         - White background
+         - Institutional voice
+         - Blockquote with left border
+         ============================================ -->
+    <section class="w-full py-14 lg:py-20 px-4 lg:px-8 bg-white">
+      <div class="max-w-4xl mx-auto">
+        
+        <h2 
+          class="text-2xl lg:text-3xl font-bold mb-8"
+          style={`color: ${colors.midnight};`}
+        >
+          Our Mission
+        </h2>
+        
+        <p class="text-lg text-gray-600 leading-relaxed mb-6">
+          Real estate investors and business owners represent a significantly underserved segment 
+          of the financing market. Traditional institutions have built systems optimized for W-2 
+          employees with predictable income patternsâ€”leaving economic pioneers to navigate 
+          fragmented, inefficient processes.
+        </p>
+        
+        <!-- Blockquote -->
+        <div 
+          class="my-12 py-8 pr-10 border-l-4 bg-gray-50 rounded-r-lg"
+          style={`border-color: ${colors.purple}; padding-left: 3rem;`}
+        >
+          <p 
+            class="text-xl font-semibold italic leading-relaxed"
+            style={`color: ${colors.purple};`}
+          >
+            "We exist to bridge that gapâ€”connecting sophisticated borrowers with lenders who 
+            understand asset-based income and investment cash flow."
+          </p>
+        </div>
+        
+        <p class="text-lg text-gray-600 leading-relaxed">
+          GrowthWave Capital deploys technology and institutional expertise to create efficient 
+          pathways to capital. Our platform handles the complexity of lender coordination, 
+          documentation, and negotiationâ€”allowing clients to focus on building their portfolios 
+          and businesses.
+        </p>
+        
+      </div>
+    </section>
+
+    <!-- ============================================
+         CORE COMPETENCIES SECTION
+         - Gray background
+         - 2x2 grid of cards with icons
+         ============================================ -->
+    <section 
+      class="w-full py-14 lg:py-20 px-4 lg:px-8"
+      style={`background-color: ${colors.gray50};`}
+    >
+      <div class="max-w-5xl mx-auto">
+        
+        <h2 
+          class="text-2xl lg:text-3xl font-bold mb-10 text-center"
+          style={`color: ${colors.midnight};`}
+        >
+          Core Competencies
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {competencies.map((c) => (
+            <div class="p-6 rounded-xl border border-gray-200 bg-white hover:shadow-md transition-shadow">
+              <div class="flex items-center gap-3 mb-3">
+                <div class="icon-glass w-12 h-12 rounded-lg flex items-center justify-center">
+                  {c.icon === 'landmark' && (
+                    <svg class="w-6 h-6" style={`color: ${colors.purple};`} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <line x1="3" y1="22" x2="21" y2="22"></line>
+                      <line x1="6" y1="18" x2="6" y2="11"></line>
+                      <line x1="10" y1="18" x2="10" y2="11"></line>
+                      <line x1="14" y1="18" x2="14" y2="11"></line>
+                      <line x1="18" y1="18" x2="18" y2="11"></line>
+                      <polygon points="12 2 20 7 4 7"></polygon>
+                    </svg>
+                  )}
+                  {c.icon === 'server' && (
+                    <svg class="w-6 h-6" style={`color: ${colors.purple};`} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+                      <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+                      <line x1="6" y1="6" x2="6.01" y2="6"></line>
+                      <line x1="6" y1="18" x2="6.01" y2="18"></line>
+                    </svg>
+                  )}
+                  {c.icon === 'home' && (
+                    <svg class="w-6 h-6" style={`color: ${colors.purple};`} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                      <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                    </svg>
+                  )}
+                  {c.icon === 'workflow' && (
+                    <svg class="w-6 h-6" style={`color: ${colors.purple};`} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                      <rect x="3" y="3" width="6" height="6" rx="1"></rect>
+                      <rect x="15" y="3" width="6" height="6" rx="1"></rect>
+                      <rect x="9" y="15" width="6" height="6" rx="1"></rect>
+                      <path d="M6 9v3a1 1 0 0 0 1 1h4"></path>
+                      <path d="M18 9v3a1 1 0 0 1-1 1h-4"></path>
+                      <path d="M12 13v2"></path>
+                    </svg>
+                  )}
+                </div>
+                <h3 
+                  class="text-lg font-bold"
+                  style={`color: ${colors.midnight};`}
+                >
+                  {c.title}
+                </h3>
+              </div>
+              <p class="text-base text-gray-600 leading-relaxed">
+                {c.desc}
+              </p>
+            </div>
+          ))}
+        </div>
+        
+      </div>
+    </section>
+
+    <!-- ============================================
+         OPERATING PRINCIPLES SECTION
+         - White background
+         - 3-column grid (responsive)
+         - Hover effect on cards
+         ============================================ -->
+    <section class="w-full py-14 lg:py-20 px-4 lg:px-8 bg-white">
+      <div class="max-w-6xl mx-auto">
+        
+        <h2 
+          class="text-2xl lg:text-3xl font-bold mb-10 text-center"
+          style={`color: ${colors.midnight};`}
+        >
+          Operating Principles
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {principles.map((p) => (
+            <div 
+              class="p-5 rounded-xl bg-gray-50 hover:bg-gray-100 transition-colors"
+            >
+              <div class="icon-glass w-12 h-12 rounded-lg flex items-center justify-center mb-3">
+                <span class="text-2xl">{p.icon}</span>
+              </div>
+              <h3 
+                class="text-base font-bold mb-2"
+                style={`color: ${colors.midnight};`}
+              >
+                {p.title}
+              </h3>
+              <p class="text-base text-gray-600 leading-relaxed">
+                {p.desc}
+              </p>
+            </div>
+          ))}
+        </div>
+        
+      </div>
+    </section>
+
+    <!-- ============================================
+         CTA SECTION
+         - Purple â†’ Dark Navy gradient
+         - Two buttons side by side
+         ============================================ -->
+    <section 
+      class="w-full py-14 lg:py-20 px-4 lg:px-8"
+      style={`background: linear-gradient(135deg, ${colors.purple} 0%, ${colors.midnight} 100%);`}
+    >
+      <div class="max-w-4xl mx-auto text-center">
+        
+        <h2 class="text-2xl lg:text-3xl font-bold text-white mb-5">
+          Ready to Access Institutional-Quality Financing?
+        </h2>
+        
+        <p class="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
+          Connect with our team for a strategic assessment of your financing opportunities.
+        </p>
+        
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+          <a 
+            href="/capital/contact?type=consultation"
+            class="px-8 py-4 rounded-lg font-semibold text-white text-base border-2 border-white transition-colors hover:bg-white/10"
+          >
+            Schedule Consultation
+          </a>
+          <a 
+            href="/capital/contact?type=prequalify"
+            class="px-8 py-4 rounded-lg font-semibold text-white text-base transition-opacity hover:opacity-90"
+            style={`background-color: ${colors.purple};`}
+          >
+            Start Pre-Qualification
+          </a>
+        </div>
+        
+      </div>
+    </section>
+
+    <!-- ============================================
+         LEGAL DISCLAIMER
+         ============================================ -->
+    <section 
+      class="w-full py-6 px-4 lg:px-8"
+      style={`background-color: ${colors.gray50};`}
+    >
+      <div class="max-w-4xl mx-auto">
+        <p class="text-sm text-gray-500 text-center leading-relaxed">
+          GrowthWave Capital provides consulting services and lender placement. We are not a direct lender. 
+          Financing subject to lender approval and qualification. No guarantee of approval, specific amounts, or exact terms.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <Footer brand="capital" />
+</BaseLayout>
+
+<style>
+  /* Glass-morphism icon container - Purple (default) */
+  .icon-glass {
+    background: linear-gradient(135deg, rgba(124,58,237,0.15) 0%, rgba(124,58,237,0.05) 100%);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(124,58,237,0.2);
+  }
+</style>

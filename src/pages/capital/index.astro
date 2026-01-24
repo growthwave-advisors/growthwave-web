@@ -1,0 +1,651 @@
+---
+/**
+ * GrowthWave Capital - Homepage
+ * ==============================
+ * Updated: January 2026
+ * 
+ * REBUILT to match approved wireframe (capital-wireframe-viewer-v2.jsx)
+ * 
+ * Design System Compliance:
+ * - Two-layer "Fixed Island" pattern on all sections
+ * - Typography stops at lg breakpoint (no xl: or 2xl:)
+ * - Responsive padding: px-4 lg:px-8
+ * - Body content: max-w-7xl (1280px)
+ * - Royal Purple #7C3AED accent color
+ * - Styled Lucide icons with glass-morphism containers
+ * 
+ * @see capital-wireframe-viewer-v2.jsx (approved wireframe)
+ * @see GrowthWave_Capital_Homepage_FINAL.md (copy source)
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import Button from '@components/Button.astro';
+
+// Brand Colors - Capital uses Royal Purple accent
+const colors = {
+  purple: '#7C3AED',
+  purpleLight: '#8B5CF6',
+  purpleBg: 'rgba(124,58,237,0.15)',
+  purpleBgLight: 'rgba(124,58,237,0.08)',
+  ocean: '#265077',
+  midnight: '#022140',
+  gray50: '#f9fafb',
+  gray100: '#f3f4f6',
+  gray200: '#e5e7eb',
+  gray300: '#d1d5db',
+  gray400: '#9ca3af',
+  gray500: '#6b7280',
+  gray600: '#4b5563',
+  gray700: '#374151',
+  gray800: '#1f2937',
+  // Division colors for Flywheel
+  creditGreen: '#10B981',
+  propertiesCoral: '#FF6B4A',
+};
+
+// Hero Stats
+const heroStats = [
+  { value: '24/7', label: 'Access' },
+  { value: '15-45', label: 'Day Timelines' },
+  { value: '$0', label: 'Upfront Fees' },
+];
+
+// The GrowthWave Difference - 4 items with Lucide icon names
+const differentiators = [
+  {
+    icon: 'clock',
+    title: 'No Office Hours Required',
+    desc: 'Submit at 11 PM Sunday. Confirmation in minutes, analysis in hours, lender coordination begins Monday morning.',
+  },
+  {
+    icon: 'eye',
+    title: 'Instant Transparency',
+    desc: 'Real-time portal access shows exactly where your application stands. No "let me check and call you back" delays.',
+  },
+  {
+    icon: 'cpu',
+    title: 'Intelligent Automation',
+    desc: 'Pre-qualification, customized document checklists, strategic lender matching that maximizes approval odds.',
+  },
+  {
+    icon: 'trending-up',
+    title: 'Multiplied Effectiveness',
+    desc: 'Technology handles coordination, documentation, and follow-up while you focus on finding your next deal.',
+  },
+];
+
+// Financing Solutions - 5 products + recommendation card
+const products = [
+  { icon: '💳', name: 'Business Credit Cards', range: '$5K–$50K+', featured: false },
+  { icon: '💰', name: 'Lines of Credit', range: '$10K–$250K', featured: false },
+  { icon: '🏠', name: 'DSCR Loans', range: '$75K–$5M+', featured: true },
+  { icon: '🌉', name: 'Bridge Financing', range: '7-14 days', featured: false },
+  { icon: '📋', name: 'Term Loans', range: '$25K–$500K', featured: false },
+];
+
+// Investor Success Flywheel - 3 stages with division colors
+const flywheelStages = [
+  { 
+    num: 1, 
+    name: 'Credit Sculpt', 
+    desc: '3-6 months to 680+', 
+    color: colors.creditGreen, 
+    current: false 
+  },
+  { 
+    num: 2, 
+    name: 'GrowthWave Capital', 
+    desc: '$50K-$250K+ capital', 
+    color: colors.purple, 
+    current: true 
+  },
+  { 
+    num: 3, 
+    name: 'GrowthWave Properties', 
+    desc: 'Multifamily investments', 
+    color: colors.propertiesCoral, 
+    current: false 
+  },
+];
+
+// CTA pathways
+const ctaCards = [
+  { 
+    icon: '📅', 
+    title: 'Schedule Consultation', 
+    btn: 'Schedule',
+    href: '/capital/contact?type=consultation',
+    style: 'glass' 
+  },
+  { 
+    icon: '🚀', 
+    title: 'Begin Application', 
+    btn: 'Start Now',
+    href: '/capital/contact?type=prequalify',
+    style: 'solid' 
+  },
+  { 
+    icon: '🎓', 
+    title: 'Credit Sculpt Graduate?', 
+    btn: 'Graduates',
+    href: '/capital/contact?type=graduate',
+    style: 'green' 
+  },
+];
+
+// FAQ items - 4 questions (matching wireframe)
+const faqItems = [
+  {
+    q: 'Why does "24/7 access" matter?',
+    a: "Because you're busy during business hours. Our systems work around your schedule—submit applications late at night, check status from your phone.",
+  },
+  {
+    q: 'How much can I qualify for?',
+    a: 'Credit cards $5K-$50K+, lines of credit $10K-$250K, DSCR loans $75K-$5M+. Schedule a consultation for personalized estimates.',
+  },
+  {
+    q: 'Do you guarantee approval?',
+    a: 'No. We provide consulting and lender placement. Our pre-qualification dramatically increases approval odds before formal applications.',
+  },
+  {
+    q: 'What does this cost?',
+    a: "No upfront fees. We're compensated by lenders when funding closes—similar to mortgage brokers.",
+  },
+];
+---
+
+<BaseLayout
+  brand="capital"
+  title="GrowthWave Capital | Business Financing for Economic Pioneers"
+  description="Access business capital built for investors and entrepreneurs who generate wealth on their terms. Technology-enabled financing without W-2 requirements—available 24/7."
+>
+  <Header brand="capital" activePage="Home" />
+
+  <main>
+    <!-- ============================================
+         HERO SECTION
+         - Gradient background (full-width)
+         - Two-column layout
+         - Stats row with border-top divider
+         ============================================ -->
+    <section 
+      class="w-full"
+      style={`background: linear-gradient(135deg, ${colors.midnight} 0%, ${colors.ocean} 100%);`}
+    >
+      <div class="max-w-7xl mx-auto px-4 lg:px-8 py-12 lg:py-20">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+          
+          <!-- Content Column -->
+          <div>
+            <!-- Badge -->
+            <div 
+              class="inline-block px-3 py-1.5 rounded-full text-sm font-medium mb-4"
+              style={`background-color: rgba(124,58,237,0.2); color: ${colors.purple};`}
+            >
+              Technology-Enabled Business Financing
+            </div>
+            
+            <!-- Headline -->
+            <h1 class="text-3xl lg:text-4xl font-bold text-white leading-tight mb-5">
+              Business Capital for <span style={`color: ${colors.purple};`}>Economic Pioneers</span>
+            </h1>
+            
+            <!-- Subheadline -->
+            <p class="text-lg text-gray-300 mb-8 leading-relaxed">
+              Real estate investors and business owners generate wealth differently than W-2 employees. 
+              Our platform connects you with financing that understands your business model—and works on your schedule.
+            </p>
+            
+            <!-- CTAs -->
+            <div class="flex flex-col sm:flex-row gap-4">
+              <a 
+                href="/capital/contact"
+                class="px-6 py-3.5 rounded-lg font-semibold text-white text-base flex items-center justify-center gap-2 transition-opacity hover:opacity-90"
+                style={`background-color: ${colors.purple};`}
+              >
+                Start Your Journey (24/7) →
+              </a>
+              <a 
+                href="#difference"
+                class="px-6 py-3.5 rounded-lg font-semibold border-2 border-white/30 text-white text-base text-center transition-colors hover:bg-white/10"
+              >
+                See How We're Different
+              </a>
+            </div>
+            
+            <!-- Stats Row -->
+            <div class="flex flex-wrap items-center gap-8 mt-10 pt-8 border-t border-white/20">
+              {heroStats.map((stat) => (
+                <div class="text-center">
+                  <div class="text-2xl font-bold text-white">{stat.value}</div>
+                  <div class="text-sm text-gray-400">{stat.label}</div>
+                </div>
+              ))}
+            </div>
+          </div>
+          
+          <!-- Image Column -->
+          <div class="relative hidden lg:block">
+            <div 
+              class="aspect-square rounded-2xl flex items-center justify-center border-2 border-dashed"
+              style={`background-color: rgba(124,58,237,0.1); border-color: ${colors.purple};`}
+            >
+              <div class="text-center p-8">
+                <div class="text-6xl mb-4">💼</div>
+                <p class="text-white/70 text-sm">Hero Image Placeholder</p>
+              </div>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         CHALLENGE SECTION
+         - "You deserve better" as standalone purple pill
+         ============================================ -->
+    <section class="w-full py-14 lg:py-20 px-4 lg:px-8" style={`background-color: ${colors.gray50};`}>
+      <div class="max-w-4xl mx-auto text-center">
+        <h2 
+          class="text-2xl lg:text-3xl font-bold mb-5"
+          style={`color: ${colors.midnight};`}
+        >
+          Traditional Banks Don't Understand Your Business
+        </h2>
+        
+        <p class="text-lg text-gray-600 leading-relaxed mb-8">
+          You're an <strong>economic pioneer</strong> operating outside traditional employment. 
+          But banks still think everyone should have W-2 income and paystubs. They want you to explain 
+          your business model to loan officers who've never owned rental property.
+        </p>
+        
+        <!-- Standalone Purple Pill - Dramatic Statement -->
+        <div 
+          class="inline-block px-8 py-4 rounded-xl text-xl font-semibold text-white"
+          style={`background-color: ${colors.purple};`}
+        >
+          You deserve better.
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         THE GROWTHWAVE DIFFERENCE SECTION
+         - 4 cards in 2x2 grid
+         - Styled Lucide icons with glass-morphism
+         ============================================ -->
+    <section id="difference" class="w-full py-14 lg:py-20 px-4 lg:px-8 bg-white">
+      <div class="max-w-6xl mx-auto">
+        
+        <!-- Section Header -->
+        <div class="text-center mb-12">
+          <div 
+            class="inline-block px-3 py-1.5 rounded-full text-sm font-medium mb-4"
+            style={`background-color: ${colors.purpleBgLight}; color: ${colors.purple};`}
+          >
+            Technology as Leverage
+          </div>
+          <h2 
+            class="text-2xl lg:text-3xl font-bold"
+            style={`color: ${colors.midnight};`}
+          >
+            The GrowthWave Difference
+          </h2>
+        </div>
+        
+        <!-- Differentiators Grid - 2x2 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {differentiators.map((item) => (
+            <div class="p-6 rounded-xl border border-gray-200 hover:shadow-lg transition-shadow bg-white">
+              <!-- Glass-morphism Icon Container -->
+              <div class="icon-glass w-12 h-12 rounded-lg flex items-center justify-center mb-4">
+                {item.icon === 'clock' && (
+                  <svg class="w-6 h-6" style={`color: ${colors.purple};`} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10"></circle>
+                    <polyline points="12 6 12 12 16 14"></polyline>
+                  </svg>
+                )}
+                {item.icon === 'eye' && (
+                  <svg class="w-6 h-6" style={`color: ${colors.purple};`} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                    <circle cx="12" cy="12" r="3"></circle>
+                  </svg>
+                )}
+                {item.icon === 'cpu' && (
+                  <svg class="w-6 h-6" style={`color: ${colors.purple};`} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect x="4" y="4" width="16" height="16" rx="2" ry="2"></rect>
+                    <rect x="9" y="9" width="6" height="6"></rect>
+                    <line x1="9" y1="1" x2="9" y2="4"></line>
+                    <line x1="15" y1="1" x2="15" y2="4"></line>
+                    <line x1="9" y1="20" x2="9" y2="23"></line>
+                    <line x1="15" y1="20" x2="15" y2="23"></line>
+                    <line x1="20" y1="9" x2="23" y2="9"></line>
+                    <line x1="20" y1="14" x2="23" y2="14"></line>
+                    <line x1="1" y1="9" x2="4" y2="9"></line>
+                    <line x1="1" y1="14" x2="4" y2="14"></line>
+                  </svg>
+                )}
+                {item.icon === 'trending-up' && (
+                  <svg class="w-6 h-6" style={`color: ${colors.purple};`} viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                    <polyline points="17 6 23 6 23 12"></polyline>
+                  </svg>
+                )}
+              </div>
+              <h3 
+                class="text-lg font-bold mb-2"
+                style={`color: ${colors.midnight};`}
+              >
+                {item.title}
+              </h3>
+              <p class="text-base text-gray-600 leading-relaxed">
+                {item.desc}
+              </p>
+            </div>
+          ))}
+        </div>
+        
+      </div>
+    </section>
+
+    <!-- ============================================
+         FINANCING SOLUTIONS SECTION
+         - 5 product cards + "Get Recommendations" card
+         - DSCR featured with purple border
+         ============================================ -->
+    <section class="w-full py-14 lg:py-20 px-4 lg:px-8" style={`background-color: ${colors.gray50};`}>
+      <div class="max-w-6xl mx-auto">
+        
+        <h2 
+          class="text-2xl lg:text-3xl font-bold mb-10 text-center"
+          style={`color: ${colors.midnight};`}
+        >
+          Financing Solutions
+        </h2>
+        
+        <!-- Products Grid - 3 columns on desktop -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          {products.map((product) => (
+            <div 
+              class={`p-5 rounded-xl bg-white ${product.featured ? 'border-2' : 'border border-gray-200'}`}
+              style={product.featured ? `border-color: ${colors.purple};` : ''}
+            >
+              <!-- Glass-containerized emoji -->
+              <div class="icon-glass w-12 h-12 rounded-lg flex items-center justify-center mb-3">
+                <span class="text-2xl">{product.icon}</span>
+              </div>
+              <h3 
+                class="text-lg font-bold"
+                style={`color: ${colors.midnight};`}
+              >
+                {product.name}
+              </h3>
+              <p 
+                class="text-base font-medium"
+                style={`color: ${colors.purple};`}
+              >
+                {product.range}
+              </p>
+            </div>
+          ))}
+          
+          <!-- Get Recommendations Card -->
+          <div 
+            class="p-5 rounded-xl flex flex-col items-center justify-center text-center"
+            style={`background-color: ${colors.purpleBgLight};`}
+          >
+            <p class="text-base text-gray-600 mb-3">Not sure which fits?</p>
+            <a 
+              href="/capital/contact"
+              class="px-5 py-2.5 rounded-lg text-base font-semibold text-white transition-opacity hover:opacity-90"
+              style={`background-color: ${colors.purple};`}
+            >
+              Get Recommendations
+            </a>
+          </div>
+        </div>
+        
+      </div>
+    </section>
+
+    <!-- ============================================
+         INVESTOR SUCCESS FLYWHEEL SECTION
+         - 3 stages with division brand colors
+         - Circular number badges
+         ============================================ -->
+    <section class="w-full py-14 lg:py-20 px-4 lg:px-8 bg-white">
+      <div class="max-w-5xl mx-auto">
+        
+        <h2 
+          class="text-2xl lg:text-3xl font-bold mb-10 text-center"
+          style={`color: ${colors.midnight};`}
+        >
+          The Investor Success Flywheel™
+        </h2>
+        
+        <!-- Flywheel Stages -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {flywheelStages.map((stage) => (
+            <div 
+              class={`text-center p-6 rounded-xl border-2 relative ${stage.current ? '' : 'bg-white'}`}
+              style={`border-color: ${stage.color}; ${stage.current ? `background-color: ${stage.color}08;` : ''}`}
+            >
+              {/* "YOU ARE HERE" Badge */}
+              {stage.current && (
+                <div 
+                  class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full text-xs font-bold text-white whitespace-nowrap"
+                  style={`background-color: ${stage.color};`}
+                >
+                  YOU ARE HERE
+                </div>
+              )}
+              
+              {/* Circular Number Badge */}
+              <div 
+                class="w-12 h-12 rounded-full mx-auto mb-3 flex items-center justify-center text-white text-lg font-bold"
+                style={`background-color: ${stage.color};`}
+              >
+                {stage.num}
+              </div>
+              
+              <h3 
+                class="text-lg font-bold mb-1"
+                style={`color: ${stage.color};`}
+              >
+                {stage.name}
+              </h3>
+              <p class="text-base text-gray-600">
+                {stage.desc}
+              </p>
+            </div>
+          ))}
+        </div>
+        
+      </div>
+    </section>
+
+    <!-- ============================================
+         CTA SECTION
+         - Purple → Dark Navy gradient (ends dark)
+         - 3 pathway cards
+         ============================================ -->
+    <section 
+      class="w-full py-14 lg:py-20 px-4 lg:px-8"
+      style={`background: linear-gradient(135deg, ${colors.purple} 0%, ${colors.midnight} 100%);`}
+    >
+      <div class="max-w-4xl mx-auto text-center">
+        
+        <h2 class="text-2xl lg:text-3xl font-bold text-white mb-8">
+          Start Your Journey (24/7 Access)
+        </h2>
+        
+        <!-- CTA Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
+          
+          <!-- Schedule Consultation (Glass) -->
+          <div class="p-5 rounded-xl text-center bg-white/10 border border-white/20">
+            <div class="icon-glass-light w-14 h-14 rounded-lg flex items-center justify-center mb-3 mx-auto">
+              <span class="text-2xl">📅</span>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-3">Schedule Consultation</h3>
+            <a 
+              href="/capital/contact?type=consultation"
+              class="block w-full py-3 rounded-lg text-base font-semibold text-white transition-opacity hover:opacity-90"
+              style={`background-color: ${colors.purple};`}
+            >
+              Schedule
+            </a>
+          </div>
+          
+          <!-- Begin Application (Solid White) -->
+          <div class="p-5 rounded-xl text-center bg-white">
+            <div class="icon-glass w-14 h-14 rounded-lg flex items-center justify-center mb-3 mx-auto">
+              <span class="text-2xl">🚀</span>
+            </div>
+            <h3 
+              class="text-lg font-bold mb-3"
+              style={`color: ${colors.midnight};`}
+            >
+              Begin Application
+            </h3>
+            <a 
+              href="/capital/contact?type=prequalify"
+              class="block w-full py-3 rounded-lg text-base font-semibold text-white transition-opacity hover:opacity-90"
+              style={`background-color: ${colors.purple};`}
+            >
+              Start Now
+            </a>
+          </div>
+          
+          <!-- Credit Sculpt Graduate (Green Border) -->
+          <div 
+            class="p-5 rounded-xl text-center border-2"
+            style={`border-color: ${colors.creditGreen}; background-color: ${colors.creditGreen}10;`}
+          >
+            <div class="icon-glass-green w-14 h-14 rounded-lg flex items-center justify-center mb-3 mx-auto">
+              <span class="text-2xl">🎓</span>
+            </div>
+            <h3 class="text-lg font-bold text-white mb-3">Credit Sculpt Graduate?</h3>
+            <a 
+              href="/capital/contact?type=graduate"
+              class="block w-full py-3 rounded-lg text-base font-semibold text-white transition-opacity hover:opacity-90"
+              style={`background-color: ${colors.creditGreen};`}
+            >
+              Graduates
+            </a>
+          </div>
+          
+        </div>
+        
+      </div>
+    </section>
+
+    <!-- ============================================
+         FAQ SECTION
+         - 4 questions with arrow toggles
+         ============================================ -->
+    <section class="w-full py-14 lg:py-20 px-4 lg:px-8 bg-white">
+      <div class="max-w-3xl mx-auto">
+        
+        <h2 
+          class="text-2xl lg:text-3xl font-bold mb-8 text-center"
+          style={`color: ${colors.midnight};`}
+        >
+          Frequently Asked Questions
+        </h2>
+        
+        <div class="space-y-3">
+          {faqItems.map((faq, i) => (
+            <details 
+              class="group border rounded-xl overflow-hidden faq-item"
+              style={`border-color: ${colors.gray200};`}
+            >
+              <summary 
+                class="w-full px-5 py-4 flex items-center justify-between text-left cursor-pointer list-none bg-white group-open:bg-purple-light"
+              >
+                <span 
+                  class="font-semibold text-base group-open:text-purple"
+                  style={`color: ${colors.midnight};`}
+                >
+                  {faq.q}
+                </span>
+                <span 
+                  class="text-lg transition-transform group-open:rotate-180"
+                  style={`color: ${colors.purple};`}
+                >
+                  ▼
+                </span>
+              </summary>
+              <div class="px-5 py-4 bg-white border-t text-base text-gray-600 leading-relaxed" style={`border-color: ${colors.gray200};`}>
+                {faq.a}
+              </div>
+            </details>
+          ))}
+        </div>
+        
+      </div>
+    </section>
+
+    <!-- ============================================
+         LEGAL DISCLAIMER (from wireframe footer)
+         ============================================ -->
+    <section class="w-full py-6 px-4 lg:px-8" style={`background-color: ${colors.gray50};`}>
+      <div class="max-w-4xl mx-auto">
+        <p class="text-sm text-gray-500 text-center leading-relaxed">
+          GrowthWave Capital provides consulting services and lender placement. We are not a direct lender. 
+          Financing subject to lender approval and qualification. No guarantee of approval, specific amounts, or exact terms.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <Footer brand="capital" />
+</BaseLayout>
+
+<style>
+  /* Glass-morphism icon container - Purple (default) */
+  .icon-glass {
+    background: linear-gradient(135deg, rgba(124,58,237,0.15) 0%, rgba(124,58,237,0.05) 100%);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(124,58,237,0.2);
+  }
+  
+  /* Glass-morphism icon container - Light (for dark backgrounds) */
+  .icon-glass-light {
+    background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.05) 100%);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255,255,255,0.2);
+  }
+  
+  /* Glass-morphism icon container - Green (for Credit Sculpt) */
+  .icon-glass-green {
+    background: linear-gradient(135deg, rgba(16,185,129,0.2) 0%, rgba(16,185,129,0.05) 100%);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(16,185,129,0.3);
+  }
+  
+  /* FAQ styling */
+  .faq-item[open] {
+    border-color: #7C3AED;
+  }
+  
+  .faq-item[open] summary {
+    background-color: rgba(124,58,237,0.08);
+  }
+  
+  .faq-item[open] summary span:first-child {
+    color: #7C3AED;
+  }
+  
+  /* Remove default details marker */
+  details summary::-webkit-details-marker {
+    display: none;
+  }
+  
+  details summary::marker {
+    display: none;
+  }
+</style>

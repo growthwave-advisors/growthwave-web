@@ -1,0 +1,751 @@
+---
+/**
+ * GrowthWave Capital - Financing Solutions Page
+ * ==============================================
+ * Updated: January 2026
+ * 
+ * BUILT to match approved wireframe (capital-wireframe-viewer-v2.jsx FinancingSolutionsPage)
+ * 
+ * Design System Compliance:
+ * - Two-layer "Fixed Island" pattern on all sections
+ * - Typography stops at lg breakpoint (no xl: or 2xl:)
+ * - Responsive padding: px-4 lg:px-8
+ * - Body content: max-w-7xl (1280px)
+ * - Royal Purple #7C3AED accent color
+ * - Styled icons with glass-morphism containers
+ * - DSCR Loans featured with purple accent treatment
+ * 
+ * Key Features:
+ * - 5 product cards with expandable details (native <details>)
+ * - "Not sure which product?" recommendation CTA card
+ * - 5-step process timeline
+ * - Qualification comparison table (responsive: table desktop, cards mobile)
+ * - "Don't Self-Disqualify" callout box
+ * 
+ * @see capital-wireframe-viewer-v2.jsx (approved wireframe - FinancingSolutionsPage lines 534-702)
+ * @see GrowthWave_Capital_Financing_Solutions_FINAL.md (copy source - wireframe takes precedence)
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import Button from '@components/Button.astro';
+
+// Brand Colors - Capital uses Royal Purple accent
+const colors = {
+  purple: '#7C3AED',
+  purpleLight: '#8B5CF6',
+  purpleBg: 'rgba(124,58,237,0.15)',
+  purpleBgLight: 'rgba(124,58,237,0.08)',
+  ocean: '#265077',
+  midnight: '#022140',
+  gray50: '#f9fafb',
+  gray100: '#f3f4f6',
+  gray200: '#e5e7eb',
+  gray300: '#d1d5db',
+  gray400: '#9ca3af',
+  gray500: '#6b7280',
+  gray600: '#4b5563',
+  gray700: '#374151',
+  gray800: '#1f2937',
+  // Division colors
+  creditGreen: '#10B981',
+  propertiesCoral: '#FF6B4A',
+};
+
+// Financing Products - 5 products from wireframe
+const products = [
+  { 
+    icon: '💳', 
+    name: 'Business Credit Cards', 
+    range: '$5K–$50K+', 
+    time: '1-3 weeks', 
+    desc: 'Unsecured credit for operational expenses, renovations, and cash flow management. Often includes 0% intro APR periods.',
+    featured: false,
+    bestFor: [
+      'Operational expenses between deals or during renovations',
+      'Renovation materials with 0% intro APR (12-21 months typical)',
+      'Building business credit separate from personal credit',
+      'Earning rewards on business spending at scale',
+    ],
+    typicalTerms: {
+      limits: '$5K-$25K start, up to $50K+ over time',
+      rates: 'Variable 14-24% (avoid by paying in full)',
+      introAPR: '0% for 12-21 months on purchases',
+      annualFees: '$0-$495 depending on benefits',
+    },
+    requirements: {
+      credit: '640+ minimum, 680+ for best terms',
+      revenue: 'Helpful but not always required',
+      timeInBusiness: 'Some cards available for new businesses',
+      personalGuarantee: 'Required (standard)',
+    },
+  },
+  { 
+    icon: '💰', 
+    name: 'Lines of Credit', 
+    range: '$10K–$250K', 
+    time: '2-4 weeks', 
+    desc: 'Revolving credit you draw as needed. Pay interest only on what you use—the emergency fund wealthy investors maintain.',
+    featured: false,
+    bestFor: [
+      'Flexible capital access for unpredictable opportunities',
+      'Operational cash flow during slower periods',
+      'Emergency reserves without touching long-term capital',
+      'Bridging gaps between property cash flow and expenses',
+    ],
+    typicalTerms: {
+      limits: '$10K-$100K typical, up to $250K for established',
+      rates: '8-20% APR depending on profile',
+      drawPeriod: '1-5 years to draw funds',
+      repayment: 'Interest-only or minimum payment options',
+    },
+    requirements: {
+      credit: '640+ minimum, 680+ for better terms',
+      revenue: '$50K+ annual preferred',
+      timeInBusiness: '2+ years typically required',
+      businessCashFlow: 'Must demonstrate ability to service debt',
+    },
+  },
+  { 
+    icon: '🏠', 
+    name: 'DSCR Loans', 
+    range: '$75K–$5M+', 
+    time: '4-6 weeks', 
+    desc: 'Underwritten on property cash flow, NOT employment status. Finally—lending designed for how investors actually earn.',
+    featured: true,
+    bestFor: [
+      'Full-time investors without W-2 income',
+      'Acquiring rental properties with proven cash flow',
+      'Refinancing properties to pull out equity',
+      'Scaling beyond conventional loan limits (4-10 properties)',
+    ],
+    typicalTerms: {
+      amounts: '$75K-$5M+ (up to $20M+ for larger)',
+      rates: '6.75%-16% depending on DSCR, LTV, credit',
+      ltvPurchase: 'Up to 80% loan-to-value',
+      ltvRefi: 'Up to 75-80% cash-out refinance',
+      minDscr: '1.0-1.1 (rent must cover mortgage)',
+    },
+    requirements: {
+      credit: '680+ for best terms, options down to 640',
+      propertyCashFlow: 'DSCR of 1.0+ required',
+      downPayment: '20-25% typical for purchases',
+      reserves: '6-12 months PITI in liquid reserves',
+      propertyType: '1-4 units standard, 5-20 units supported',
+    },
+  },
+  { 
+    icon: '🌉', 
+    name: 'Bridge Financing', 
+    range: '$50K–$500K', 
+    time: '7-14 days', 
+    desc: 'Fast closing for time-sensitive acquisitions. Higher rates, but closes in days. Speed creates competitive advantage.',
+    featured: false,
+    bestFor: [
+      'Fast closings on competitive deals',
+      'Properties needing renovation before permanent financing',
+      'Value-add projects where you\'ll refinance after improvements',
+      'Situations where speed creates competitive advantage',
+    ],
+    typicalTerms: {
+      amounts: '$50K-$500K typical for smaller multifamily',
+      rates: '9-15% typical (higher than permanent)',
+      ltc: 'Up to 85% loan-to-cost including rehab',
+      arv: '70-75% after-repair-value',
+      loanTerms: '6-24 months (short-term by design)',
+    },
+    requirements: {
+      credit: '640+ minimum, 680+ for best terms',
+      experience: 'Works with first-time and experienced',
+      exitStrategy: 'Must demonstrate clear plan (refi or sale)',
+      downPayment: '15-30% of total project cost',
+    },
+  },
+  { 
+    icon: '📋', 
+    name: 'Term Loans', 
+    range: '$25K–$500K', 
+    time: '2-4 weeks', 
+    desc: 'Fixed monthly payments for renovation projects, equipment, or expansion. Predictable structure with clear payoff timeline.',
+    featured: false,
+    bestFor: [
+      'Renovation projects with known scope and budget',
+      'Equipment purchases (trucks, tools, technology)',
+      'Business expansion or new market entry',
+      'Consolidating higher-interest debt',
+    ],
+    typicalTerms: {
+      amounts: '$25K-$500K',
+      rates: '8-18% fixed APR',
+      terms: '1-5 year repayment periods',
+      payments: 'Fixed monthly payments',
+      prepayment: 'Often allowed, some with penalties',
+    },
+    requirements: {
+      credit: '640+ minimum, 680+ for best rates',
+      revenue: '$100K+ annual typically required',
+      timeInBusiness: '2+ years preferred',
+      collateral: 'May be required for larger amounts',
+    },
+  },
+];
+
+// Process Steps - 5 steps from wireframe
+const processSteps = [
+  { 
+    num: 1, 
+    title: 'Free Consultation', 
+    desc: 'Strategic discussion about your goals, current profile, and timeline. We assess your situation and identify the best financing paths.' 
+  },
+  { 
+    num: 2, 
+    title: 'Strategy & Preparation', 
+    desc: 'We analyze your complete profile and create a customized financing strategy. Document checklist provided with clear next steps.' 
+  },
+  { 
+    num: 3, 
+    title: 'Lender Placement', 
+    desc: 'Your application is positioned with lenders most likely to approve based on your specific profile. We handle coordination and negotiation.' 
+  },
+  { 
+    num: 4, 
+    title: 'Approval & Closing', 
+    desc: 'Real-time status updates through our portal. We guide you through underwriting, conditions, and closing for smooth execution.' 
+  },
+  { 
+    num: 5, 
+    title: 'Ongoing Relationship', 
+    desc: 'Your financing needs evolve. We stay connected for future products, limit increases, and strategic capital planning as you scale.' 
+  },
+];
+
+// Qualification Table Data - Desktop version
+const qualificationTable = [
+  { icon: '💳', name: 'Credit Cards', credit: '640+', revenue: 'Helpful', time: '1-3 weeks', featured: false, fast: false },
+  { icon: '💰', name: 'Lines of Credit', credit: '640+', revenue: '$50K+', time: '2-4 weeks', featured: false, fast: false },
+  { icon: '🏠', name: 'DSCR Loans', credit: '680+', revenue: 'DSCR 1.0+', time: '4-6 weeks', featured: true, fast: false },
+  { icon: '🌉', name: 'Bridge', credit: '640+', revenue: 'Exit strategy', time: '7-14 days', featured: false, fast: true },
+  { icon: '📋', name: 'Term Loans', credit: '640+', revenue: '$100K+', time: '2-4 weeks', featured: false, fast: false },
+];
+---
+
+<BaseLayout
+  brand="capital"
+  title="Financing Solutions | Business Capital for Real Estate Investors"
+  description="Business credit cards, lines of credit, DSCR loans, and bridge financing for real estate investors and entrepreneurs. No W-2 income verification required."
+>
+  <Header brand="capital" activePage="Financing Solutions" />
+
+  <main>
+    <!-- ============================================
+         HERO SECTION
+         - Gradient background (full-width)
+         - Centered content
+         - "Our Products" badge
+         ============================================ -->
+    <section 
+      class="w-full"
+      style={`background: linear-gradient(135deg, ${colors.midnight} 0%, ${colors.ocean} 100%);`}
+    >
+      <div class="max-w-5xl mx-auto px-4 lg:px-8 py-14 lg:py-20 text-center">
+        
+        <!-- Badge -->
+        <div 
+          class="inline-block px-5 py-2 rounded-full text-base font-semibold mb-6 border"
+          style={`background-color: rgba(124,58,237,0.25); color: white; border-color: rgba(124,58,237,0.5);`}
+        >
+          Our Products
+        </div>
+        
+        <!-- Headline -->
+        <h1 class="text-3xl lg:text-4xl font-bold text-white mb-5">
+          Financing Built for How You <span style={`color: ${colors.purple};`}>Generate Wealth</span>
+        </h1>
+        
+        <!-- Subheadline -->
+        <p class="text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed">
+          Products designed for real estate investors and business owners—not W-2 employees. 
+          Technology-enabled process, realistic timelines.
+        </p>
+        
+      </div>
+    </section>
+
+    <!-- ============================================
+         PRODUCTS SECTION
+         - White background
+         - 2-column grid of product cards
+         - Each card is expandable via <details>
+         - 6th card is "Not sure?" CTA
+         ============================================ -->
+    <section class="w-full py-14 lg:py-20 px-4 lg:px-8 bg-white">
+      <div class="max-w-6xl mx-auto">
+        
+        <h2 
+          class="text-2xl lg:text-3xl font-bold mb-10 text-center"
+          style={`color: ${colors.midnight};`}
+        >
+          Financing Products
+        </h2>
+        
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+          
+          {products.map((p, i) => (
+            <details 
+              class={`product-card rounded-xl border-2 overflow-hidden transition-all ${p.featured ? 'featured' : ''}`}
+              style={`border-color: ${colors.gray200};`}
+            >
+              <summary class="cursor-pointer list-none">
+                <div 
+                  class="p-5"
+                  style={p.featured ? `background-color: ${colors.purple}05;` : 'background-color: white;'}
+                >
+                  <!-- Header Row -->
+                  <div class="flex items-center justify-between mb-3">
+                    <div class="flex items-center gap-3">
+                      <!-- Icon -->
+                      <div class="icon-glass w-12 h-12 rounded-lg flex items-center justify-center">
+                        <span class="text-2xl">{p.icon}</span>
+                      </div>
+                      <!-- Name & Range -->
+                      <div>
+                        <h3 
+                          class="text-lg font-bold"
+                          style={`color: ${p.featured ? colors.purple : colors.midnight};`}
+                        >
+                          {p.name}
+                        </h3>
+                        <p class="text-base text-gray-500">{p.range}</p>
+                      </div>
+                    </div>
+                    <!-- Timeline Badge -->
+                    <div 
+                      class="px-3 py-1.5 rounded-full text-sm font-medium"
+                      style={`background-color: ${colors.purple}10; color: ${colors.purple};`}
+                    >
+                      {p.time}
+                    </div>
+                  </div>
+                  
+                  <!-- Description -->
+                  <p class="text-base text-gray-600 leading-relaxed">{p.desc}</p>
+                </div>
+                
+                <!-- Toggle Indicator -->
+                <div class="px-5 py-3 border-t border-gray-100 text-center toggle-indicator">
+                  <span 
+                    class="text-base font-medium inline-flex items-center gap-1"
+                    style={`color: ${colors.purple};`}
+                  >
+                    <span class="toggle-text">▼ View Details</span>
+                  </span>
+                </div>
+              </summary>
+              
+              <!-- Expanded Content -->
+              <div class="px-5 pb-5 border-t border-gray-100 pt-4 expanded-content">
+                
+                <!-- Best For -->
+                <div class="mb-4">
+                  <h4 class="font-bold text-base mb-2" style={`color: ${colors.midnight};`}>Best For:</h4>
+                  <ul class="space-y-1">
+                    {p.bestFor.map((item) => (
+                      <li class="text-base text-gray-600 flex items-start gap-2">
+                        <span style={`color: ${colors.purple};`}>•</span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+                
+                <!-- Typical Terms -->
+                <div class="mb-4">
+                  <h4 class="font-bold text-base mb-2" style={`color: ${colors.midnight};`}>Typical Terms:</h4>
+                  <div class="grid grid-cols-2 gap-2 text-sm">
+                    {Object.entries(p.typicalTerms).map(([key, value]) => (
+                      <div class="bg-gray-50 rounded-lg p-2">
+                        <span class="text-gray-500 capitalize">{key.replace(/([A-Z])/g, ' $1').trim()}:</span>
+                        <span class="font-medium text-gray-700 ml-1">{value}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                
+                <!-- Requirements -->
+                <div class="mb-4">
+                  <h4 class="font-bold text-base mb-2" style={`color: ${colors.midnight};`}>Qualification Requirements:</h4>
+                  <div class="grid grid-cols-2 gap-2 text-sm">
+                    {Object.entries(p.requirements).map(([key, value]) => (
+                      <div class="flex items-start gap-1">
+                        <span style={`color: ${colors.creditGreen};`}>✓</span>
+                        <span class="text-gray-600">{value}</span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+                
+                <!-- Learn More CTA -->
+                <a 
+                  href={`/capital/contact?type=${p.name.toLowerCase().replace(/\s+/g, '')}`}
+                  class="inline-block px-5 py-2.5 rounded-lg text-base font-semibold text-white transition-opacity hover:opacity-90"
+                  style={`background-color: ${colors.purple};`}
+                >
+                  Learn More About {p.name}
+                </a>
+                
+              </div>
+            </details>
+          ))}
+          
+          <!-- "Not Sure?" Recommendation Card -->
+          <div 
+            class="rounded-xl p-6 flex flex-col items-center justify-center text-center"
+            style={`background-color: ${colors.purple}08; border: 2px dashed ${colors.purple}40;`}
+          >
+            <div class="icon-glass w-14 h-14 rounded-lg flex items-center justify-center mb-4">
+              <span class="text-3xl">🤔</span>
+            </div>
+            <p class="text-base text-gray-600 mb-4">Not sure which product fits your situation?</p>
+            <a 
+              href="/capital/contact?type=consultation"
+              class="px-6 py-3 rounded-lg text-base font-semibold text-white transition-opacity hover:opacity-90"
+              style={`background-color: ${colors.purple};`}
+            >
+              Get Recommendations
+            </a>
+            <p class="text-sm text-gray-500 mt-3">Free consultation • No commitment</p>
+          </div>
+          
+        </div>
+        
+      </div>
+    </section>
+
+    <!-- ============================================
+         PROCESS SECTION
+         - Gray background
+         - Vertical timeline with numbered steps
+         - Purple connecting line
+         ============================================ -->
+    <section 
+      class="w-full py-14 lg:py-20 px-4 lg:px-8"
+      style={`background-color: ${colors.gray50};`}
+    >
+      <div class="max-w-4xl mx-auto">
+        
+        <h2 
+          class="text-2xl lg:text-3xl font-bold mb-10 text-center"
+          style={`color: ${colors.midnight};`}
+        >
+          Our Process
+        </h2>
+        
+        <!-- Timeline Container -->
+        <div class="bg-white rounded-xl p-6 lg:p-8 shadow-sm">
+          
+          {processSteps.map((step, i) => (
+            <div class="flex gap-4 pb-5">
+              <!-- Number Column with Connecting Line -->
+              <div class="flex flex-col items-center">
+                <div 
+                  class="w-10 h-10 rounded-full flex items-center justify-center text-white text-base font-bold flex-shrink-0"
+                  style={`background-color: ${colors.purple};`}
+                >
+                  {step.num}
+                </div>
+                {i < processSteps.length - 1 && (
+                  <div 
+                    class="w-0.5 flex-1 my-2"
+                    style={`background-color: ${colors.purple}30;`}
+                  />
+                )}
+              </div>
+              
+              <!-- Content Column -->
+              <div class="pt-2 pb-4">
+                <h4 class="font-bold text-base mb-1" style={`color: ${colors.midnight};`}>
+                  {step.title}
+                </h4>
+                <p class="text-base text-gray-600 leading-relaxed">
+                  {step.desc}
+                </p>
+              </div>
+            </div>
+          ))}
+          
+        </div>
+        
+        <!-- CTA Button -->
+        <div class="text-center mt-8">
+          <a 
+            href="/capital/contact?type=consultation"
+            class="inline-block px-8 py-4 rounded-lg font-semibold text-white text-base transition-opacity hover:opacity-90"
+            style={`background-color: ${colors.purple};`}
+          >
+            Schedule Free Consultation (24/7)
+          </a>
+        </div>
+        
+      </div>
+    </section>
+
+    <!-- ============================================
+         QUALIFICATION TABLE SECTION
+         - White background
+         - Desktop: Table view
+         - Mobile: Stacked cards
+         - "Don't Self-Disqualify" callout box
+         ============================================ -->
+    <section class="w-full py-14 lg:py-20 px-4 lg:px-8 bg-white">
+      <div class="max-w-6xl mx-auto">
+        
+        <h2 
+          class="text-2xl lg:text-3xl font-bold mb-8 text-center"
+          style={`color: ${colors.midnight};`}
+        >
+          Qualification at a Glance
+        </h2>
+        
+        <!-- Mobile: Stacked Cards -->
+        <div class="lg:hidden space-y-4">
+          {qualificationTable.map((row) => (
+            <div 
+              class={`p-4 rounded-xl border-2 ${row.featured ? '' : 'border-gray-200'}`}
+              style={row.featured ? `border-color: ${colors.purple}; background-color: ${colors.purple}05;` : ''}
+            >
+              <div class="flex items-center gap-2 mb-3">
+                <span class="text-xl">{row.icon}</span>
+                <h4 
+                  class="font-bold text-base"
+                  style={`color: ${row.featured ? colors.purple : colors.midnight};`}
+                >
+                  {row.name}
+                </h4>
+              </div>
+              <div class="grid grid-cols-3 gap-2 text-sm">
+                <div>
+                  <span class="text-gray-500">Credit:</span>
+                  <span class="font-medium ml-1">{row.credit}</span>
+                </div>
+                <div>
+                  <span class="text-gray-500">Revenue:</span>
+                  <span class="font-medium ml-1">{row.revenue}</span>
+                </div>
+                <div>
+                  <span class="text-gray-500">Timeline:</span>
+                  <span 
+                    class="font-medium ml-1"
+                    style={`color: ${row.fast ? colors.creditGreen : colors.purple};`}
+                  >
+                    {row.time}
+                  </span>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        
+        <!-- Desktop: Table -->
+        <div class="hidden lg:block overflow-x-auto">
+          <table class="w-full text-base">
+            <thead>
+              <tr style={`background-color: ${colors.midnight};`}>
+                <th class="px-4 py-3 text-left text-white font-semibold">Product</th>
+                <th class="px-4 py-3 text-center text-white font-semibold">Credit Score</th>
+                <th class="px-4 py-3 text-center text-white font-semibold">Revenue/Other</th>
+                <th class="px-4 py-3 text-center text-white font-semibold">Timeline</th>
+              </tr>
+            </thead>
+            <tbody>
+              {qualificationTable.map((row) => (
+                <tr 
+                  class="border-b border-gray-200"
+                  style={row.featured ? `background-color: ${colors.purple}05;` : ''}
+                >
+                  <td 
+                    class="px-4 py-3 font-medium"
+                    style={row.featured ? `color: ${colors.purple};` : ''}
+                  >
+                    {row.icon} {row.name}
+                  </td>
+                  <td class="px-4 py-3 text-center text-gray-600">{row.credit}</td>
+                  <td class="px-4 py-3 text-center text-gray-600">{row.revenue}</td>
+                  <td 
+                    class="px-4 py-3 text-center font-medium"
+                    style={`color: ${row.fast ? colors.creditGreen : colors.purple};`}
+                  >
+                    {row.time}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        
+        <!-- "Don't Self-Disqualify" Callout Box -->
+        <div 
+          class="mt-6 p-5 rounded-xl border-2 flex items-center gap-4"
+          style={`border-color: ${colors.purple}; background-color: ${colors.purple}05;`}
+        >
+          <span class="text-3xl flex-shrink-0">💡</span>
+          <div>
+            <h4 class="font-bold text-base" style={`color: ${colors.purple};`}>
+              Don't Self-Disqualify
+            </h4>
+            <p class="text-base text-gray-600">
+              Close on requirements? Schedule a consultation. Different lenders have different criteria—we can often find options you wouldn't discover on your own.
+            </p>
+          </div>
+        </div>
+        
+      </div>
+    </section>
+
+    <!-- ============================================
+         CTA SECTION
+         - Purple → Dark Navy gradient
+         - Two CTA buttons
+         ============================================ -->
+    <section 
+      class="w-full py-14 lg:py-20 px-4 lg:px-8"
+      style={`background: linear-gradient(135deg, ${colors.purple} 0%, ${colors.midnight} 100%);`}
+    >
+      <div class="max-w-4xl mx-auto text-center">
+        
+        <h2 class="text-2xl lg:text-3xl font-bold text-white mb-8">
+          Ready to Access Business Capital?
+        </h2>
+        
+        <div class="flex flex-col sm:flex-row justify-center gap-4">
+          <a 
+            href="/capital/contact?type=consultation"
+            class="px-8 py-4 rounded-lg font-semibold text-white text-base border-2 border-white transition-colors hover:bg-white/10 text-center"
+          >
+            Schedule Consultation
+          </a>
+          <a 
+            href="/capital/contact?type=prequalify"
+            class="px-8 py-4 rounded-lg font-semibold bg-white text-base transition-opacity hover:opacity-90 text-center"
+            style={`color: ${colors.purple};`}
+          >
+            Start Pre-Qualification
+          </a>
+        </div>
+        
+      </div>
+    </section>
+
+    <!-- ============================================
+         LEGAL DISCLAIMER
+         - Light gray background
+         - Centered text
+         ============================================ -->
+    <section class="w-full py-6 px-4 lg:px-8" style={`background-color: ${colors.gray50};`}>
+      <div class="max-w-4xl mx-auto">
+        <p class="text-sm text-gray-500 text-center leading-relaxed">
+          GrowthWave Capital provides consulting services and lender placement. We are not a direct lender. 
+          Financing subject to lender approval and qualification. No guarantee of approval, specific amounts, or exact terms. 
+          Timelines are typical estimates and may vary. Credit and capital carry risk—use strategically as tools for wealth building, not consumption.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <Footer brand="capital" />
+</BaseLayout>
+
+<style>
+  /* ============================================
+     PRODUCT CARD STYLES
+     - Expandable details/summary
+     - Featured card treatment (DSCR)
+     - Toggle indicator animation
+     ============================================ */
+  
+  /* Glass-morphism icon container - Purple (default) */
+  .icon-glass {
+    background: linear-gradient(135deg, rgba(124,58,237,0.15) 0%, rgba(124,58,237,0.05) 100%);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(124,58,237,0.2);
+  }
+  
+  /* Remove default details marker */
+  details summary::-webkit-details-marker {
+    display: none;
+  }
+  
+  details summary::marker {
+    display: none;
+  }
+  
+  /* Product card base state */
+  .product-card {
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+  }
+  
+  .product-card:hover {
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  }
+  
+  /* Product card open state */
+  .product-card[open] {
+    border-color: #7C3AED;
+    box-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+  }
+  
+  .product-card[open] > summary > div:first-child {
+    background-color: rgba(124,58,237,0.05);
+  }
+  
+  /* Featured card (DSCR) always has purple tint */
+  .product-card.featured {
+    border-color: #7C3AED;
+  }
+  
+  .product-card.featured > summary > div:first-child {
+    background-color: rgba(124,58,237,0.05);
+  }
+  
+  /* Toggle indicator rotation */
+  .product-card .toggle-text {
+    transition: transform 0.2s ease;
+  }
+  
+  .product-card[open] .toggle-text::before {
+    content: '▲ Show Less';
+  }
+  
+  .product-card[open] .toggle-text {
+    display: none;
+  }
+  
+  .product-card[open] .toggle-indicator span::after {
+    content: '▲ Show Less';
+  }
+  
+  /* Table row hover */
+  table tbody tr {
+    transition: background-color 0.15s ease;
+  }
+  
+  table tbody tr:hover {
+    background-color: rgba(124,58,237,0.03);
+  }
+  
+  /* Expanded content animation */
+  .expanded-content {
+    animation: slideDown 0.2s ease-out;
+  }
+  
+  @keyframes slideDown {
+    from {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+</style>
