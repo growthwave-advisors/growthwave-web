@@ -1,43 +1,22 @@
 /**
- * @fileoverview Type Definitions Index
- * @description Re-exports all type definitions for convenient importing.
- * 
- * @example
- * ```typescript
- * import type { BrandId, BrandConfig, ButtonProps } from '@types';
- * ```
+ * Type Re-exports
+ * ================
+ * Clean import interface for all type definitions.
+ * Usage: import type { BrandId, BrandConfig } from '@types';
  */
 
 export type {
-  // Core types
   BrandId,
-  HexColor,
-  
-  // Navigation
+  DivisionId,
+  BrandColors,
+  BrandLogos,
   NavItem,
-  
-  // Assets
-  LogoAssets,
-  FaviconAssets,
-  
-  // Colors
-  BrandAccentColors,
-  CoreColors,
-  DivisionColors,
-  
-  // SEO
-  SeoDefaults,
-  
-  // Configuration
+  BrandSEO,
+  DivisionLink,
+  BrandContact,
   BrandConfig,
-  BrandConfigMap,
-  
-  // Component Props
-  BrandAwareProps,
-  HeaderProps,
-  FooterProps,
+  BrandsConfig,
+  DivisionLinks,
   ButtonVariant,
   ButtonSize,
-  ButtonProps,
-  BaseLayoutProps,
 } from './brand';

@@ -1,29 +1,18 @@
 /**
- * @fileoverview Global Styles for GrowthWave Multi-Domain Website
- * @description Tailwind CSS v4 configuration using CSS-native approach.
- * Includes brand color tokens, typography settings, and custom utilities.
- * 
- * Tailwind v4 Note: Configuration is done via CSS, not tailwind.config.mjs.
- * Custom properties defined here are available throughout the application.
- * 
- * @author GrowthWave Development Team
- * @version 1.0.0
+ * GrowthWave Global Styles
+ * ========================
+ * Tailwind CSS v4 with CSS custom properties for brand theming.
+ * Includes utility classes for approved UI effects.
  */
-
-/* =============================================================================
-   TAILWIND CSS V4 IMPORT
-   ============================================================================= */
 
 @import "tailwindcss";
 
-/* =============================================================================
-   CSS CUSTOM PROPERTIES (DESIGN TOKENS)
-   ============================================================================= */
+/* ============================================
+   CSS Custom Properties (Brand Colors)
+   ============================================ */
 
 :root {
-  /* -------------------------------------------------------------------------
-     Core Brand Colors
-     ------------------------------------------------------------------------- */
+  /* Core Colors */
   --color-ocean-blue: #265077;
   --color-dark-navy: #022140;
   --color-wave-cyan: #51A7F8;
@@ -31,229 +20,57 @@
   --color-light-gray: #718EA7;
   --color-white: #FFFFFF;
 
-  /* -------------------------------------------------------------------------
-     Division Accent Colors
-     ------------------------------------------------------------------------- */
+  /* Division Accents */
   --color-properties-coral: #FF6B4A;
   --color-capital-purple: #7C3AED;
   --color-credit-green: #10B981;
 
-  /* -------------------------------------------------------------------------
-     Opacity Variants (Pre-calculated for performance)
-     ------------------------------------------------------------------------- */
-
-  /* Properties Coral Variants */
-  --color-properties-coral-light: rgba(255, 107, 74, 0.15);
-  --color-properties-coral-medium: rgba(255, 107, 74, 0.30);
-  --color-properties-coral-glow: rgba(255, 107, 74, 0.80);
-
-  /* Capital Purple Variants */
-  --color-capital-purple-light: rgba(124, 58, 237, 0.15);
-  --color-capital-purple-medium: rgba(124, 58, 237, 0.30);
-  --color-capital-purple-glow: rgba(124, 58, 237, 0.80);
-
-  /* Credit Green Variants */
-  --color-credit-green-light: rgba(16, 185, 129, 0.15);
-  --color-credit-green-medium: rgba(16, 185, 129, 0.30);
-  --color-credit-green-glow: rgba(16, 185, 129, 0.80);
-
-  /* Ocean Blue Variants (for Advisors) */
-  --color-ocean-blue-light: rgba(38, 80, 119, 0.15);
-  --color-ocean-blue-medium: rgba(38, 80, 119, 0.30);
-  --color-ocean-blue-glow: rgba(38, 80, 119, 0.80);
-
-  /* -------------------------------------------------------------------------
-     Typography
-     ------------------------------------------------------------------------- */
-  --font-family-primary: 'Outfit', system-ui, -apple-system, sans-serif;
-
-  /* Font Weights */
-  --font-weight-light: 300;
-  --font-weight-regular: 400;
+  /* Typography */
+  --font-family: 'Outfit', system-ui, -apple-system, sans-serif;
+  --font-weight-normal: 400;
   --font-weight-medium: 500;
   --font-weight-semibold: 600;
   --font-weight-bold: 700;
 
-  /* Font Sizes (using clamp for fluid typography) */
-  --font-size-xs: 0.75rem;
-  /* 12px */
-  --font-size-sm: 0.875rem;
-  /* 14px */
-  --font-size-base: 1rem;
-  /* 16px */
-  --font-size-lg: 1.125rem;
-  /* 18px */
-  --font-size-xl: 1.25rem;
-  /* 20px */
-  --font-size-2xl: 1.5rem;
-  /* 24px */
-  --font-size-3xl: 1.875rem;
-  /* 30px */
-  --font-size-4xl: 2.25rem;
-  /* 36px */
-  --font-size-5xl: 3rem;
-  /* 48px */
-
-  /* Line Heights */
-  --line-height-tight: 1.25;
-  --line-height-snug: 1.375;
-  --line-height-normal: 1.5;
-  --line-height-relaxed: 1.625;
-
-  /* -------------------------------------------------------------------------
-     Spacing Scale
-     ------------------------------------------------------------------------- */
-  --spacing-xs: 0.25rem;
-  /* 4px */
-  --spacing-sm: 0.5rem;
-  /* 8px */
-  --spacing-md: 1rem;
-  /* 16px */
-  --spacing-lg: 1.5rem;
-  /* 24px */
-  --spacing-xl: 2rem;
-  /* 32px */
-  --spacing-2xl: 3rem;
-  /* 48px */
-  --spacing-3xl: 4rem;
-  /* 64px */
-  --spacing-4xl: 6rem;
-  /* 96px */
-
-  /* -------------------------------------------------------------------------
-     Animation Durations
-     ------------------------------------------------------------------------- */
-  --duration-fast: 150ms;
-  --duration-normal: 200ms;
-  --duration-slow: 300ms;
-  --duration-slower: 500ms;
-
-  /* -------------------------------------------------------------------------
-     Border Radius
-     ------------------------------------------------------------------------- */
-  --radius-sm: 0.25rem;
-  /* 4px */
-  --radius-md: 0.5rem;
-  /* 8px */
-  --radius-lg: 0.75rem;
-  /* 12px */
-  --radius-xl: 1rem;
-  /* 16px */
-  --radius-2xl: 1.5rem;
-  /* 24px */
-  --radius-full: 9999px;
-
-  /* -------------------------------------------------------------------------
-     Shadows
-     ------------------------------------------------------------------------- */
-  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
-  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
-  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
-  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
-
-  /* -------------------------------------------------------------------------
-     Layout
-     ------------------------------------------------------------------------- */
-  --max-width-content: 80rem;
-  /* 1280px */
-  --max-width-narrow: 48rem;
-  /* 768px */
-  --header-height: 4.5rem;
-  /* 72px */
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-base: 200ms ease;
+  --transition-slow: 300ms ease;
 }
 
-/* =============================================================================
-   BASE STYLES
-   ============================================================================= */
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
+/* ============================================
+   Base Styles
+   ============================================ */
 
 html {
-  font-family: var(--font-family-primary);
-  font-size: 16px;
-  line-height: var(--line-height-normal);
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  font-family: var(--font-family);
   scroll-behavior: smooth;
 }
 
 body {
-  margin: 0;
-  padding: 0;
   color: var(--color-neutral-gray);
   background-color: var(--color-white);
-  min-height: 100vh;
+  line-height: 1.6;
 }
 
-/* =============================================================================
-   TYPOGRAPHY BASE
-   ============================================================================= */
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: var(--font-family-primary);
-  font-weight: var(--font-weight-bold);
-  line-height: var(--line-height-tight);
-  color: var(--color-dark-navy);
-  margin: 0;
-}
-
-h1 {
-  font-size: var(--font-size-5xl);
-}
-
-h2 {
-  font-size: var(--font-size-4xl);
-}
-
-h3 {
-  font-size: var(--font-size-3xl);
-}
-
-h4 {
-  font-size: var(--font-size-2xl);
-}
-
-h5 {
-  font-size: var(--font-size-xl);
-}
-
-h6 {
-  font-size: var(--font-size-lg);
-}
-
-p {
-  margin: 0;
-  line-height: var(--line-height-relaxed);
-}
-
-a {
-  color: inherit;
-  text-decoration: none;
-}
-
-/* =============================================================================
-   CUSTOM UTILITY CLASSES
-   ============================================================================= */
+/* ============================================
+   Utility Classes - Navigation
+   ============================================ */
 
 /**
- * Navigation link with center-grow underline effect.
- * Apply to anchor tags in navigation menus.
+ * Center-grow underline effect for navigation links
+ * Usage: <a class="nav-link" data-active="true|false">Link</a>
+ * The underline expands from center on hover
  */
 .nav-link {
   position: relative;
+  display: inline-block;
   padding-block: 0.5rem;
-  font-weight: var(--font-weight-medium);
   color: var(--color-neutral-gray);
-  transition: color var(--duration-normal) ease;
+  font-weight: var(--font-weight-normal);
+  transition: color var(--transition-base);
 }
 
 .nav-link::after {
@@ -263,126 +80,109 @@ a {
   left: 50%;
   width: 0;
   height: 2px;
-  background-color: currentColor;
+  background-color: var(--nav-accent, var(--color-ocean-blue));
   transform: translateX(-50%);
-  transition: width var(--duration-slow) ease;
+  transition: width var(--transition-slow);
 }
 
 .nav-link:hover::after,
-.nav-link.active::after {
+.nav-link[data-active="true"]::after {
   width: 100%;
 }
 
 .nav-link:hover,
-.nav-link.active {
-  color: var(--link-color, var(--color-ocean-blue));
+.nav-link[data-active="true"] {
+  color: var(--nav-accent, var(--color-ocean-blue));
+  font-weight: var(--font-weight-semibold);
 }
 
+
+/* ============================================
+   Utility Classes - Footer Glow Effect
+   ============================================ */
+
 /**
- * Glow effect for footer division links.
- * Use with inline style for --glow-color custom property.
+ * Glowing division links for footer
+ * Usage: <a class="glow-link" style="--glow-color: #FF6B4A;">Link</a>
+ * Creates a soft glow using text-shadow
  */
 .glow-link {
-  transition: opacity var(--duration-normal) ease;
-  text-shadow:
-    0 0 20px var(--glow-color, currentColor),
-    0 0 40px color-mix(in srgb, var(--glow-color, currentColor) 50%, transparent);
+  color: var(--glow-color, var(--color-wave-cyan));
+  text-shadow: 
+    0 0 20px color-mix(in srgb, var(--glow-color, var(--color-wave-cyan)) 50%, transparent),
+    0 0 40px color-mix(in srgb, var(--glow-color, var(--color-wave-cyan)) 25%, transparent);
+  transition: opacity var(--transition-base);
 }
 
 .glow-link:hover {
-  opacity: 0.85;
+  opacity: 0.8;
 }
+
+
+/* ============================================
+   Utility Classes - Button Arrow Reveal
+   ============================================ */
 
 /**
- * Arrow reveal effect for CTA buttons/links.
- * Arrow slides in from left on hover.
+ * Arrow reveal effect for CTA buttons
+ * Usage: <button class="group"><span>Text</span><span class="arrow-reveal">→</span></button>
+ * Arrow slides right on hover
  */
 .arrow-reveal {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
+  display: inline-block;
+  margin-left: 0.5rem;
+  transition: transform var(--transition-base);
 }
 
-.arrow-reveal .arrow {
-  transition: transform var(--duration-normal) ease;
-}
-
-.arrow-reveal:hover .arrow {
+.group:hover .arrow-reveal {
   transform: translateX(0.25rem);
 }
 
+
+/* ============================================
+   Utility Classes - Backgrounds & Containers
+   ============================================ */
+
 /**
- * Gradient backgrounds matching brand hero sections.
+ * Hero gradient background (dark navy → ocean blue)
  */
 .bg-gradient-hero {
   background: linear-gradient(135deg, var(--color-dark-navy) 0%, var(--color-ocean-blue) 100%);
 }
 
-.bg-gradient-coral {
-  background: linear-gradient(135deg, var(--color-properties-coral) 0%, #ff8a6b 100%);
-}
-
-.bg-gradient-purple {
-  background: linear-gradient(135deg, var(--color-capital-purple) 0%, #9f67ff 100%);
-}
-
 /**
- * Container with max-width and horizontal padding.
+ * Content container with responsive padding
  */
 .container-content {
   width: 100%;
-  max-width: var(--max-width-content);
+  max-width: 80rem;
   margin-inline: auto;
-  padding-inline: var(--spacing-lg);
+  padding-inline: 1rem;
 }
 
-@media (min-width: 768px) {
+@media (min-width: 640px) {
   .container-content {
-    padding-inline: var(--spacing-xl);
+    padding-inline: 1.5rem;
   }
 }
 
-/**
- * Visually hidden but accessible to screen readers.
- */
-.sr-only {
-  position: absolute;
-  width: 1px;
-  height: 1px;
-  padding: 0;
-  margin: -1px;
-  overflow: hidden;
-  clip: rect(0, 0, 0, 0);
-  white-space: nowrap;
-  border-width: 0;
+@media (min-width: 1024px) {
+  .container-content {
+    padding-inline: 2rem;
+  }
 }
 
-/* =============================================================================
-   FOCUS STATES (ACCESSIBILITY)
-   ============================================================================= */
+
+/* ============================================
+   Focus States (Accessibility)
+   ============================================ */
 
 :focus-visible {
   outline: 2px solid var(--color-wave-cyan);
   outline-offset: 2px;
 }
 
-/* Remove default focus ring for mouse users */
-:focus:not(:focus-visible) {
-  outline: none;
-}
-
-/* =============================================================================
-   REDUCED MOTION PREFERENCE
-   ============================================================================= */
-
-@media (prefers-reduced-motion: reduce) {
-
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
-  }
+a:focus-visible,
+button:focus-visible {
+  outline-color: var(--focus-color, var(--color-wave-cyan));
 }

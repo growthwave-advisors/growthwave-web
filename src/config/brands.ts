@@ -1,37 +1,16 @@
 /**
- * @fileoverview Centralized Brand Configuration for GrowthWave Websites
- * @description Single source of truth for all brand-specific data including
- * colors, logos, navigation, and SEO defaults. Import this config into any
- * component that needs brand-aware rendering.
- * 
- * @example
- * ```typescript
- * import { brands, coreColors } from '@config/brands';
- * const config = brands.properties;
- * console.log(config.colors.accent); // '#FF6B4A'
- * ```
- * 
- * @author GrowthWave Development Team
- * @version 1.0.0
+ * GrowthWave Brand Configuration
+ * ===============================
+ * Centralized configuration for all three GrowthWave brands.
+ * Single source of truth for colors, logos, navigation, and SEO.
  */
 
-import type {
-  BrandId,
-  BrandConfig,
-  BrandConfigMap,
-  CoreColors,
-  DivisionColors,
-} from '../types/brand';
-
-// =============================================================================
-// CORE COLOR PALETTE
-// =============================================================================
+import type { BrandId, BrandConfig, BrandsConfig, DivisionLinks } from '@brand-types/brand';
 
 /**
- * Core colors shared across all GrowthWave brands.
- * Use these for consistent backgrounds, text, and structural elements.
+ * Core brand colors shared across all divisions
  */
-export const coreColors: CoreColors = {
+export const coreColors = {
   oceanBlue: '#265077',
   darkNavy: '#022140',
   waveCyan: '#51A7F8',
@@ -41,247 +20,170 @@ export const coreColors: CoreColors = {
 } as const;
 
 /**
- * Division-specific accent colors for cross-brand linking in footers.
+ * Division accent colors
  */
-export const divisionColors: DivisionColors = {
+export const divisionColors = {
   propertiesCoral: '#FF6B4A',
   capitalPurple: '#7C3AED',
   creditGreen: '#10B981',
 } as const;
 
-// =============================================================================
-// BRAND CONFIGURATIONS
-// =============================================================================
-
 /**
- * GrowthWave Properties brand configuration.
- * Real estate investment division focusing on multifamily value-add.
+ * Division links for cross-brand footer navigation
  */
-const propertiesConfig: BrandConfig = {
-  id: 'properties',
-  name: 'GrowthWave Properties',
-  tagline: 'Building Wealth Through Real Estate',
-  domain: 'growthwaveproperties.com',
-  email: 'wilfred@growthwaveproperties.com',
-  
-  colors: {
-    accent: '#FF6B4A',
-    accentLight: 'rgba(255, 107, 74, 0.15)',
-    accentMedium: 'rgba(255, 107, 74, 0.30)',
-    accentGlow: 'rgba(255, 107, 74, 0.80)',
-  },
-  
-  logos: {
-    primary: '/images/logos/properties/logo-primary.svg',
-    primaryTransparent: '/images/logos/properties/logo-primary-transparent.svg',
-    reversed: '/images/logos/properties/logo-reversed.svg',
-  },
-  
-  favicons: {
-    ico: '/favicon/properties/favicon.ico',
-    png16: '/favicon/properties/favicon-16x16.png',
-    png32: '/favicon/properties/favicon-32x32.png',
-    appleTouchIcon: '/favicon/properties/apple-touch-icon.png',
-    manifest: '/favicon/properties/site.webmanifest',
-  },
-  
-  navigation: [
-    { label: 'Home', href: '/properties/' },
-    { label: 'About', href: '/properties/about/' },
-    { label: 'Approach', href: '/properties/approach/' },
-    { label: 'Portfolio', href: '/properties/portfolio/' },
-    { label: 'Contact', href: '/properties/contact/' },
-  ],
-  
-  seo: {
-    titleSuffix: 'GrowthWave Properties',
-    description: 'Partner with experienced operators on cash-flowing multifamily properties. Value-add investments in the Midwest and South regions.',
-    twitterCard: 'summary_large_image',
-  },
-} as const;
-
-/**
- * GrowthWave Capital brand configuration.
- * Business financing division focusing on real estate investor funding.
- */
-const capitalConfig: BrandConfig = {
-  id: 'capital',
-  name: 'GrowthWave Capital',
-  tagline: 'Fueling Your Business Growth',
-  domain: 'growthwavecapital.com',
-  email: 'wilfred@growthwavecapital.com',
-  
-  colors: {
-    accent: '#7C3AED',
-    accentLight: 'rgba(124, 58, 237, 0.15)',
-    accentMedium: 'rgba(124, 58, 237, 0.30)',
-    accentGlow: 'rgba(124, 58, 237, 0.80)',
-  },
-  
-  logos: {
-    primary: '/images/logos/capital/logo-primary.svg',
-    primaryTransparent: '/images/logos/capital/logo-primary-transparent.svg',
-    reversed: '/images/logos/capital/logo-reversed.svg',
-  },
-  
-  favicons: {
-    ico: '/favicon/capital/favicon.ico',
-    png16: '/favicon/capital/favicon-16x16.png',
-    png32: '/favicon/capital/favicon-32x32.png',
-    appleTouchIcon: '/favicon/capital/apple-touch-icon.png',
-    manifest: '/favicon/capital/site.webmanifest',
-  },
-  
-  navigation: [
-    { label: 'Home', href: '/capital/' },
-    { label: 'Services', href: '/capital/services/' },
-    { label: 'About', href: '/capital/about/' },
-    { label: 'Apply', href: '/capital/apply/' },
-    { label: 'Contact', href: '/capital/contact/' },
-  ],
-  
-  seo: {
-    titleSuffix: 'GrowthWave Capital',
-    description: 'Access $50K-$250K+ in business credit and financing. Enterprise-grade technology platform built by a former Credit Union CTO with 15 years of banking experience.',
-    twitterCard: 'summary_large_image',
-  },
-} as const;
-
-/**
- * GrowthWave Advisors brand configuration.
- * Corporate hub connecting all divisions via the Investor Success Flywheel.
- */
-const advisorsConfig: BrandConfig = {
-  id: 'advisors',
-  name: 'GrowthWave Advisors',
-  tagline: 'Building the Investor Success Flywheel™',
-  domain: 'growthwaveadvisors.com',
-  email: 'wilfred@growthwaveadvisors.com',
-  
-  colors: {
-    accent: '#265077', // Uses Ocean Blue as accent
-    accentLight: 'rgba(38, 80, 119, 0.15)',
-    accentMedium: 'rgba(38, 80, 119, 0.30)',
-    accentGlow: 'rgba(38, 80, 119, 0.80)',
-  },
-  
-  logos: {
-    primary: '/images/logos/advisors/logo-primary.svg',
-    primaryTransparent: '/images/logos/advisors/logo-primary-transparent.svg',
-    reversed: '/images/logos/advisors/logo-reversed.svg',
-  },
-  
-  favicons: {
-    ico: '/favicon/advisors/favicon.ico',
-    png16: '/favicon/advisors/favicon-16x16.png',
-    png32: '/favicon/advisors/favicon-32x32.png',
-    appleTouchIcon: '/favicon/advisors/apple-touch-icon.png',
-    manifest: '/favicon/advisors/site.webmanifest',
-  },
-  
-  navigation: [
-    { label: 'Home', href: '/advisors/' },
-    { label: 'Our Companies', href: '/advisors/companies/' },
-    { label: 'About', href: '/advisors/about/' },
-    { label: 'Contact', href: '/advisors/contact/' },
-  ],
-  
-  seo: {
-    titleSuffix: 'GrowthWave Advisors',
-    description: 'Integrated financial services for investors. From credit repair through business financing to cash-flowing real estate investments.',
-    twitterCard: 'summary_large_image',
-  },
-} as const;
-
-// =============================================================================
-// EXPORTED CONFIGURATION
-// =============================================================================
-
-/**
- * Complete brand configuration map.
- * Access individual brands via `brands.properties`, `brands.capital`, etc.
- */
-export const brands: BrandConfigMap = {
-  properties: propertiesConfig,
-  capital: capitalConfig,
-  advisors: advisorsConfig,
-} as const;
-
-/**
- * Division link data for footer cross-linking.
- * Used by Footer component to display all divisions with proper glow effects.
- */
-export const divisionLinks = [
+export const divisionLinks: DivisionLinks = [
   {
+    id: 'properties',
     name: 'GrowthWave Properties',
-    href: 'https://growthwaveproperties.com',
+    url: 'https://growthwaveproperties.com',
     color: divisionColors.propertiesCoral,
-    glowColor: 'rgba(255, 107, 74, 0.80)',
   },
   {
+    id: 'capital',
     name: 'GrowthWave Capital',
-    href: 'https://growthwavecapital.com',
+    url: 'https://growthwavecapital.com',
     color: divisionColors.capitalPurple,
-    glowColor: 'rgba(124, 58, 237, 0.80)',
   },
   {
+    id: 'creditsculpt',
     name: 'Credit Sculpt',
-    href: 'https://creditsculpt.com',
+    url: 'https://creditsculpt.com',
     color: divisionColors.creditGreen,
-    glowColor: 'rgba(16, 185, 129, 0.80)',
   },
 ] as const;
 
-// =============================================================================
-// UTILITY FUNCTIONS
-// =============================================================================
+/**
+ * Complete brand configurations
+ */
+export const brands: BrandsConfig = {
+  properties: {
+    id: 'properties',
+    name: 'GrowthWave Properties',
+    tagline: 'Building wealth through strategic multifamily investment.',
+    colors: {
+      primary: coreColors.oceanBlue,
+      secondary: coreColors.waveCyan,
+      accent: divisionColors.propertiesCoral,
+      dark: coreColors.darkNavy,
+      text: coreColors.neutralGray,
+      textLight: coreColors.white,
+    },
+    logos: {
+      primary: '/images/logos/properties/logo-primary.svg',
+      primaryTransparent: '/images/logos/properties/logo-primary-transparent.svg',
+      reversed: '/images/logos/properties/logo-reversed.svg',
+      icon: '/images/logos/properties/icon.svg',
+    },
+    navigation: [
+      { label: 'Home', href: '/' },
+      { label: 'About', href: '/about' },
+      { label: 'Approach', href: '/approach' },
+      { label: 'Portfolio', href: '/portfolio' },
+      { label: 'Contact', href: '/contact' },
+    ],
+    seo: {
+      title: 'GrowthWave Properties | Value-Add Multifamily Investment',
+      description: 'Partner with us for strategic multifamily real estate investments in the Midwest & South. 15 years banking experience. Value-add focus with 2-5 year hold periods.',
+      ogImage: '/images/og/properties-og.jpg',
+      domain: 'growthwaveproperties.com',
+    },
+    contact: {
+      email: 'invest@growthwaveproperties.com',
+      location: 'Orlando, FL',
+    },
+    ctaText: 'Partner With Us',
+    ctaUrl: '/contact',
+  },
+  capital: {
+    id: 'capital',
+    name: 'GrowthWave Capital',
+    tagline: 'Fueling your business growth with smart financing.',
+    colors: {
+      primary: coreColors.oceanBlue,
+      secondary: coreColors.waveCyan,
+      accent: divisionColors.capitalPurple,
+      dark: coreColors.darkNavy,
+      text: coreColors.neutralGray,
+      textLight: coreColors.white,
+    },
+    logos: {
+      primary: '/images/logos/capital/logo-primary.svg',
+      primaryTransparent: '/images/logos/capital/logo-primary-transparent.svg',
+      reversed: '/images/logos/capital/logo-reversed.svg',
+      icon: '/images/logos/capital/icon.svg',
+    },
+    navigation: [
+      { label: 'Home', href: '/' },
+      { label: 'About', href: '/about' },
+      { label: 'Services', href: '/services' },
+      { label: 'Contact', href: '/contact' },
+    ],
+    seo: {
+      title: 'GrowthWave Capital | Business Financing for Investors',
+      description: 'Access business credit, financing, and DSCR loans to fund your deals. Enterprise-grade technology meets personalized service.',
+      ogImage: '/images/og/capital-og.jpg',
+      domain: 'growthwavecapital.com',
+    },
+    contact: {
+      email: 'funding@growthwavecapital.com',
+      location: 'Orlando, FL',
+    },
+    ctaText: 'Apply Now',
+    ctaUrl: '/contact',
+  },
+  advisors: {
+    id: 'advisors',
+    name: 'GrowthWave Advisors',
+    tagline: 'Integrated financial services for investors.',
+    colors: {
+      primary: coreColors.oceanBlue,
+      secondary: coreColors.waveCyan,
+      accent: coreColors.oceanBlue,
+      dark: coreColors.darkNavy,
+      text: coreColors.neutralGray,
+      textLight: coreColors.white,
+    },
+    logos: {
+      primary: '/images/logos/advisors/logo-primary.svg',
+      primaryTransparent: '/images/logos/advisors/logo-primary-transparent.svg',
+      reversed: '/images/logos/advisors/logo-reversed.svg',
+      icon: '/images/logos/advisors/icon.svg',
+    },
+    navigation: [
+      { label: 'Home', href: '/' },
+      { label: 'About', href: '/about' },
+      { label: 'Services', href: '/services' },
+      { label: 'Resources', href: '/resources' },
+      { label: 'Contact', href: '/contact' },
+    ],
+    seo: {
+      title: 'GrowthWave Advisors | The Investor Success Flywheel™',
+      description: 'From credit repair to business financing to real estate investment. The integrated path to building wealth through smart leverage.',
+      ogImage: '/images/og/advisors-og.jpg',
+      domain: 'growthwaveadvisors.com',
+    },
+    contact: {
+      email: 'hello@growthwaveadvisors.com',
+      location: 'Orlando, FL',
+    },
+    ctaText: 'Get Started',
+    ctaUrl: '/contact',
+  },
+} as const;
 
 /**
- * Retrieves brand configuration by ID with type safety.
+ * Get brand configuration by ID
  * @param brandId - The brand identifier
- * @returns Complete brand configuration object
- * 
- * @example
- * ```typescript
- * const config = getBrandConfig('properties');
- * console.log(config.name); // 'GrowthWave Properties'
- * ```
+ * @returns Complete brand configuration
  */
-export function getBrandConfig(brandId: BrandId): BrandConfig {
+export function getBrand(brandId: BrandId): BrandConfig {
   return brands[brandId];
 }
 
 /**
- * Checks if a given string is a valid BrandId.
- * Useful for validating URL parameters or user input.
- * @param value - String to validate
- * @returns Type predicate indicating if value is a valid BrandId
- * 
- * @example
- * ```typescript
- * const param = 'properties';
- * if (isValidBrandId(param)) {
- *   const config = getBrandConfig(param); // TypeScript knows param is BrandId
- * }
- * ```
+ * Get all brand IDs
+ * @returns Array of brand identifiers
  */
-export function isValidBrandId(value: string): value is BrandId {
-  return value === 'properties' || value === 'capital' || value === 'advisors';
-}
-
-/**
- * Generates the full page title with brand suffix.
- * @param pageTitle - The page-specific title
- * @param brandId - The brand identifier
- * @returns Formatted title string
- * 
- * @example
- * ```typescript
- * getFullPageTitle('About', 'properties');
- * // Returns: 'About | GrowthWave Properties'
- * ```
- */
-export function getFullPageTitle(pageTitle: string, brandId: BrandId): string {
-  const brandConfig = getBrandConfig(brandId);
-  return `${pageTitle} | ${brandConfig.seo.titleSuffix}`;
+export function getBrandIds(): readonly BrandId[] {
+  return Object.keys(brands) as BrandId[];
 }
