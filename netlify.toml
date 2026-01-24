@@ -1,6 +1,6 @@
 # Netlify Configuration
 # =====================
-# Build settings, redirects, and headers for GrowthWave multi-brand site.
+# Build settings and host-based redirects for GrowthWave multi-brand site.
 
 [build]
   command = "npm run build"
@@ -8,21 +8,6 @@
 
 [build.environment]
   NODE_VERSION = "18"
-
-# Asset optimization
-[build.processing]
-  skip_processing = false
-
-[build.processing.css]
-  bundle = true
-  minify = true
-
-[build.processing.js]
-  bundle = true
-  minify = true
-
-[build.processing.images]
-  compress = true
 
 # Security & Performance Headers
 [[headers]]
@@ -33,7 +18,7 @@
     X-XSS-Protection = "1; mode=block"
     Referrer-Policy = "strict-origin-when-cross-origin"
 
-# Cache static assets aggressively
+# Cache static assets
 [[headers]]
   for = "/images/*"
   [headers.values]
@@ -44,53 +29,33 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-[[headers]]
-  for = "/*.css"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
+# ===========================================
+# Host-Based Redirects (200 = rewrite/proxy)
+# ===========================================
 
-[[headers]]
-  for = "/*.js"
-  [headers.values]
-    Cache-Control = "public, max-age=31536000, immutable"
-
-# Domain-based redirects (200 = rewrite, serves content without URL change)
 # GrowthWave Advisors
 [[redirects]]
-  from = "https://growthwaveadvisors.com/*"
+  from = "/*"
   to = "/advisors/:splat"
   status = 200
-
-[[redirects]]
-  from = "https://www.growthwaveadvisors.com/*"
-  to = "/advisors/:splat"
-  status = 200
+  force = true
+  [redirects.conditions]
+    Host = ["growthwaveadvisors.com", "www.growthwaveadvisors.com"]
 
 # GrowthWave Capital
 [[redirects]]
-  from = "https://growthwavecapital.com/*"
+  from = "/*"
   to = "/capital/:splat"
   status = 200
-
-[[redirects]]
-  from = "https://www.growthwavecapital.com/*"
-  to = "/capital/:splat"
-  status = 200
+  force = true
+  [redirects.conditions]
+    Host = ["growthwavecapital.com", "www.growthwavecapital.com"]
 
 # GrowthWave Properties
 [[redirects]]
-  from = "https://growthwaveproperties.com/*"
+  from = "/*"
   to = "/properties/:splat"
   status = 200
-
-[[redirects]]
-  from = "https://www.growthwaveproperties.com/*"
-  to = "/properties/:splat"
-  status = 200
-
-# Redirect www to non-www (optional - choose your preferred format)
-# [[redirects]]
-#   from = "https://www.growthwaveadvisors.com/*"
-#   to = "https://growthwaveadvisors.com/:splat"
-#   status = 301
-#   force = true
+  force = true
+  [redirects.conditions]
+    Host = ["growthwaveproperties.com", "www.growthwaveproperties.com"]
