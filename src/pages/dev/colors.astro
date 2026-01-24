@@ -1,0 +1,356 @@
+---
+/**
+ * GrowthWave Style Guide - Colors
+ * ================================
+ * Complete color reference for the GrowthWave brand system.
+ * Includes core colors, division accents, and usage guidelines.
+ * 
+ * NOTE: This page is noindexed - for internal development use only.
+ */
+import { coreColors, divisionColors } from '@config/brands';
+
+// Color data with usage notes
+const coreColorData = [
+  { name: 'Dark Navy', token: '--color-dark-navy', hex: '#022140', usage: 'Hero backgrounds, footer, dark sections' },
+  { name: 'Ocean Blue', token: '--color-ocean-blue', hex: '#265077', usage: 'Primary brand color, headlines, CTAs' },
+  { name: 'Wave Cyan', token: '--color-wave-cyan', hex: '#51A7F8', usage: 'Advisors accent, links, highlights' },
+  { name: 'Neutral Gray', token: '--color-neutral-gray', hex: '#595959', usage: 'Body text, paragraphs' },
+  { name: 'Light Gray', token: '--color-light-gray', hex: '#718EA7', usage: 'Secondary text, placeholders' },
+  { name: 'White', token: '--color-white', hex: '#FFFFFF', usage: 'Backgrounds, text on dark' },
+];
+
+const divisionColorData = [
+  { name: 'Properties Coral', token: '--color-properties-coral', hex: '#FF6B4A', brand: 'GrowthWave Properties' },
+  { name: 'Capital Purple', token: '--color-capital-purple', hex: '#7C3AED', brand: 'GrowthWave Capital' },
+  { name: 'Credit Green', token: '--color-credit-green', hex: '#10B981', brand: 'Credit Sculpt' },
+];
+
+const gradients = [
+  { name: 'Hero Gradient', class: 'bg-gradient-hero', css: 'linear-gradient(135deg, #022140 0%, #265077 100%)', usage: 'Hero sections, page headers' },
+];
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Colors | GrowthWave Style Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      body {
+        font-family: 'Outfit', system-ui, -apple-system, sans-serif;
+        background-color: #f8fafc;
+        color: #1e293b;
+        line-height: 1.6;
+      }
+      
+      .header {
+        background: linear-gradient(135deg, #022140 0%, #265077 100%);
+        color: white;
+        padding: 3rem 2rem;
+      }
+      
+      .header-content {
+        max-width: 64rem;
+        margin: 0 auto;
+      }
+      
+      .header h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+      
+      .header p {
+        opacity: 0.8;
+      }
+      
+      .breadcrumb {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+        font-size: 0.875rem;
+      }
+      
+      .breadcrumb a {
+        color: #51A7F8;
+        text-decoration: none;
+      }
+      
+      .breadcrumb a:hover {
+        text-decoration: underline;
+      }
+      
+      .breadcrumb span {
+        opacity: 0.6;
+      }
+      
+      main {
+        max-width: 64rem;
+        margin: 0 auto;
+        padding: 3rem 2rem;
+      }
+      
+      section {
+        margin-bottom: 3rem;
+      }
+      
+      h2 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        color: #022140;
+        margin-bottom: 1rem;
+        padding-bottom: 0.5rem;
+        border-bottom: 2px solid #e2e8f0;
+      }
+      
+      .color-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+        gap: 1rem;
+      }
+      
+      .color-card {
+        background: white;
+        border-radius: 0.75rem;
+        overflow: hidden;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e2e8f0;
+      }
+      
+      .color-swatch {
+        height: 100px;
+        display: flex;
+        align-items: flex-end;
+        padding: 0.75rem;
+      }
+      
+      .color-swatch.light-text {
+        color: white;
+      }
+      
+      .color-swatch.dark-text {
+        color: #022140;
+      }
+      
+      .color-hex {
+        font-family: 'SF Mono', Monaco, monospace;
+        font-size: 0.875rem;
+        font-weight: 500;
+        background: rgba(255, 255, 255, 0.2);
+        padding: 0.25rem 0.5rem;
+        border-radius: 0.25rem;
+      }
+      
+      .color-info {
+        padding: 1rem;
+      }
+      
+      .color-name {
+        font-weight: 600;
+        color: #022140;
+        margin-bottom: 0.25rem;
+      }
+      
+      .color-token {
+        font-family: 'SF Mono', Monaco, monospace;
+        font-size: 0.75rem;
+        color: #64748b;
+        margin-bottom: 0.5rem;
+      }
+      
+      .color-usage {
+        font-size: 0.8125rem;
+        color: #94a3b8;
+      }
+      
+      .color-brand {
+        display: inline-block;
+        font-size: 0.75rem;
+        background: #f1f5f9;
+        color: #64748b;
+        padding: 0.125rem 0.5rem;
+        border-radius: 1rem;
+        margin-top: 0.5rem;
+      }
+      
+      .gradient-card {
+        background: white;
+        border-radius: 0.75rem;
+        overflow: hidden;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e2e8f0;
+      }
+      
+      .gradient-swatch {
+        height: 120px;
+        display: flex;
+        align-items: flex-end;
+        padding: 1rem;
+        color: white;
+      }
+      
+      .gradient-info {
+        padding: 1rem;
+      }
+      
+      .gradient-name {
+        font-weight: 600;
+        color: #022140;
+        margin-bottom: 0.25rem;
+      }
+      
+      .gradient-css {
+        font-family: 'SF Mono', Monaco, monospace;
+        font-size: 0.6875rem;
+        color: #64748b;
+        word-break: break-all;
+        margin-bottom: 0.5rem;
+      }
+      
+      .code-block {
+        background: #1e293b;
+        color: #e2e8f0;
+        padding: 1.5rem;
+        border-radius: 0.5rem;
+        font-family: 'SF Mono', Monaco, monospace;
+        font-size: 0.8125rem;
+        overflow-x: auto;
+        line-height: 1.8;
+      }
+      
+      .code-block .comment {
+        color: #64748b;
+      }
+      
+      .code-block .property {
+        color: #51A7F8;
+      }
+      
+      .code-block .value {
+        color: #FF6B4A;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <div class="header-content">
+        <nav class="breadcrumb">
+          <a href="/">Hub</a>
+          <span>/</span>
+          <a href="/dev">Style Guide</a>
+          <span>/</span>
+          <span>Colors</span>
+        </nav>
+        <h1>Colors</h1>
+        <p>Brand color palette and usage guidelines</p>
+      </div>
+    </header>
+    
+    <main>
+      <!-- Core Colors -->
+      <section>
+        <h2>Core Colors</h2>
+        <p style="color: #64748b; margin-bottom: 1.5rem;">
+          These colors are used across all GrowthWave brands and form the foundation of the visual identity.
+        </p>
+        <div class="color-grid">
+          {coreColorData.map((color) => (
+            <div class="color-card">
+              <div 
+                class={`color-swatch ${['#FFFFFF', '#718EA7'].includes(color.hex) ? 'dark-text' : 'light-text'}`}
+                style={`background-color: ${color.hex};`}
+              >
+                <span class="color-hex">{color.hex}</span>
+              </div>
+              <div class="color-info">
+                <div class="color-name">{color.name}</div>
+                <div class="color-token">{color.token}</div>
+                <div class="color-usage">{color.usage}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+      
+      <!-- Division Accent Colors -->
+      <section>
+        <h2>Division Accent Colors</h2>
+        <p style="color: #64748b; margin-bottom: 1.5rem;">
+          Each GrowthWave division has a unique accent color that maintains brand recognition while differentiating services.
+        </p>
+        <div class="color-grid">
+          {divisionColorData.map((color) => (
+            <div class="color-card">
+              <div 
+                class="color-swatch light-text"
+                style={`background-color: ${color.hex};`}
+              >
+                <span class="color-hex">{color.hex}</span>
+              </div>
+              <div class="color-info">
+                <div class="color-name">{color.name}</div>
+                <div class="color-token">{color.token}</div>
+                <span class="color-brand">{color.brand}</span>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+      
+      <!-- Gradients -->
+      <section>
+        <h2>Gradients</h2>
+        <div class="color-grid">
+          {gradients.map((gradient) => (
+            <div class="gradient-card">
+              <div 
+                class="gradient-swatch"
+                style={`background: ${gradient.css};`}
+              >
+                <span class="color-hex">.{gradient.class}</span>
+              </div>
+              <div class="gradient-info">
+                <div class="gradient-name">{gradient.name}</div>
+                <div class="gradient-css">{gradient.css}</div>
+                <div class="color-usage">{gradient.usage}</div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+      
+      <!-- CSS Variables Reference -->
+      <section>
+        <h2>CSS Variables</h2>
+        <p style="color: #64748b; margin-bottom: 1.5rem;">
+          All colors are defined as CSS custom properties in <code style="background: #f1f5f9; padding: 0.125rem 0.375rem; border-radius: 0.25rem;">global.css</code>
+        </p>
+        <div class="code-block">
+          <span class="comment">/* Core Colors */</span><br />
+          <span class="property">--color-dark-navy:</span> <span class="value">#022140</span>;<br />
+          <span class="property">--color-ocean-blue:</span> <span class="value">#265077</span>;<br />
+          <span class="property">--color-wave-cyan:</span> <span class="value">#51A7F8</span>;<br />
+          <span class="property">--color-neutral-gray:</span> <span class="value">#595959</span>;<br />
+          <span class="property">--color-light-gray:</span> <span class="value">#718EA7</span>;<br />
+          <span class="property">--color-white:</span> <span class="value">#FFFFFF</span>;<br />
+          <br />
+          <span class="comment">/* Division Accents */</span><br />
+          <span class="property">--color-properties-coral:</span> <span class="value">#FF6B4A</span>;<br />
+          <span class="property">--color-capital-purple:</span> <span class="value">#7C3AED</span>;<br />
+          <span class="property">--color-credit-green:</span> <span class="value">#10B981</span>;
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,237 @@
+---
+/**
+ * GrowthWave Style Guide - Hub
+ * ============================
+ * Developer reference for the GrowthWave design system.
+ * Links to individual style guide sections.
+ * 
+ * NOTE: This page is noindexed - for internal development use only.
+ */
+import { coreColors, divisionColors } from '@config/brands';
+---
+
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Style Guide | GrowthWave Dev</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      
+      body {
+        font-family: 'Outfit', system-ui, -apple-system, sans-serif;
+        background-color: #f8fafc;
+        color: #1e293b;
+        line-height: 1.6;
+      }
+      
+      .header {
+        background: linear-gradient(135deg, #022140 0%, #265077 100%);
+        color: white;
+        padding: 3rem 2rem;
+      }
+      
+      .header-content {
+        max-width: 64rem;
+        margin: 0 auto;
+      }
+      
+      .header h1 {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+      }
+      
+      .header p {
+        opacity: 0.8;
+      }
+      
+      .header .back-link {
+        display: inline-block;
+        margin-bottom: 1rem;
+        color: #51A7F8;
+        text-decoration: none;
+        font-size: 0.875rem;
+      }
+      
+      .header .back-link:hover {
+        text-decoration: underline;
+      }
+      
+      main {
+        max-width: 64rem;
+        margin: 0 auto;
+        padding: 3rem 2rem;
+      }
+      
+      .section-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 3rem;
+      }
+      
+      .section-card {
+        background: white;
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e2e8f0;
+        text-decoration: none;
+        color: inherit;
+        transition: all 200ms ease;
+      }
+      
+      .section-card:hover {
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        transform: translateY(-2px);
+      }
+      
+      .section-card h2 {
+        font-size: 1.25rem;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        color: #022140;
+      }
+      
+      .section-card p {
+        font-size: 0.875rem;
+        color: #64748b;
+        margin-bottom: 1rem;
+      }
+      
+      .section-card .preview {
+        display: flex;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+      }
+      
+      .color-dot {
+        width: 24px;
+        height: 24px;
+        border-radius: 50%;
+        border: 2px solid white;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+      }
+      
+      .type-preview {
+        font-size: 0.75rem;
+        color: #94a3b8;
+        font-family: monospace;
+      }
+      
+      .btn-preview {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        background: #265077;
+        color: white;
+        border-radius: 0.25rem;
+        font-size: 0.75rem;
+      }
+      
+      .info-section {
+        background: white;
+        border-radius: 0.75rem;
+        padding: 2rem;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        border: 1px solid #e2e8f0;
+      }
+      
+      .info-section h2 {
+        font-size: 1.125rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: #022140;
+      }
+      
+      .info-section ul {
+        list-style: none;
+        display: grid;
+        gap: 0.5rem;
+      }
+      
+      .info-section li {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 0.875rem;
+        color: #64748b;
+      }
+      
+      .info-section li::before {
+        content: '•';
+        color: #51A7F8;
+      }
+      
+      code {
+        background: #f1f5f9;
+        padding: 0.125rem 0.375rem;
+        border-radius: 0.25rem;
+        font-size: 0.8125rem;
+        font-family: 'SF Mono', Monaco, monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <div class="header-content">
+        <a href="/" class="back-link">← Back to Hub</a>
+        <h1>GrowthWave Style Guide</h1>
+        <p>Design system reference for developers</p>
+      </div>
+    </header>
+    
+    <main>
+      <div class="section-grid">
+        <a href="/dev/colors" class="section-card">
+          <h2>Colors</h2>
+          <p>Brand color palettes, core colors, and division accents</p>
+          <div class="preview">
+            <span class="color-dot" style="background-color: #022140;"></span>
+            <span class="color-dot" style="background-color: #265077;"></span>
+            <span class="color-dot" style="background-color: #51A7F8;"></span>
+            <span class="color-dot" style="background-color: #FF6B4A;"></span>
+            <span class="color-dot" style="background-color: #7C3AED;"></span>
+            <span class="color-dot" style="background-color: #10B981;"></span>
+          </div>
+        </a>
+        
+        <a href="/dev/typography" class="section-card">
+          <h2>Typography</h2>
+          <p>Font family, type scale, weights, and responsive rules</p>
+          <div class="preview">
+            <span class="type-preview">Outfit 400 / 500 / 600 / 700</span>
+          </div>
+        </a>
+        
+        <a href="/dev/components" class="section-card">
+          <h2>Components</h2>
+          <p>Buttons, navigation, forms, and interactive elements</p>
+          <div class="preview">
+            <span class="btn-preview">Button</span>
+          </div>
+        </a>
+      </div>
+      
+      <div class="info-section">
+        <h2>Quick Reference</h2>
+        <ul>
+          <li>Typography scaling stops at <code>lg</code> breakpoint (1024px)</li>
+          <li>Hero headlines: <code>text-3xl lg:text-[44px]</code></li>
+          <li>Section headlines: <code>text-xl lg:text-2xl</code></li>
+          <li>Body text: <code>text-base lg:text-lg</code></li>
+          <li>Content max-width: <code>80rem</code> (Fixed Island pattern)</li>
+          <li>Transitions: <code>150ms</code> fast / <code>200ms</code> base / <code>300ms</code> slow</li>
+        </ul>
+      </div>
+    </main>
+  </body>
+</html>

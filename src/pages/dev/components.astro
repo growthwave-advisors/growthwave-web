@@ -1,0 +1,256 @@
+---
+/**
+ * GrowthWave Style Guide - Components
+ * ====================================
+ * Interactive component reference showcasing all variants.
+ * Uses actual components to ensure documentation stays in sync.
+ * 
+ * NOTE: This page is noindexed - for internal development use only.
+ */
+import '@styles/global.css';
+import Button from '@components/Button.astro';
+---
+
+<!doctype html>
+<html lang="en" class="scroll-smooth">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>Components | GrowthWave Style Guide</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  </head>
+  <body class="min-h-screen antialiased bg-slate-50 text-slate-600">
+    <header class="bg-gradient-hero text-white py-12 px-8">
+      <div class="max-w-4xl mx-auto">
+        <nav class="flex items-center gap-2 mb-4 text-sm">
+          <a href="/" class="text-sky-300 hover:underline">Hub</a>
+          <span class="opacity-60">/</span>
+          <a href="/dev" class="text-sky-300 hover:underline">Style Guide</a>
+          <span class="opacity-60">/</span>
+          <span class="opacity-60">Components</span>
+        </nav>
+        <h1 class="text-3xl font-bold mb-2">Components</h1>
+        <p class="opacity-80">Interactive elements and UI components</p>
+      </div>
+    </header>
+    
+    <main class="max-w-4xl mx-auto py-12 px-8">
+      <!-- Buttons Section -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold text-slate-800 mb-4 pb-2 border-b-2 border-slate-200">Buttons</h2>
+        
+        <!-- Primary Buttons -->
+        <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 mb-6">
+          <h3 class="text-lg font-semibold text-slate-700 mb-2">Primary Variant</h3>
+          <p class="text-sm text-slate-500 mb-4">
+            Main call-to-action buttons. Background uses brand accent color.
+          </p>
+          <div class="flex flex-wrap gap-4 items-center">
+            <Button brand="properties" size="sm">Small</Button>
+            <Button brand="properties" size="md">Medium</Button>
+            <Button brand="properties" size="lg">Large</Button>
+            <Button brand="properties" showArrow>With Arrow</Button>
+            <Button brand="capital">Capital Brand</Button>
+            <Button brand="advisors">Advisors Brand</Button>
+          </div>
+          <div class="mt-4 pt-4 border-t border-slate-100 font-mono text-xs text-slate-400">
+            &lt;Button brand="properties" size="md"&gt;Label&lt;/Button&gt;
+          </div>
+        </div>
+
+        <!-- Secondary Buttons -->
+        <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 mb-6">
+          <h3 class="text-lg font-semibold text-slate-700 mb-2">Secondary Variant</h3>
+          <p class="text-sm text-slate-500 mb-4">
+            Bordered buttons for secondary actions. Border and text use brand accent color.
+          </p>
+          <div class="flex flex-wrap gap-4 items-center">
+            <Button brand="properties" variant="secondary">Properties</Button>
+            <Button brand="capital" variant="secondary">Capital</Button>
+            <Button brand="advisors" variant="secondary">Advisors</Button>
+            <Button brand="properties" variant="secondary" showArrow>With Arrow</Button>
+          </div>
+          <div class="mt-4 pt-4 border-t border-slate-100 font-mono text-xs text-slate-400">
+            &lt;Button brand="properties" variant="secondary"&gt;Label&lt;/Button&gt;
+          </div>
+        </div>
+
+        <!-- Ghost Buttons -->
+        <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 mb-6">
+          <h3 class="text-lg font-semibold text-slate-700 mb-2">Ghost Variant</h3>
+          <p class="text-sm text-slate-500 mb-4">
+            Text-only buttons for tertiary actions. No background or border.
+          </p>
+          <div class="flex flex-wrap gap-4 items-center">
+            <Button brand="properties" variant="ghost">Properties</Button>
+            <Button brand="capital" variant="ghost">Capital</Button>
+            <Button brand="advisors" variant="ghost">Advisors</Button>
+            <Button brand="properties" variant="ghost" showArrow>With Arrow</Button>
+          </div>
+          <div class="mt-4 pt-4 border-t border-slate-100 font-mono text-xs text-slate-400">
+            &lt;Button brand="properties" variant="ghost"&gt;Label&lt;/Button&gt;
+          </div>
+        </div>
+
+        <!-- Outline Buttons (Dark Background) -->
+        <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 mb-6">
+          <div class="bg-gradient-hero rounded-lg p-6">
+            <h3 class="text-lg font-semibold text-white mb-2">Outline Variant (Dark Background)</h3>
+            <p class="text-sm text-white/70 mb-4">
+              White-bordered buttons for use on dark backgrounds like hero sections.
+            </p>
+            <div class="flex flex-wrap gap-4 items-center">
+              <Button brand="properties" variant="outline">Properties</Button>
+              <Button brand="capital" variant="outline">Capital</Button>
+              <Button brand="advisors" variant="outline">Advisors</Button>
+              <Button brand="properties" variant="outline" showArrow>With Arrow</Button>
+            </div>
+            <div class="mt-4 pt-4 border-t border-white/10 font-mono text-xs text-white/50">
+              &lt;Button brand="properties" variant="outline"&gt;Label&lt;/Button&gt;
+            </div>
+          </div>
+        </div>
+
+        <!-- Button as Links -->
+        <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 mb-6">
+          <h3 class="text-lg font-semibold text-slate-700 mb-2">As Links</h3>
+          <p class="text-sm text-slate-500 mb-4">
+            Buttons can render as anchor tags when given an <code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs">href</code> prop.
+          </p>
+          <div class="flex flex-wrap gap-4 items-center">
+            <Button brand="properties" href="/about">Internal Link</Button>
+            <Button brand="properties" href="https://example.com" external>External Link</Button>
+            <Button brand="properties" href="/contact" showArrow>Link With Arrow</Button>
+          </div>
+          <div class="mt-4 pt-4 border-t border-slate-100 font-mono text-xs text-slate-400">
+            &lt;Button brand="properties" href="/about"&gt;Internal Link&lt;/Button&gt;
+          </div>
+        </div>
+
+        <!-- Disabled State -->
+        <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 mb-6">
+          <h3 class="text-lg font-semibold text-slate-700 mb-2">Disabled State</h3>
+          <p class="text-sm text-slate-500 mb-4">
+            Reduced opacity and no pointer events.
+          </p>
+          <div class="flex flex-wrap gap-4 items-center">
+            <Button brand="properties" disabled>Disabled Primary</Button>
+            <Button brand="properties" variant="secondary" disabled>Disabled Secondary</Button>
+          </div>
+          <div class="mt-4 pt-4 border-t border-slate-100 font-mono text-xs text-slate-400">
+            &lt;Button brand="properties" disabled&gt;Label&lt;/Button&gt;
+          </div>
+        </div>
+      </section>
+
+      <!-- Navigation Section -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold text-slate-800 mb-4 pb-2 border-b-2 border-slate-200">Navigation Links</h2>
+        
+        <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200">
+          <h3 class="text-lg font-semibold text-slate-700 mb-2">Center-Grow Underline Effect</h3>
+          <p class="text-sm text-slate-500 mb-4">
+            Navigation links use a center-grow underline animation. Hover to see the effect.
+          </p>
+          <div class="flex gap-8 py-4" style="--nav-accent: #FF6B4A;">
+            <a href="#" class="nav-link">Home</a>
+            <a href="#" class="nav-link" data-active="true">About</a>
+            <a href="#" class="nav-link">Approach</a>
+            <a href="#" class="nav-link">Contact</a>
+          </div>
+          <ul class="mt-4 space-y-2 text-sm text-slate-500">
+            <li class="flex items-center gap-2"><span class="text-sky-500">•</span> Active state shows full underline</li>
+            <li class="flex items-center gap-2"><span class="text-sky-500">•</span> Hover expands underline from center</li>
+            <li class="flex items-center gap-2"><span class="text-sky-500">•</span> Color matches brand accent via <code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs">--nav-accent</code></li>
+          </ul>
+          <div class="mt-4 pt-4 border-t border-slate-100 font-mono text-xs text-slate-400">
+            &lt;a class="nav-link" data-active="true"&gt;Link&lt;/a&gt;
+          </div>
+        </div>
+      </section>
+
+      <!-- Hero Gradient Section -->
+      <section class="mb-12">
+        <h2 class="text-2xl font-semibold text-slate-800 mb-4 pb-2 border-b-2 border-slate-200">Hero Gradient</h2>
+        
+        <div class="bg-white rounded-xl shadow-sm border border-slate-200 overflow-hidden">
+          <div class="bg-gradient-hero py-16 px-8 text-center text-white">
+            <h3 class="text-2xl font-bold mb-2">Hero Gradient Background</h3>
+            <p class="opacity-80 mb-6">Dark Navy → Ocean Blue (135°)</p>
+            <div class="flex justify-center gap-4 flex-wrap">
+              <Button brand="properties" variant="outline" showArrow>Outline Button</Button>
+              <Button brand="properties" showArrow>Primary Button</Button>
+            </div>
+          </div>
+          <div class="p-4 bg-slate-50 font-mono text-xs text-slate-400">
+            .bg-gradient-hero: linear-gradient(135deg, #022140, #265077)
+          </div>
+        </div>
+      </section>
+
+      <!-- Props Reference -->
+      <section>
+        <h2 class="text-2xl font-semibold text-slate-800 mb-4 pb-2 border-b-2 border-slate-200">Button Props Reference</h2>
+        <div class="bg-white rounded-xl p-6 shadow-sm border border-slate-200 overflow-x-auto">
+          <table class="w-full text-sm">
+            <thead>
+              <tr class="border-b-2 border-slate-200 text-left">
+                <th class="py-3 px-2 text-slate-800">Prop</th>
+                <th class="py-3 px-2 text-slate-800">Type</th>
+                <th class="py-3 px-2 text-slate-800">Default</th>
+                <th class="py-3 px-2 text-slate-800">Description</th>
+              </tr>
+            </thead>
+            <tbody class="text-slate-500">
+              <tr class="border-b border-slate-100">
+                <td class="py-3 px-2"><code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs">brand</code></td>
+                <td class="py-3 px-2">'properties' | 'capital' | 'advisors'</td>
+                <td class="py-3 px-2">Required</td>
+                <td class="py-3 px-2">Determines accent color</td>
+              </tr>
+              <tr class="border-b border-slate-100">
+                <td class="py-3 px-2"><code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs">variant</code></td>
+                <td class="py-3 px-2">'primary' | 'secondary' | 'ghost' | 'outline'</td>
+                <td class="py-3 px-2">'primary'</td>
+                <td class="py-3 px-2">Visual style variant</td>
+              </tr>
+              <tr class="border-b border-slate-100">
+                <td class="py-3 px-2"><code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs">size</code></td>
+                <td class="py-3 px-2">'sm' | 'md' | 'lg'</td>
+                <td class="py-3 px-2">'md'</td>
+                <td class="py-3 px-2">Button size</td>
+              </tr>
+              <tr class="border-b border-slate-100">
+                <td class="py-3 px-2"><code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs">href</code></td>
+                <td class="py-3 px-2">string</td>
+                <td class="py-3 px-2">undefined</td>
+                <td class="py-3 px-2">Renders as anchor if provided</td>
+              </tr>
+              <tr class="border-b border-slate-100">
+                <td class="py-3 px-2"><code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs">external</code></td>
+                <td class="py-3 px-2">boolean</td>
+                <td class="py-3 px-2">false</td>
+                <td class="py-3 px-2">Opens link in new tab</td>
+              </tr>
+              <tr class="border-b border-slate-100">
+                <td class="py-3 px-2"><code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs">showArrow</code></td>
+                <td class="py-3 px-2">boolean</td>
+                <td class="py-3 px-2">false</td>
+                <td class="py-3 px-2">Shows animated arrow</td>
+              </tr>
+              <tr>
+                <td class="py-3 px-2"><code class="bg-slate-100 px-1.5 py-0.5 rounded text-xs">disabled</code></td>
+                <td class="py-3 px-2">boolean</td>
+                <td class="py-3 px-2">false</td>
+                <td class="py-3 px-2">Disables interaction</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
