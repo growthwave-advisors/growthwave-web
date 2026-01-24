@@ -16,6 +16,22 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex, nofollow" />
     <title>GrowthWave</title>
+    <script>
+      // Client-side domain routing fallback
+      (function() {
+        var host = window.location.hostname;
+        var path = window.location.pathname;
+        
+        // Only redirect from root or if not already on correct path
+        if (host.includes('growthwaveadvisors') && !path.startsWith('/advisors')) {
+          window.location.replace('/advisors' + path);
+        } else if (host.includes('growthwavecapital') && !path.startsWith('/capital')) {
+          window.location.replace('/capital' + path);
+        } else if (host.includes('growthwaveproperties') && !path.startsWith('/properties')) {
+          window.location.replace('/properties' + path);
+        }
+      })();
+    </script>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet" />
