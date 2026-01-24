@@ -1,22 +1,20 @@
 ---
 /**
- * Header.astro
+ * Header.astro - UPDATED FOR EDGE FUNCTION ROUTING
+ * =================================================
+ * 
+ * URL STRATEGY: All internal links use RELATIVE paths (no brand prefix)
+ * - href="/" → stays as "/" (edge function handles mapping to /advisors/)
+ * - href="/about" → stays as "/about" (edge function maps to /advisors/about)
+ * 
+ * This works because:
+ * 1. Edge function rewrites /about → /advisors/about internally
+ * 2. Browser URL stays as growthwaveadvisors.com/about (clean!)
+ * 3. User clicks /about → browser requests /about → edge function serves /advisors/about
  * 
  * LOGO USAGE:
  * - Desktop: horizontal_color (wide format, full brand colors on white bg)
  * - Mobile menu: stacked_color (square format for compact spaces)
- * 
- * NAMING CONVENTION:
- * {brand}-{division}_{shape}_{color}.svg
- * - Shape: horizontal | stacked | icon
- * - Color: color | reversed
- * 
- * URL PARAMETER ROUTING (Properties):
- * - "Opportunities" nav link Ã¢â€ â€™ /contact?type=investment
- * - "Partner With Us" CTA Ã¢â€ â€™ /contact?type=partnership
- * - Other links use standard /{page} pattern
- * 
- * Design System Reference: /mnt/project/Website_Design_System_STRATEGY.md
  */
 
 interface Props {
@@ -33,8 +31,7 @@ const brandConfig = {
     accentHover: '#E5603F',
     pages: ['Home', 'About', 'Approach', 'Opportunities', 'Contact'],
     ctaText: 'Partner With Us',
-    ctaHref: '/properties/contact?type=partnership',
-    // Logo variants: {brand}_{shape}_{color}.svg (icons are centralized)
+    ctaHref: '/contact?type=partnership',
     logoHorizontalColor: '/images/logos/properties/growthwave-properties_horizontal_color.svg',
     logoHorizontalReversed: '/images/logos/properties/growthwave-properties_horizontal_reversed.svg',
     logoStackedColor: '/images/logos/properties/growthwave-properties_stacked_color.svg',
@@ -45,7 +42,7 @@ const brandConfig = {
     accentHover: '#6D28D9',
     pages: ['Home', 'About', 'Financing Solutions', 'Contact'],
     ctaText: 'Start Your Journey',
-    ctaHref: '/capital/contact',
+    ctaHref: '/contact',
     logoHorizontalColor: '/images/logos/capital/growthwave-capital_horizontal_color.svg',
     logoHorizontalReversed: '/images/logos/capital/growthwave-capital_horizontal_reversed.svg',
     logoStackedColor: '/images/logos/capital/growthwave-capital_stacked_color.svg',
@@ -54,9 +51,9 @@ const brandConfig = {
   advisors: {
     accent: '#265077',
     accentHover: '#1E3F5C',
-    pages: ['Home', 'About', 'Services', 'Contact'],
+    pages: ['Home', 'About', 'Services', 'Contact'],  // Removed 'Divisions' - Services covers this
     ctaText: 'Get Started',
-    ctaHref: '/advisors/contact',
+    ctaHref: '/contact',
     logoHorizontalColor: '/images/logos/advisors/growthwave-advisors_horizontal_color.svg',
     logoHorizontalReversed: '/images/logos/advisors/growthwave-advisors_horizontal_reversed.svg',
     logoStackedColor: '/images/logos/advisors/growthwave-advisors_stacked_color.svg',
@@ -68,44 +65,38 @@ const config = brandConfig[brand];
 
 /**
  * Get the href for a navigation page
- * Handles special routing for pages that need query parameters
- * All pages include brand prefix: /{brand}/{page}
+ * ALL PATHS ARE RELATIVE - Edge function handles brand mapping
  */
 function getPageHref(page: string): string {
-  const basePath = `/${brand}`;
-  
   // Special routing for Properties brand
   if (brand === 'properties') {
     if (page === 'Opportunities') {
-      return `${basePath}/contact?type=investment`;
+      return '/contact?type=investment';
     }
   }
   
   // Special routing for Capital brand
   if (brand === 'capital') {
     if (page === 'Financing Solutions') {
-      return `${basePath}/solutions`;
+      return '/solutions';
     }
   }
   
-  // Default routing with brand prefix
+  // Default routing - RELATIVE paths (no brand prefix!)
   if (page === 'Home') {
-    return `${basePath}/`;
+    return '/';
   }
   
-  return `${basePath}/${page.toLowerCase()}`;
+  return `/${page.toLowerCase()}`;
 }
 
 /**
  * Check if a page is "active" based on current page
- * Handles Opportunities Ã¢â€ â€™ Contact mapping for active state
  */
 function isActivePage(page: string): boolean {
   const currentPage = activePage.toLowerCase();
   const checkPage = page.toLowerCase();
   
-  // "Opportunities" should show active when on contact page with investment type
-  // For simplicity, we check if current page is contact when checking Opportunities
   if (checkPage === 'opportunities' && currentPage === 'contact') {
     return true;
   }
@@ -119,8 +110,8 @@ function isActivePage(page: string): boolean {
   <div class="max-w-7xl mx-auto px-4 lg:px-8">
     <div class="flex items-center justify-between py-1">
       
-      <!-- Logo: horizontal_color for white background -->
-      <a href={`/${brand}/`} class="flex-shrink-0">
+      <!-- Logo: Links to / (edge function serves brand homepage) -->
+      <a href="/" class="flex-shrink-0">
         <img 
           src={config.logoHorizontalColor}
           alt={`GrowthWave ${brand.charAt(0).toUpperCase() + brand.slice(1)}`}

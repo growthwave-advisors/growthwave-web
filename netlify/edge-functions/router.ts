@@ -2,17 +2,21 @@
  * GrowthWave Domain Router - Netlify Edge Function
  * =================================================
  * 
+ * FIXED VERSION - Handles trailing slashes to prevent redirect exposure
+ * 
  * This edge function runs at Netlify's CDN edge and rewrites URLs based on hostname.
  * It enables clean URLs (no /advisors/ prefix) while serving content from brand subdirectories.
  * 
  * HOW IT WORKS:
  * 1. Incoming request: https://growthwaveadvisors.com/about
  * 2. Edge function detects hostname → maps to brand "advisors"
- * 3. Rewrites URL internally to: /advisors/about
- * 4. Serves /advisors/about content
+ * 3. Rewrites URL internally to: /advisors/about/  (with trailing slash!)
+ * 4. Serves /advisors/about/index.html content
  * 5. User sees clean URL: https://growthwaveadvisors.com/about
  * 
- * IMPORTANT: This is a REWRITE (not redirect) - the URL in the browser stays clean.
+ * CRITICAL FIX: We add trailing slash in the rewrite to match Astro's output
+ * structure (/advisors/about/index.html), preventing Netlify from issuing
+ * a 301 redirect that would reveal the internal path.
  */
 
 import type { Context } from "https://edge.netlify.com";
@@ -37,6 +41,12 @@ const PASSTHROUGH_PATHS = [
   "/.netlify/",
 ];
 
+// File extensions that should NOT get trailing slash treatment
+const FILE_EXTENSIONS = [
+  ".html", ".css", ".js", ".json", ".xml", ".txt", ".svg", ".png", 
+  ".jpg", ".jpeg", ".gif", ".webp", ".ico", ".woff", ".woff2", ".ttf"
+];
+
 export default async function handler(request: Request, context: Context) {
   const url = new URL(request.url);
   const hostname = url.hostname;
@@ -45,7 +55,6 @@ export default async function handler(request: Request, context: Context) {
   // Check if this is a passthrough path (shared assets)
   for (const prefix of PASSTHROUGH_PATHS) {
     if (pathname.startsWith(prefix)) {
-      // Let the request pass through unchanged
       return context.next();
     }
   }
@@ -55,30 +64,40 @@ export default async function handler(request: Request, context: Context) {
 
   // If no brand mapping found (e.g., netlify.app URL or localhost)
   if (!brand) {
-    // Let the request pass through unchanged (shows Hub page)
     return context.next();
   }
 
   // Check if the path already has the brand prefix
   if (pathname.startsWith(`/${brand}/`) || pathname === `/${brand}`) {
-    // Already has prefix - pass through
     return context.next();
   }
 
-  // Rewrite the URL to include the brand prefix
-  // /about → /advisors/about
-  // / → /advisors/
-  const newPathname = pathname === "/" 
-    ? `/${brand}/` 
-    : `/${brand}${pathname}`;
+  // Check if this is a file request (has extension)
+  const isFileRequest = FILE_EXTENSIONS.some(ext => pathname.endsWith(ext));
 
-  // Create the new URL with rewritten path
-  const newUrl = new URL(newPathname, url.origin);
-  newUrl.search = url.search; // Preserve query parameters
+  // Build the rewritten path
+  let newPathname: string;
+  
+  if (pathname === "/") {
+    // Root path → /advisors/
+    newPathname = `/${brand}/`;
+  } else if (isFileRequest) {
+    // File request → don't add trailing slash
+    newPathname = `/${brand}${pathname}`;
+  } else {
+    // Page request → ensure trailing slash to match Astro's output
+    // This prevents Netlify from issuing a redirect that reveals the path
+    newPathname = pathname.endsWith("/") 
+      ? `/${brand}${pathname}` 
+      : `/${brand}${pathname}/`;
+  }
 
-  // Fetch the content from the rewritten URL
-  // This is a REWRITE - the browser URL stays the same
-  return context.rewrite(newUrl.toString());
+  // Preserve query parameters
+  const queryString = url.search;
+  const rewritePath = newPathname + queryString;
+
+  // REWRITE (not redirect) - browser URL stays the same
+  return context.rewrite(rewritePath);
 }
 
 // Configure which paths this edge function runs on
