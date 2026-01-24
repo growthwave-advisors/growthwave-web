@@ -1,0 +1,234 @@
+---
+/**
+ * Header.astro
+ * 
+ * LOGO USAGE:
+ * - Desktop: horizontal_color (wide format, full brand colors on white bg)
+ * - Mobile menu: stacked_color (square format for compact spaces)
+ * 
+ * NAMING CONVENTION:
+ * {brand}-{division}_{shape}_{color}.svg
+ * - Shape: horizontal | stacked | icon
+ * - Color: color | reversed
+ * 
+ * URL PARAMETER ROUTING (Properties):
+ * - "Opportunities" nav link Ã¢â€ â€™ /contact?type=investment
+ * - "Partner With Us" CTA Ã¢â€ â€™ /contact?type=partnership
+ * - Other links use standard /{page} pattern
+ * 
+ * Design System Reference: /mnt/project/Website_Design_System_STRATEGY.md
+ */
+
+interface Props {
+  brand?: 'properties' | 'capital' | 'advisors';
+  activePage?: string;
+}
+
+const { brand = 'properties', activePage = '' } = Astro.props;
+
+// Brand configuration with standardized logo naming
+const brandConfig = {
+  properties: {
+    accent: '#FF6B4A',
+    accentHover: '#E5603F',
+    pages: ['Home', 'About', 'Approach', 'Opportunities', 'Contact'],
+    ctaText: 'Partner With Us',
+    ctaHref: '/properties/contact?type=partnership',
+    // Logo variants: {brand}_{shape}_{color}.svg (icons are centralized)
+    logoHorizontalColor: '/images/logos/properties/growthwave-properties_horizontal_color.svg',
+    logoHorizontalReversed: '/images/logos/properties/growthwave-properties_horizontal_reversed.svg',
+    logoStackedColor: '/images/logos/properties/growthwave-properties_stacked_color.svg',
+    logoStackedReversed: '/images/logos/properties/growthwave-properties_stacked_reversed.svg',
+  },
+  capital: {
+    accent: '#7C3AED',
+    accentHover: '#6D28D9',
+    pages: ['Home', 'About', 'Financing Solutions', 'Contact'],
+    ctaText: 'Start Your Journey',
+    ctaHref: '/capital/contact',
+    logoHorizontalColor: '/images/logos/capital/growthwave-capital_horizontal_color.svg',
+    logoHorizontalReversed: '/images/logos/capital/growthwave-capital_horizontal_reversed.svg',
+    logoStackedColor: '/images/logos/capital/growthwave-capital_stacked_color.svg',
+    logoStackedReversed: '/images/logos/capital/growthwave-capital_stacked_reversed.svg',
+  },
+  advisors: {
+    accent: '#265077',
+    accentHover: '#1E3F5C',
+    pages: ['Home', 'About', 'Services', 'Contact'],
+    ctaText: 'Get Started',
+    ctaHref: '/advisors/contact',
+    logoHorizontalColor: '/images/logos/advisors/growthwave-advisors_horizontal_color.svg',
+    logoHorizontalReversed: '/images/logos/advisors/growthwave-advisors_horizontal_reversed.svg',
+    logoStackedColor: '/images/logos/advisors/growthwave-advisors_stacked_color.svg',
+    logoStackedReversed: '/images/logos/advisors/growthwave-advisors_stacked_reversed.svg',
+  },
+};
+
+const config = brandConfig[brand];
+
+/**
+ * Get the href for a navigation page
+ * Handles special routing for pages that need query parameters
+ * All pages include brand prefix: /{brand}/{page}
+ */
+function getPageHref(page: string): string {
+  const basePath = `/${brand}`;
+  
+  // Special routing for Properties brand
+  if (brand === 'properties') {
+    if (page === 'Opportunities') {
+      return `${basePath}/contact?type=investment`;
+    }
+  }
+  
+  // Special routing for Capital brand
+  if (brand === 'capital') {
+    if (page === 'Financing Solutions') {
+      return `${basePath}/solutions`;
+    }
+  }
+  
+  // Default routing with brand prefix
+  if (page === 'Home') {
+    return `${basePath}/`;
+  }
+  
+  return `${basePath}/${page.toLowerCase()}`;
+}
+
+/**
+ * Check if a page is "active" based on current page
+ * Handles Opportunities Ã¢â€ â€™ Contact mapping for active state
+ */
+function isActivePage(page: string): boolean {
+  const currentPage = activePage.toLowerCase();
+  const checkPage = page.toLowerCase();
+  
+  // "Opportunities" should show active when on contact page with investment type
+  // For simplicity, we check if current page is contact when checking Opportunities
+  if (checkPage === 'opportunities' && currentPage === 'contact') {
+    return true;
+  }
+  
+  return currentPage === checkPage;
+}
+---
+
+<!-- Header: Full-width wrapper with constrained content -->
+<header class="w-full bg-white sticky top-0 z-50 border-b border-gray-200">
+  <div class="max-w-7xl mx-auto px-4 lg:px-8">
+    <div class="flex items-center justify-between py-1">
+      
+      <!-- Logo: horizontal_color for white background -->
+      <a href={`/${brand}/`} class="flex-shrink-0">
+        <img 
+          src={config.logoHorizontalColor}
+          alt={`GrowthWave ${brand.charAt(0).toUpperCase() + brand.slice(1)}`}
+          class="w-44 lg:w-52 h-auto"
+        />
+      </a>
+      
+      <!-- Desktop Navigation -->
+      <nav class="hidden lg:flex items-center gap-6">
+        {config.pages.map((page) => (
+          <a 
+            href={getPageHref(page)}
+            class="nav-link-item group relative"
+            data-active={isActivePage(page) ? 'true' : 'false'}
+          >
+            <span class="text-base lg:text-lg font-medium text-gray-600 group-hover:text-gray-900 transition-colors">
+              {page}
+            </span>
+            <span class="nav-underline"></span>
+          </a>
+        ))}
+      </nav>
+      
+      <!-- CTA Button -->
+      <a 
+        href={config.ctaHref}
+        class="hidden lg:inline-flex items-center px-5 py-2.5 rounded-lg text-base lg:text-lg font-semibold text-white transition-all hover:opacity-90"
+        style={`background-color: ${config.accent};`}
+      >
+        {config.ctaText}
+      </a>
+      
+      <!-- Mobile Menu Button -->
+      <button 
+        type="button"
+        class="lg:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100"
+        aria-label="Open menu"
+        id="mobile-menu-button"
+      >
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </div>
+  </div>
+  
+  <!-- Mobile Navigation Drawer -->
+  <div id="mobile-menu" class="lg:hidden hidden">
+    <div class="max-w-7xl mx-auto px-4 py-4 border-t border-gray-100 bg-white">
+      <nav class="flex flex-col gap-2">
+        {config.pages.map((page) => (
+          <a 
+            href={getPageHref(page)}
+            class="px-4 py-3 rounded-lg text-base font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"
+            data-active={isActivePage(page) ? 'true' : 'false'}
+          >
+            {page}
+          </a>
+        ))}
+        <a 
+          href={config.ctaHref}
+          class="mt-2 px-4 py-3 rounded-lg text-base font-semibold text-white text-center transition-all hover:opacity-90"
+          style={`background-color: ${config.accent};`}
+        >
+          {config.ctaText}
+        </a>
+      </nav>
+    </div>
+  </div>
+</header>
+
+<style define:vars={{ accent: config.accent }}>
+  .nav-link-item {
+    position: relative;
+    padding-top: 0.5rem;
+    padding-bottom: 0.5rem;
+  }
+  
+  .nav-underline {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    height: 2px;
+    width: 0%;
+    background-color: var(--accent);
+    transition: width 0.3s ease;
+  }
+  
+  .nav-link-item:hover .nav-underline {
+    width: 100%;
+  }
+  
+  .nav-link-item[data-active="true"] .nav-underline {
+    width: 100%;
+  }
+  
+  .nav-link-item[data-active="true"] span:first-child {
+    color: #111827;
+    font-weight: 600;
+  }
+</style>
+
+<script>
+  const menuButton = document.getElementById('mobile-menu-button');
+  const mobileMenu = document.getElementById('mobile-menu');
+  
+  menuButton?.addEventListener('click', () => {
+    mobileMenu?.classList.toggle('hidden');
+  });
+</script>

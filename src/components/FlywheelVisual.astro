@@ -1,0 +1,722 @@
+---
+/**
+ * FlywheelVisual Component
+ * ========================
+ * The Investor Success Flywheel™ visualization
+ * 
+ * UPDATED: January 23, 2026
+ * - Hub: 280px diameter at 60% (mathematically calculated)
+ * - Cards: 240px wide, Credit Sculpt at top:0, Capital/Properties at bottom:0
+ * - All SVG icons use hardcoded stroke colors (fixes Astro rendering)
+ * 
+ * MATHEMATICAL DERIVATION FOR EQUAL OVERLAP:
+ * From visual measurement at 55% position:
+ * - Credit Sculpt effective bottom: CB = 249px
+ * - Bottom cards effective top: BT = 444px
+ * - For equal overlap: H = (CB + BT) / 2 = 346.5px = 60%
+ * 
+ * Verification at 60% (348px center, 140px radius):
+ * - Hub top edge: 208px → Credit overlap: 249-208 = 41px
+ * - Hub bottom edge: 488px → Bottom overlap: 488-444 = 44px
+ * - Equal within margin of error ✓
+ * 
+ * Responsive Strategy:
+ * - Desktop (768px+): Full circular flywheel (680×580px)
+ * - Tablet (768-1023px): Scaled to 0.7x
+ * - Mobile (<768px): Vertical stack with arrows
+ * 
+ * Usage:
+ * import FlywheelVisual from '@components/FlywheelVisual.astro';
+ * <FlywheelVisual />
+ */
+
+// Design System Colors (hardcoded for Astro SVG compatibility)
+const colors = {
+  cyan: '#51A7F8',
+  ocean: '#265077',
+  creditGreen: '#10B981',
+  capitalPurple: '#7C3AED',
+  propertiesCoral: '#FF6B4A',
+  gray400: '#9ca3af',
+  gray500: '#6b7280',
+  white: '#FFFFFF',
+};
+---
+
+<!-- ============================================
+     DESKTOP FLYWHEEL (768px+)
+     Full 680×580px circular layout
+     Hub at 57.41% with 280px diameter - mathematically calculated for equal overlap
+     ============================================ -->
+<div class="flywheel-desktop">
+  <div class="flywheel-container">
+    
+    <!-- SVG Arcs - calibrated for 280px hub at 57.41% (333px center) -->
+    <svg class="flywheel-arcs" viewBox="0 0 680 580">
+      <defs>
+        <linearGradient id="fw-arc1" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#10B981"></stop>
+          <stop offset="100%" stop-color="#7C3AED"></stop>
+        </linearGradient>
+        <linearGradient id="fw-arc2" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#7C3AED"></stop>
+          <stop offset="100%" stop-color="#FF6B4A"></stop>
+        </linearGradient>
+        <linearGradient id="fw-arc3" x1="100%" y1="0%" x2="0%" y2="0%">
+          <stop offset="0%" stop-color="#FF6B4A"></stop>
+          <stop offset="100%" stop-color="#10B981"></stop>
+        </linearGradient>
+        <filter id="fw-glow">
+          <feGaussianBlur stdDeviation="4" result="coloredBlur"></feGaussianBlur>
+          <feMerge>
+            <feMergeNode in="coloredBlur"></feMergeNode>
+            <feMergeNode in="SourceGraphic"></feMergeNode>
+          </feMerge>
+        </filter>
+      </defs>
+      
+      <!-- Arc 1→2: Credit Sculpt to Capital -->
+      <path 
+        d="M 280 190 Q 60 350 150 470" 
+        stroke="url(#fw-arc1)" 
+        stroke-width="4" 
+        fill="none" 
+        filter="url(#fw-glow)"
+        stroke-linecap="round"
+        opacity="0.8"
+      ></path>
+      <!-- Arc 2→3: Capital to Properties -->
+      <path 
+        d="M 240 560 Q 340 650 440 560" 
+        stroke="url(#fw-arc2)" 
+        stroke-width="4" 
+        fill="none" 
+        filter="url(#fw-glow)"
+        stroke-linecap="round"
+        opacity="0.8"
+      ></path>
+      <!-- Arc 3→1: Properties to Credit Sculpt -->
+      <path 
+        d="M 530 470 Q 620 350 400 190" 
+        stroke="url(#fw-arc3)" 
+        stroke-width="4" 
+        fill="none" 
+        filter="url(#fw-glow)"
+        stroke-linecap="round"
+        opacity="0.8"
+      ></path>
+    </svg>
+    
+    <!-- Center Hub - 280px diameter for equal overlap with all cards -->
+    <div class="center-hub">
+      <div class="hub-icon">
+        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="23 4 23 10 17 10"></polyline>
+          <polyline points="1 20 1 14 7 14"></polyline>
+          <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+        </svg>
+      </div>
+      <div class="hub-text-the">THE</div>
+      <div class="hub-text-title">INVESTOR SUCCESS</div>
+      <div class="hub-text-flywheel">FLYWHEEL™</div>
+    </div>
+    
+    <!-- Stage 1: Credit Sculpt (Top Center) -->
+    <div class="stage-card stage-1">
+      <div class="stage-badge stage-badge-green">1</div>
+      <div class="stage-icon stage-icon-green">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+          <polyline points="17 6 23 6 23 12"></polyline>
+        </svg>
+      </div>
+      <div class="stage-name stage-name-green">Credit Sculpt</div>
+      <div class="stage-desc">3-6 months to 680+</div>
+      <div class="stage-benefit stage-benefit-green">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+          <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
+        <span>Build credit foundation</span>
+      </div>
+    </div>
+    
+    <!-- Stage 2: Capital (Bottom Left) -->
+    <div class="stage-card stage-2">
+      <div class="stage-badge stage-badge-purple">2</div>
+      <div class="stage-icon stage-icon-purple">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="6" width="20" height="12" rx="2"></rect>
+          <circle cx="12" cy="12" r="2"></circle>
+          <path d="M6 12h.01M18 12h.01"></path>
+        </svg>
+      </div>
+      <div class="stage-name stage-name-purple">Capital</div>
+      <div class="stage-desc">$50K-$250K+ funding</div>
+      <div class="stage-benefit stage-benefit-purple">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+          <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
+        <span>Access business capital</span>
+      </div>
+    </div>
+    
+    <!-- Stage 3: Properties (Bottom Right) -->
+    <div class="stage-card stage-3">
+      <div class="stage-badge stage-badge-coral">3</div>
+      <div class="stage-icon stage-icon-coral">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FF6B4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"></path>
+          <path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"></path>
+          <path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"></path>
+          <path d="M10 6h4M10 10h4M10 14h4M10 18h4"></path>
+        </svg>
+      </div>
+      <div class="stage-name stage-name-coral">Properties</div>
+      <div class="stage-desc">8-12% CoC returns</div>
+      <div class="stage-benefit stage-benefit-coral">
+        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FF6B4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+          <polyline points="22 4 12 14.01 9 11.01"></polyline>
+        </svg>
+        <span>Invest in real estate</span>
+      </div>
+    </div>
+    
+  </div>
+  
+  <!-- Tagline -->
+  <div class="flywheel-tagline">
+    <p class="tagline-sub">Each stage feeds into the next. Momentum builds.</p>
+    <p class="tagline-main">Wealth compounds.</p>
+  </div>
+</div>
+
+<!-- ============================================
+     MOBILE FLYWHEEL (<768px)
+     Vertical stack with connecting arrows
+     ============================================ -->
+<div class="flywheel-mobile">
+  
+  <!-- Mini Hub -->
+  <div class="mobile-hub">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="23 4 23 10 17 10"></polyline>
+      <polyline points="1 20 1 14 7 14"></polyline>
+      <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+    </svg>
+    <span>FLYWHEEL™</span>
+  </div>
+  
+  <!-- Stage 1: Credit Sculpt -->
+  <div class="mobile-stage-card mobile-stage-1">
+    <div class="mobile-stage-icon-wrapper">
+      <div class="mobile-stage-icon mobile-icon-green">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+          <polyline points="17 6 23 6 23 12"></polyline>
+        </svg>
+      </div>
+      <div class="mobile-stage-badge mobile-badge-green">1</div>
+    </div>
+    <div class="mobile-stage-content">
+      <div class="mobile-stage-name mobile-name-green">Credit Sculpt</div>
+      <div class="mobile-stage-desc">3-6 months to 680+</div>
+    </div>
+  </div>
+  
+  <!-- Arrow 1→2 -->
+  <div class="mobile-arrow">
+    <div class="arrow-line arrow-line-green-purple"></div>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="12" y1="5" x2="12" y2="19"></line>
+      <polyline points="19 12 12 19 5 12"></polyline>
+    </svg>
+  </div>
+  
+  <!-- Stage 2: Capital -->
+  <div class="mobile-stage-card mobile-stage-2">
+    <div class="mobile-stage-icon-wrapper">
+      <div class="mobile-stage-icon mobile-icon-purple">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="2" y="6" width="20" height="12" rx="2"></rect>
+          <circle cx="12" cy="12" r="2"></circle>
+          <path d="M6 12h.01M18 12h.01"></path>
+        </svg>
+      </div>
+      <div class="mobile-stage-badge mobile-badge-purple">2</div>
+    </div>
+    <div class="mobile-stage-content">
+      <div class="mobile-stage-name mobile-name-purple">Capital</div>
+      <div class="mobile-stage-desc">$50K-$250K+ funding</div>
+    </div>
+  </div>
+  
+  <!-- Arrow 2→3 -->
+  <div class="mobile-arrow">
+    <div class="arrow-line arrow-line-purple-coral"></div>
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FF6B4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <line x1="12" y1="5" x2="12" y2="19"></line>
+      <polyline points="19 12 12 19 5 12"></polyline>
+    </svg>
+  </div>
+  
+  <!-- Stage 3: Properties -->
+  <div class="mobile-stage-card mobile-stage-3">
+    <div class="mobile-stage-icon-wrapper">
+      <div class="mobile-stage-icon mobile-icon-coral">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FF6B4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"></path>
+          <path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"></path>
+          <path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"></path>
+        </svg>
+      </div>
+      <div class="mobile-stage-badge mobile-badge-coral">3</div>
+    </div>
+    <div class="mobile-stage-content">
+      <div class="mobile-stage-name mobile-name-coral">Properties</div>
+      <div class="mobile-stage-desc">8-12% CoC returns</div>
+    </div>
+  </div>
+  
+  <!-- Cycle Indicator -->
+  <div class="mobile-cycle">
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#51A7F8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <polyline points="23 4 23 10 17 10"></polyline>
+      <polyline points="1 20 1 14 7 14"></polyline>
+      <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"></path>
+    </svg>
+    <span>Cycle continues...</span>
+  </div>
+  
+  <!-- Tagline -->
+  <p class="mobile-tagline">Wealth compounds.</p>
+</div>
+
+<style>
+  /* ============================================
+     DESKTOP STYLES (768px+)
+     ============================================ */
+  .flywheel-desktop {
+    display: none;
+  }
+  
+  @media (min-width: 768px) {
+    .flywheel-desktop {
+      display: block;
+    }
+    .flywheel-mobile {
+      display: none;
+    }
+  }
+  
+  /* Container */
+  .flywheel-container {
+    position: relative;
+    width: 680px;
+    height: 580px;
+    margin: 0 auto;
+    transform-origin: top center;
+  }
+  
+  /* Tablet: scale down */
+  @media (min-width: 768px) and (max-width: 1023px) {
+    .flywheel-container {
+      transform: scale(0.7);
+      margin-bottom: -174px;
+    }
+  }
+  
+  /* SVG Arcs */
+  .flywheel-arcs {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 1;
+  }
+  
+  /* Center Hub - 280px diameter at 57.41% for EQUAL overlap
+     
+     MATHEMATICAL CALCULATION (from 55% screenshot measurements):
+     - At 55% (319px): hub top=179px, hub bottom=459px
+     - Credit Sculpt bottom edge (observed): ~209px
+     - Bottom cards top edge (observed): ~457px
+     
+     Formula for equal overlap: Hub_center = (CS_bottom + BC_top) / 2
+     Hub_center = (209 + 457) / 2 = 333px
+     As percentage: 333 / 580 = 57.41%
+     
+     Verification at 57.41% (333px):
+     - Hub top: 333 - 140 = 193px
+     - Hub bottom: 333 + 140 = 473px
+     - Credit Sculpt overlap: 209 - 193 = 16px ✓
+     - Bottom cards overlap: 473 - 457 = 16px ✓
+     EQUAL! */
+  .center-hub {
+    position: absolute;
+    top: 57.41%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 280px;
+    height: 280px;
+    border-radius: 50%;
+    background: 
+      radial-gradient(circle at 30% 30%, rgba(81, 167, 248, 0.25), transparent 60%),
+      linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, transparent 100%);
+    border: 2px solid rgba(81, 167, 248, 0.5);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 0 60px rgba(81, 167, 248, 0.3);
+    z-index: 10;
+  }
+  
+  .hub-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: linear-gradient(135deg, #51A7F8 0%, #265077 100%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+    box-shadow: 0 4px 20px rgba(81, 167, 248, 0.6);
+  }
+  
+  .hub-text-the {
+    font-size: 10px;
+    color: #9ca3af;
+    letter-spacing: 0.12em;
+  }
+  
+  .hub-text-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: white;
+    letter-spacing: 0.05em;
+  }
+  
+  .hub-text-flywheel {
+    font-size: 20px;
+    font-weight: 700;
+    color: #51A7F8;
+  }
+  
+  /* Stage Cards - FIXED: 240px width */
+  .stage-card {
+    position: absolute;
+    width: 240px;
+    background: white;
+    border-radius: 20px;
+    padding: 24px;
+    text-align: center;
+    z-index: 5;
+  }
+  
+  .stage-1 {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    border: 3px solid #10B981;
+    box-shadow: 0 12px 40px rgba(16, 185, 129, 0.35), 0 0 0 1px rgba(16, 185, 129, 0.2);
+  }
+  
+  /* FIXED: bottom: 0 instead of 30px */
+  .stage-2 {
+    bottom: 0;
+    left: 0;
+    border: 3px solid #7C3AED;
+    box-shadow: 0 12px 40px rgba(124, 58, 237, 0.35), 0 0 0 1px rgba(124, 58, 237, 0.2);
+  }
+  
+  .stage-3 {
+    bottom: 0;
+    right: 0;
+    border: 3px solid #FF6B4A;
+    box-shadow: 0 12px 40px rgba(255, 107, 74, 0.35), 0 0 0 1px rgba(255, 107, 74, 0.2);
+  }
+  
+  /* Stage Badge */
+  .stage-badge {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 14px;
+  }
+  
+  .stage-badge-green {
+    background: linear-gradient(135deg, #10B981 0%, #10B981dd 100%);
+    box-shadow: 0 4px 16px rgba(16, 185, 129, 0.6);
+  }
+  
+  .stage-badge-purple {
+    background: linear-gradient(135deg, #7C3AED 0%, #7C3AEDdd 100%);
+    box-shadow: 0 4px 16px rgba(124, 58, 237, 0.6);
+  }
+  
+  .stage-badge-coral {
+    background: linear-gradient(135deg, #FF6B4A 0%, #FF6B4Add 100%);
+    box-shadow: 0 4px 16px rgba(255, 107, 74, 0.6);
+  }
+  
+  /* Stage Icon */
+  .stage-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 12px;
+    border: 1px solid;
+  }
+  
+  .stage-icon-green {
+    background: linear-gradient(135deg, rgba(16, 185, 129, 0.1) 0%, rgba(16, 185, 129, 0.03) 100%);
+    border-color: rgba(16, 185, 129, 0.3);
+  }
+  
+  .stage-icon-purple {
+    background: linear-gradient(135deg, rgba(124, 58, 237, 0.1) 0%, rgba(124, 58, 237, 0.03) 100%);
+    border-color: rgba(124, 58, 237, 0.3);
+  }
+  
+  .stage-icon-coral {
+    background: linear-gradient(135deg, rgba(255, 107, 74, 0.1) 0%, rgba(255, 107, 74, 0.03) 100%);
+    border-color: rgba(255, 107, 74, 0.3);
+  }
+  
+  .stage-name {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  
+  .stage-name-green { color: #10B981; }
+  .stage-name-purple { color: #7C3AED; }
+  .stage-name-coral { color: #FF6B4A; }
+  
+  .stage-desc {
+    font-size: 13px;
+    color: #6b7280;
+    margin-bottom: 10px;
+  }
+  
+  .stage-benefit {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    font-size: 12px;
+    font-weight: 600;
+  }
+  
+  .stage-benefit-green { color: #10B981; }
+  .stage-benefit-purple { color: #7C3AED; }
+  .stage-benefit-coral { color: #FF6B4A; }
+  
+  /* Tagline */
+  .flywheel-tagline {
+    text-align: center;
+    margin-top: 1.5rem;
+  }
+  
+  .tagline-sub {
+    color: #9ca3af;
+    font-size: 15px;
+    margin-bottom: 8px;
+  }
+  
+  .tagline-main {
+    color: #51A7F8;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: 0.02em;
+    text-shadow: 0 0 30px rgba(81, 167, 248, 0.5);
+  }
+  
+  /* ============================================
+     MOBILE STYLES (<768px)
+     ============================================ */
+  .flywheel-mobile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    max-width: 320px;
+    margin: 0 auto;
+  }
+  
+  @media (min-width: 768px) {
+    .flywheel-mobile {
+      display: none;
+    }
+  }
+  
+  /* Mobile Hub */
+  .mobile-hub {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 20px;
+    border-radius: 9999px;
+    background: rgba(81, 167, 248, 0.15);
+    border: 1px solid rgba(81, 167, 248, 0.4);
+    margin-bottom: 20px;
+  }
+  
+  .mobile-hub span {
+    font-size: 13px;
+    font-weight: 700;
+    color: #51A7F8;
+    letter-spacing: 0.05em;
+  }
+  
+  /* Mobile Stage Card */
+  .mobile-stage-card {
+    width: 100%;
+    background: white;
+    border-radius: 16px;
+    padding: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    border: 2px solid;
+  }
+  
+  .mobile-stage-1 { border-color: #10B981; }
+  .mobile-stage-2 { border-color: #7C3AED; }
+  .mobile-stage-3 { border-color: #FF6B4A; }
+  
+  .mobile-stage-icon-wrapper {
+    position: relative;
+  }
+  
+  .mobile-stage-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid;
+  }
+  
+  .mobile-icon-green {
+    background: rgba(16, 185, 129, 0.1);
+    border-color: rgba(16, 185, 129, 0.3);
+  }
+  
+  .mobile-icon-purple {
+    background: rgba(124, 58, 237, 0.1);
+    border-color: rgba(124, 58, 237, 0.3);
+  }
+  
+  .mobile-icon-coral {
+    background: rgba(255, 107, 74, 0.1);
+    border-color: rgba(255, 107, 74, 0.3);
+  }
+  
+  .mobile-stage-badge {
+    position: absolute;
+    top: -8px;
+    right: -8px;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    font-size: 12px;
+  }
+  
+  .mobile-badge-green { background: #10B981; }
+  .mobile-badge-purple { background: #7C3AED; }
+  .mobile-badge-coral { background: #FF6B4A; }
+  
+  .mobile-stage-content {
+    flex: 1;
+  }
+  
+  .mobile-stage-name {
+    font-size: 16px;
+    font-weight: 700;
+    margin-bottom: 2px;
+  }
+  
+  .mobile-name-green { color: #10B981; }
+  .mobile-name-purple { color: #7C3AED; }
+  .mobile-name-coral { color: #FF6B4A; }
+  
+  .mobile-stage-desc {
+    font-size: 13px;
+    color: #6b7280;
+  }
+  
+  /* Mobile Arrow */
+  .mobile-arrow {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 4px 0;
+  }
+  
+  .arrow-line {
+    width: 2px;
+    height: 20px;
+    border-radius: 1px;
+  }
+  
+  .arrow-line-green-purple {
+    background: linear-gradient(to bottom, #10B981, #7C3AED);
+  }
+  
+  .arrow-line-purple-coral {
+    background: linear-gradient(to bottom, #7C3AED, #FF6B4A);
+  }
+  
+  /* Mobile Cycle */
+  .mobile-cycle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 16px;
+    padding: 12px 24px;
+    border-radius: 9999px;
+    background: rgba(81, 167, 248, 0.15);
+    border: 1px solid rgba(81, 167, 248, 0.4);
+  }
+  
+  .mobile-cycle span {
+    font-size: 13px;
+    font-weight: 600;
+    color: #51A7F8;
+  }
+  
+  /* Mobile Tagline */
+  .mobile-tagline {
+    margin-top: 24px;
+    color: #51A7F8;
+    font-size: 18px;
+    font-weight: 700;
+    text-shadow: 0 0 20px rgba(81, 167, 248, 0.4);
+    text-align: center;
+  }
+</style>

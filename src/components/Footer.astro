@@ -1,0 +1,206 @@
+---
+/**
+ * Footer.astro
+ * 
+ * LOGO USAGE:
+ * - Footer (dark bg): horizontal_reversed (wide format, white/light for dark bg)
+ * 
+ * NAMING CONVENTION:
+ * {brand}-{division}_{shape}_{color}.svg
+ * - Shape: horizontal | stacked | icon
+ * - Color: color | reversed
+ * 
+ * Design System Reference: /mnt/project/Website_Design_System_STRATEGY.md
+ */
+
+interface Props {
+  brand?: 'properties' | 'capital' | 'advisors';
+}
+
+const { brand = 'properties' } = Astro.props;
+
+// Brand colors
+const colors = {
+  darkNavy: '#022140',
+  propertiesCoral: '#FF6B4A',
+  capitalPurple: '#7C3AED',
+  creditGreen: '#10B981',
+};
+
+// Brand-specific configuration with standardized logo naming
+const brandConfig = {
+  properties: {
+    tagline: 'Building wealth through strategic multifamily investment.',
+    // Logo: horizontal_reversed for dark background
+    logoHorizontalReversed: '/images/logos/properties/growthwave-properties_horizontal_reversed.svg',
+    email: 'invest@growthwaveproperties.com',
+    quickLinks: [
+      { label: 'Home', href: '/properties/' },
+      { label: 'About', href: '/properties/about' },
+      { label: 'Approach', href: '/properties/approach' },
+      { label: 'Contact', href: '/properties/contact' },
+    ],
+  },
+  capital: {
+    tagline: 'Fueling your business growth with smart financing.',
+    logoHorizontalReversed: '/images/logos/capital/growthwave-capital_horizontal_reversed.svg',
+    email: 'funding@growthwavecapital.com',
+    quickLinks: [
+      { label: 'Home', href: '/capital/' },
+      { label: 'About', href: '/capital/about' },
+      { label: 'Financing Solutions', href: '/capital/solutions' },
+      { label: 'Contact', href: '/capital/contact' },
+    ],
+  },
+  advisors: {
+    tagline: 'Integrated financial services for investors.',
+    logoHorizontalReversed: '/images/logos/advisors/growthwave-advisors_horizontal_reversed.svg',
+    email: 'hello@growthwaveadvisors.com',
+    quickLinks: [
+      { label: 'Home', href: '/advisors/' },
+      { label: 'About', href: '/advisors/about' },
+      { label: 'Services', href: '/advisors/services' },
+      { label: 'Contact', href: '/advisors/contact' },
+    ],
+  },
+};
+
+const config = brandConfig[brand];
+
+// Division links with brand colors and glow effect
+const divisions = [
+  { 
+    name: 'GrowthWave Properties', 
+    href: 'https://growthwaveproperties.com',
+    color: colors.propertiesCoral,
+  },
+  { 
+    name: 'GrowthWave Capital', 
+    href: 'https://growthwavecapital.com',
+    color: colors.capitalPurple,
+  },
+  { 
+    name: 'Credit Sculpt', 
+    href: 'https://creditsculpt.com',
+    color: colors.creditGreen,
+  },
+];
+
+const currentYear = new Date().getFullYear();
+---
+
+<!-- Footer: Full-width dark background, constrained content -->
+<footer class="w-full" style={`background-color: ${colors.darkNavy};`}>
+  
+  <!-- Main Footer Content -->
+  <div class="max-w-6xl mx-auto px-4 lg:px-8 py-12 lg:py-16">
+    
+    <!-- 12-column grid with 4-2-3-3 allocation -->
+    <div class="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12">
+      
+      <!-- Logo & Tagline: 4 columns (33%) -->
+      <div class="md:col-span-4">
+        <a href={`/${brand}/`} class="inline-block">
+          <!-- Logo: horizontal_reversed for dark background -->
+          <img 
+            src={config.logoHorizontalReversed}
+            alt={`GrowthWave ${brand.charAt(0).toUpperCase() + brand.slice(1)}`}
+            class="h-12 lg:h-14 w-auto"
+          />
+        </a>
+        <p class="text-sm lg:text-base text-gray-300 mt-4 leading-relaxed">
+          {config.tagline}
+        </p>
+      </div>
+      
+      <!-- Quick Links: 2 columns (17%) -->
+      <div class="md:col-span-2">
+        <h4 class="text-base lg:text-lg font-semibold text-white mb-4">
+          Quick Links
+        </h4>
+        <ul class="space-y-2">
+          {config.quickLinks.map((link) => (
+            <li>
+              <a 
+                href={link.href}
+                class="text-sm lg:text-base text-gray-300 hover:text-white transition-colors"
+              >
+                {link.label}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+      
+      <!-- Our Divisions: 2 columns (17%) -->
+      <div class="md:col-span-2">
+        <h4 class="text-base lg:text-lg font-semibold text-white mb-4">
+          Our Divisions
+        </h4>
+        <ul class="space-y-2">
+          {divisions.map((division) => (
+            <li>
+              <a 
+                href={division.href}
+                class="division-link text-sm lg:text-base transition-opacity hover:opacity-80"
+                style={`color: ${division.color}; text-shadow: 0 0 20px ${division.color}80, 0 0 40px ${division.color}40;`}
+              >
+                {division.name}
+              </a>
+            </li>
+          ))}
+        </ul>
+      </div>
+      
+      <!-- Contact: 4 columns (33%) -->
+      <div class="md:col-span-4">
+        <h4 class="text-base lg:text-lg font-semibold text-white mb-4">
+          Contact
+        </h4>
+        <ul class="space-y-2">
+          <li>
+            <a 
+              href={`mailto:${config.email}`}
+              class="text-sm lg:text-base text-gray-300 hover:text-white transition-colors break-all md:break-normal"
+            >
+              {config.email}
+            </a>
+          </li>
+          <li>
+            <span class="text-sm lg:text-base text-gray-300">
+              Global Access &bull; 24/7 Digital Platform
+            </span>
+          </li>
+        </ul>
+      </div>
+      
+    </div>
+  </div>
+  
+  <!-- Copyright Bar -->
+  <div class="w-full border-t border-gray-700">
+    <div class="max-w-6xl mx-auto px-4 lg:px-8 py-4">
+      <div class="flex flex-col md:flex-row justify-between items-center gap-2">
+        <p class="text-xs lg:text-sm text-gray-400">
+          &copy; {currentYear} GrowthWave Advisors LLC. All rights reserved.
+        </p>
+        <div class="flex items-center gap-4">
+          <a 
+            href={`/${brand}/privacy`}
+            class="text-xs lg:text-sm text-gray-400 hover:text-gray-300 transition-colors"
+          >
+            Privacy Policy
+          </a>
+          <span class="text-gray-600">|</span>
+          <a 
+            href={`/${brand}/terms`}
+            class="text-xs lg:text-sm text-gray-400 hover:text-gray-300 transition-colors"
+          >
+            Terms of Service
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+</footer>

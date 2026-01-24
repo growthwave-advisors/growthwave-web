@@ -1,0 +1,145 @@
+---
+/**
+ * Button Component
+ * ================
+ * Reusable button/link component with brand-aware styling and variants.
+ * Supports primary, secondary, outline, and ghost variants with optional
+ * arrow reveal effect on hover.
+ * 
+ * @example
+ * <!-- Primary button with arrow -->
+ * <Button brand="properties" showArrow>Partner With Us</Button>
+ * 
+ * <!-- Secondary link button -->
+ * <Button brand="capital" variant="secondary" href="/services">Learn More</Button>
+ * 
+ * <!-- Outline for dark backgrounds -->
+ * <Button brand="advisors" variant="outline" href="/contact">Get Started</Button>
+ * 
+ * <!-- Responsive sizing for headers -->
+ * <Button brand="properties" size="responsive" href="/contact">Partner With Us</Button>
+ */
+import type { BrandId, ButtonVariant } from '@brand-types/brand';
+import { getBrand } from '@config/brands';
+
+/** Extended button sizes including responsive */
+type ButtonSizeExtended = 'sm' | 'md' | 'lg' | 'responsive';
+
+type Props = {
+  /** Brand identifier for accent color theming */
+  brand: BrandId;
+  /** Button style variant */
+  variant?: ButtonVariant;
+  /** Button size - use 'responsive' for header/nav buttons that scale with viewport */
+  size?: ButtonSizeExtended;
+  /** URL - renders as <a> if provided, otherwise <button> */
+  href?: string;
+  /** Button type (only applies when href is not provided) */
+  type?: 'button' | 'submit' | 'reset';
+  /** Show arrow with reveal effect on hover */
+  showArrow?: boolean;
+  /** Open link in new tab */
+  external?: boolean;
+  /** Additional CSS classes */
+  class?: string;
+  /** Disabled state */
+  disabled?: boolean;
+};
+
+const {
+  brand,
+  variant = 'primary',
+  size = 'md',
+  href,
+  type = 'button',
+  showArrow = false,
+  external = false,
+  class: className = '',
+  disabled = false,
+} = Astro.props as Props;
+
+const brandConfig = getBrand(brand);
+const accentColor = brandConfig.colors.accent;
+
+/**
+ * Size classes with responsive variant for viewport-based scaling
+ * - sm: Compact buttons for tight spaces
+ * - md: Default button size
+ * - lg: Large buttons for hero CTAs
+ * - responsive: Scales from md → lg → xl across breakpoints (use in headers)
+ */
+const sizeClasses: Record<ButtonSizeExtended, string> = {
+  sm: 'px-4 py-2 text-sm',
+  md: 'px-5 py-2.5 text-sm',
+  lg: 'px-6 py-3 text-base',
+  responsive: 'px-5 py-2.5 text-sm lg:px-6 lg:py-3 lg:text-base xl:px-7 xl:py-3.5 xl:text-lg 2xl:px-8 2xl:py-4 2xl:text-xl',
+};
+
+// Base classes for all buttons
+const baseClasses = `
+  inline-flex items-center justify-center gap-2
+  font-semibold rounded-lg
+  transition-all duration-200
+  focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2
+  disabled:opacity-50 disabled:cursor-not-allowed
+  group
+`.trim().replace(/\s+/g, ' ');
+
+// Variant-specific styles (inline styles for brand color)
+const variantConfig: Record<ButtonVariant, { classes: string; style: string }> = {
+  primary: {
+    classes: 'text-white hover:opacity-90',
+    style: `background-color: ${accentColor}; --tw-ring-color: ${accentColor};`,
+  },
+  secondary: {
+    classes: 'bg-white border-2 hover:bg-gray-50',
+    style: `color: ${accentColor}; border-color: ${accentColor}; --tw-ring-color: ${accentColor};`,
+  },
+  outline: {
+    classes: 'bg-transparent text-white border-2 border-white hover:bg-white/10',
+    style: `--tw-ring-color: white;`,
+  },
+  ghost: {
+    classes: 'bg-transparent hover:bg-gray-100',
+    style: `color: ${accentColor}; --tw-ring-color: ${accentColor};`,
+  },
+};
+
+const { classes: variantClasses, style: variantStyle } = variantConfig[variant];
+
+const combinedClasses = [
+  baseClasses,
+  sizeClasses[size],
+  variantClasses,
+  className,
+].join(' ');
+
+// Link attributes for external links
+const linkAttrs = external ? { target: '_blank', rel: 'noopener noreferrer' } : {};
+
+// Determine if we render as link or button
+const isLink = !!href;
+---
+
+{isLink ? (
+  <a
+    href={href}
+    class={combinedClasses}
+    style={variantStyle}
+    {...linkAttrs}
+    aria-disabled={disabled ? 'true' : undefined}
+  >
+    <slot />
+    {showArrow && <span class="arrow-reveal" aria-hidden="true">→</span>}
+  </a>
+) : (
+  <button
+    type={type}
+    class={combinedClasses}
+    style={variantStyle}
+    disabled={disabled}
+  >
+    <slot />
+    {showArrow && <span class="arrow-reveal" aria-hidden="true">→</span>}
+  </button>
+)}
