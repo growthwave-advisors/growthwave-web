@@ -1,40 +1,39 @@
 {
   "extends": "astro/tsconfigs/strict",
   "compilerOptions": {
-    /* Path Aliases for Clean Imports */
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"],
-      "@components/*": ["src/components/*"],
-      "@layouts/*": ["src/layouts/*"],
-      "@config/*": ["src/config/*"],
-      "@types/*": ["src/types/*"],
-      "@styles/*": ["src/styles/*"],
-      "@utils/*": ["src/utils/*"]
+      "@components/*": [
+        "src/components/*"
+      ],
+      "@layouts/*": [
+        "src/layouts/*"
+      ],
+      "@config/*": [
+        "src/config/*"
+      ],
+      "@brand-types/*": [
+        "src/types/*"
+      ],
+      "@styles/*": [
+        "src/styles/*"
+      ]
     },
-    
-    /* Strict Type Checking (Boris Cherny approved) */
-    "strict": true,
-    "noImplicitAny": true,
     "strictNullChecks": true,
-    "strictFunctionTypes": true,
+    "noUncheckedIndexedAccess": true,
+    "noImplicitAny": true,
     "noImplicitReturns": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedIndexedAccess": true,
-    
-    /* Module Resolution */
-    "moduleResolution": "bundler",
-    "allowImportingTsExtensions": true,
-    "noEmit": true,
-    
-    /* Interop */
-    "esModuleInterop": true,
-    "isolatedModules": true,
-    "verbatimModuleSyntax": true,
-    
-    /* Source Maps for Debugging */
-    "sourceMap": true
+    "forceConsistentCasingInFileNames": true,
+    "jsx": "react-jsx",
+    "jsxImportSource": "react"
   },
-  "include": ["src/**/*", "src/**/*.astro"],
-  "exclude": ["node_modules", "dist"]
+  "include": [
+    "src/**/*",
+    "astro.config.mjs"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }
