@@ -1,0 +1,689 @@
+---
+/**
+ * GrowthWave Properties - Approach Page
+ * ======================================
+ * Updated: January 2026
+ * 
+ * Design System Compliance:
+ * - Two-layer "Fixed Island" pattern on all sections
+ * - Typography stops at lg breakpoint (no xl: or 2xl:)
+ * - Responsive padding: px-4 lg:px-8
+ * - Body content: max-w-7xl (1280px)
+ * 
+ * Copy Updates Applied:
+ * - "high-growth regional markets" (not Midwest-specific)
+ * - "Stabilized or Value-Add" occupancy criteria
+ * 
+ * @see Website_Design_System_STRATEGY.md
+ * @see Website_Copy_Updates_January_2026.md
+ * @see approach-page-wireframe-FINAL.jsx
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import Button from '@components/Button.astro';
+
+// Brand Colors
+const colors = {
+  coral: '#FF6B4A',
+  coralLight: '#ff8a6b',
+  coralBg: 'rgba(255,107,74,0.15)',
+  coralBgLight: 'rgba(255,107,74,0.08)',
+  ocean: '#265077',
+  oceanBg: 'rgba(38,80,119,0.12)',
+  midnight: '#022140',
+  cyan: '#51A7F8',
+  cyanBg: 'rgba(81,167,248,0.12)',
+  purple: '#7C3AED',
+  green: '#10B981',
+  gray50: '#f9fafb',
+  gray100: '#f3f4f6',
+  gray200: '#e5e7eb',
+  gray300: '#d1d5db',
+  gray400: '#9ca3af',
+  gray500: '#6b7280',
+  gray600: '#4b5563',
+  gray700: '#374151',
+  gray800: '#1f2937',
+};
+
+// Investment Process Steps
+const processSteps = [
+  { 
+    step: '1', 
+    title: 'Market Selection', 
+    desc: 'Evaluate high-growth regional markets based on employment, population, and regulations.',
+    icon: 'search'
+  },
+  { 
+    step: '2', 
+    title: 'Deal Sourcing', 
+    desc: 'Identify off-market opportunities through broker relationships and proprietary analysis.',
+    icon: 'chart'
+  },
+  { 
+    step: '3', 
+    title: 'Underwriting', 
+    desc: 'Rigorous modeling with 7% vacancy, $450/unit reserves, and stress testing.',
+    icon: 'calculator'
+  },
+  { 
+    step: '4', 
+    title: 'Due Diligence', 
+    desc: 'Comprehensive inspection, tenant analysis, title review, and assumption verification.',
+    icon: 'filecheck'
+  },
+  { 
+    step: '5', 
+    title: 'Value-Add Execution', 
+    desc: 'Systematic renovations, operational improvements, and revenue optimization.',
+    icon: 'wrench'
+  },
+  { 
+    step: '6', 
+    title: 'Stabilization & Exit', 
+    desc: 'Professional management through stabilization, then strategic exit via 1031.',
+    icon: 'trending'
+  },
+];
+
+// Property Criteria - What We Target
+const targetCriteria = [
+  { label: 'Property Type', value: 'Small to Midsize Multifamily' },
+  { label: 'Asset Class', value: 'B/C Workforce Housing' },
+  { label: 'Condition', value: 'Value-Add Opportunities' },
+  { label: 'Markets', value: 'High-Growth Regional' },
+  { label: 'Occupancy', value: 'Stabilized or Value-Add' },
+];
+
+// Property Criteria - What We Look For
+const lookForCategories = [
+  {
+    title: 'Revenue Upside',
+    color: colors.coral,
+    bgColor: colors.coralBg,
+    items: ['Below-market rents', 'Stale tenant rents', 'Missing income streams', 'Reno rent premiums']
+  },
+  {
+    title: 'Operational',
+    color: colors.ocean,
+    bgColor: colors.oceanBg,
+    items: ['Utility conversion', 'Expense reduction', 'Pro management', 'Deferred maintenance']
+  },
+  {
+    title: 'Market',
+    color: colors.cyan,
+    bgColor: colors.cyanBg,
+    items: ['Diverse employment', 'Population growth', 'Workforce demand', 'Landlord-friendly']
+  },
+];
+
+// Our Commitment Cards
+const commitments = [
+  { 
+    title: 'To Our Partners', 
+    text: 'Transparent reporting, proactive communication, honest assessments. No surprises—just professional execution.',
+    icon: 'briefcase'
+  },
+  { 
+    title: 'To Our Tenants', 
+    text: 'Clean, safe, well-maintained housing at fair prices. Prompt maintenance and treating residents with dignity.',
+    icon: 'home'
+  },
+  { 
+    title: 'To Our Markets', 
+    text: 'We invest in communities. Our renovations improve neighborhoods and our long-term approach creates stability.',
+    icon: 'heart'
+  },
+];
+
+// GrowthWave Difference - Flywheel
+const flywheel = [
+  { name: 'Credit Sculpt Services', color: colors.green, text: 'Optimizes credit profiles for better financing.', tag: 'Step 1' },
+  { name: 'GrowthWave Capital', color: colors.purple, text: 'Provides business credit and financing access.', tag: 'Step 2' },
+  { name: 'GrowthWave Properties', color: colors.coral, text: 'Delivers professionally managed investments.', tag: 'Step 3' },
+];
+---
+
+<BaseLayout
+  brand="properties"
+  title="Our Approach | GrowthWave Properties"
+  description="Learn our disciplined investment approach: conservative underwriting, systematic value-add execution, and transparent reporting for consistent results."
+>
+  <Header brand="properties" activePage="Approach" />
+
+  <main>
+    <!-- ============================================
+         SECTION 1: HERO
+         - Dark gradient background (full-width)
+         - Radial gradient overlays for depth
+         ============================================ -->
+    <section 
+      class="w-full relative overflow-hidden"
+      style={`background-color: ${colors.midnight};`}
+    >
+      <!-- Gradient overlays -->
+      <div 
+        class="absolute inset-0 opacity-30 pointer-events-none"
+        style={`background: radial-gradient(ellipse at 30% 20%, ${colors.ocean}40 0%, transparent 50%),
+                           radial-gradient(ellipse at 70% 80%, ${colors.coral}20 0%, transparent 50%);`}
+      ></div>
+      
+      <div class="max-w-7xl mx-auto px-4 lg:px-8 py-16 lg:py-20 relative z-10">
+        <div class="max-w-3xl mx-auto text-center">
+          <!-- Badge -->
+          <div 
+            class="inline-block px-3 py-1 rounded-full text-xs lg:text-sm font-semibold tracking-wider uppercase mb-4"
+            style={`background-color: ${colors.coralBg}; color: ${colors.coral};`}
+          >
+            Our Investment Approach
+          </div>
+          
+          <!-- Headline -->
+          <h1 class="text-3xl lg:text-5xl font-bold text-white leading-tight mb-4">
+            Disciplined Strategy.{' '}
+            <span style={`color: ${colors.coral};`}>Proven Execution.</span>
+          </h1>
+          
+          <!-- Subheadline -->
+          <p class="text-base lg:text-xl text-gray-300 max-w-2xl mx-auto">
+            Conservative underwriting combined with systematic value-add execution 
+            to deliver consistent results for our partners.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         SECTION 2: INVESTMENT PHILOSOPHY
+         - Asymmetric 2-column layout
+         - Pull quote with accent bar
+         - Principle badges
+         ============================================ -->
+    <section class="w-full bg-white">
+      <div class="max-w-7xl mx-auto px-4 lg:px-8 py-12 lg:py-20">
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 lg:gap-12">
+          
+          <!-- Left Column: Title + Pull Quote (2/5) -->
+          <div class="lg:col-span-2">
+            <h2 
+              class="text-2xl lg:text-3xl font-bold mb-6"
+              style={`color: ${colors.midnight};`}
+            >
+              Our Investment Philosophy
+            </h2>
+            
+            <!-- Pull Quote -->
+            <div 
+              class="relative p-5 lg:p-6 rounded-xl"
+              style={`background: linear-gradient(135deg, ${colors.coralBgLight} 0%, transparent 100%);`}
+            >
+              <div 
+                class="absolute left-0 top-0 bottom-0 w-1 rounded-full"
+                style={`background-color: ${colors.coral};`}
+              ></div>
+              <p 
+                class="text-base lg:text-lg italic leading-relaxed pl-4"
+                style={`color: ${colors.ocean};`}
+              >
+                "We can't predict market appreciation, but we can <strong>force it</strong> through strategic improvements 
+                that increase NOI."
+              </p>
+            </div>
+            
+            <!-- Principle Badges -->
+            <div class="flex flex-wrap gap-2 mt-6">
+              <span 
+                class="px-3 py-1.5 rounded-full text-xs lg:text-sm font-semibold"
+                style={`background-color: ${colors.oceanBg}; color: ${colors.ocean};`}
+              >
+                Conservative Underwriting
+              </span>
+              <span 
+                class="px-3 py-1.5 rounded-full text-xs lg:text-sm font-semibold"
+                style={`background-color: ${colors.coralBg}; color: ${colors.coral};`}
+              >
+                Operational Excellence
+              </span>
+              <span 
+                class="px-3 py-1.5 rounded-full text-xs lg:text-sm font-semibold"
+                style={`background-color: ${colors.cyanBg}; color: ${colors.cyan};`}
+              >
+                Transparent Reporting
+              </span>
+            </div>
+          </div>
+          
+          <!-- Right Column: Philosophy Content (3/5) -->
+          <div class="lg:col-span-3 space-y-4">
+            <p 
+              class="text-base lg:text-lg leading-relaxed"
+              style={`color: ${colors.gray600};`}
+            >
+              We believe the best multifamily returns come from controlling what we can control: 
+              property selection, renovation execution, operational improvements, and professional management.
+            </p>
+            
+            <p 
+              class="text-base lg:text-lg leading-relaxed"
+              style={`color: ${colors.gray600};`}
+            >
+              Our strategy focuses on workforce housing across{' '}
+              <span 
+                class="text-lg lg:text-xl font-semibold"
+                style={`color: ${colors.ocean};`}
+              >
+                high-growth regional markets
+              </span>{' '}
+              where fundamentals support long-term value creation.
+            </p>
+            
+            <p 
+              class="text-base lg:text-lg leading-relaxed"
+              style={`color: ${colors.gray600};`}
+            >
+              Every decision is guided by:{' '}
+              <span 
+                class="text-lg lg:text-xl font-semibold"
+                style={`color: ${colors.ocean};`}
+              >
+                conservative underwriting
+              </span>{' '}
+              that protects capital,{' '}
+              <span 
+                class="text-lg lg:text-xl font-semibold"
+                style={`color: ${colors.coral};`}
+              >
+                operational excellence
+              </span>{' '}
+              that maximizes performance, and{' '}
+              <span 
+                class="text-lg lg:text-xl font-semibold"
+                style={`color: ${colors.cyan};`}
+              >
+                transparent reporting
+              </span>{' '}
+              that builds trust.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         SECTION 3: PROPERTY CRITERIA
+         - Light gray background
+         - Dark card + 3 feature cards
+         ============================================ -->
+    <section class="w-full" style={`background-color: ${colors.gray50};`}>
+      <div class="max-w-7xl mx-auto px-4 lg:px-8 py-12 lg:py-20">
+        
+        <!-- Section Header -->
+        <div class="text-center mb-10 lg:mb-12">
+          <h2 
+            class="text-2xl lg:text-3xl font-bold mb-3"
+            style={`color: ${colors.midnight};`}
+          >
+            Property Criteria
+          </h2>
+          <p 
+            class="text-base lg:text-lg max-w-2xl mx-auto"
+            style={`color: ${colors.gray600};`}
+          >
+            Clear acquisition parameters guide our deal sourcing and analysis
+          </p>
+        </div>
+        
+        <!-- Criteria Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-6">
+          
+          <!-- What We Target - Dark Card (2 columns) -->
+          <div 
+            class="lg:col-span-2 rounded-2xl p-6 lg:p-8 shadow-lg relative overflow-hidden"
+            style={`background-color: ${colors.midnight};`}
+          >
+            <!-- Decorative gradient -->
+            <div 
+              class="absolute top-0 right-0 w-40 h-40 opacity-20 pointer-events-none"
+              style={`background: radial-gradient(circle, ${colors.coral} 0%, transparent 70%); transform: translate(30%, -30%);`}
+            ></div>
+            
+            <h3 class="text-base lg:text-lg font-bold text-white mb-6 relative z-10">
+              What We Target
+            </h3>
+            
+            <div class="space-y-4 relative z-10">
+              {targetCriteria.map((item) => (
+                <div 
+                  class="flex justify-between items-center py-3 border-b last:border-0"
+                  style={`border-color: rgba(255,255,255,0.1);`}
+                >
+                  <span class="text-sm lg:text-base text-gray-400">{item.label}</span>
+                  <span class="text-sm lg:text-base font-semibold text-white">{item.value}</span>
+                </div>
+              ))}
+            </div>
+          </div>
+          
+          <!-- What We Look For - 3 Cards (3 columns) -->
+          <div class="lg:col-span-3 grid grid-cols-1 md:grid-cols-3 gap-4">
+            {lookForCategories.map((cat) => (
+              <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
+                <!-- Icon placeholder -->
+                <div 
+                  class="w-10 h-10 lg:w-12 lg:h-12 rounded-lg flex items-center justify-center mb-4"
+                  style={`background-color: ${cat.bgColor}; color: ${cat.color};`}
+                >
+                  <svg class="w-5 h-5 lg:w-6 lg:h-6" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                    {cat.title === 'Revenue Upside' && <path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />}
+                    {cat.title === 'Operational' && <><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"/></>}
+                    {cat.title === 'Market' && <><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z" /><circle cx="12" cy="10" r="3" /></>}
+                  </svg>
+                </div>
+                
+                <h4 
+                  class="font-bold text-sm lg:text-base mb-3"
+                  style={`color: ${colors.midnight};`}
+                >
+                  {cat.title}
+                </h4>
+                
+                <ul class="space-y-2">
+                  {cat.items.map((item) => (
+                    <li 
+                      class="flex items-center gap-2 text-xs lg:text-sm"
+                      style={`color: ${colors.gray600};`}
+                    >
+                      <svg class="w-4 h-4 shrink-0" style={`color: ${cat.color};`} fill="none" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24">
+                        <path d="M20 6 9 17l-5-5" />
+                      </svg>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         SECTION 4: INVESTMENT PROCESS
+         - White background
+         - 3+3 grid layout with flow indicator
+         ============================================ -->
+    <section class="w-full bg-white">
+      <div class="max-w-7xl mx-auto px-4 lg:px-8 py-12 lg:py-20">
+        
+        <!-- Section Header -->
+        <div class="text-center mb-10 lg:mb-12">
+          <h2 
+            class="text-2xl lg:text-3xl font-bold mb-3"
+            style={`color: ${colors.midnight};`}
+          >
+            Our Investment Process
+          </h2>
+          <p 
+            class="text-base lg:text-lg max-w-2xl mx-auto"
+            style={`color: ${colors.gray600};`}
+          >
+            A systematic, repeatable approach from market selection through profitable exit
+          </p>
+        </div>
+        
+        <!-- Process Grid - Row 1 (Steps 1-3) -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+          {processSteps.slice(0, 3).map((item) => (
+            <div class="bg-white rounded-xl p-5 shadow-lg border border-gray-100">
+              <div class="flex items-start gap-4">
+                <!-- Icon with step badge -->
+                <div class="relative shrink-0">
+                  <div 
+                    class="w-12 h-12 lg:w-14 lg:h-14 rounded-lg flex items-center justify-center"
+                    style={`background-color: ${colors.coralBg}; color: ${colors.coral};`}
+                  >
+                    <svg class="w-6 h-6 lg:w-7 lg:h-7" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                      {item.icon === 'search' && <><circle cx="11" cy="11" r="8" /><path d="m21 21-4.35-4.35" /></>}
+                      {item.icon === 'chart' && <path d="M3 3v18h18M7 16V8m4 8V6m4 10v-3m4 3V9" />}
+                      {item.icon === 'calculator' && <><rect x="4" y="2" width="16" height="20" rx="2" /><path d="M8 6h8M8 10h8M8 14h2m4 0h2M8 18h2m4 0h2" /></>}
+                    </svg>
+                  </div>
+                  <div 
+                    class="absolute -top-1.5 -right-1.5 w-6 h-6 rounded-full flex items-center justify-center text-white font-bold text-xs"
+                    style={`background-color: ${colors.coral};`}
+                  >
+                    {item.step}
+                  </div>
+                </div>
+                
+                <!-- Content -->
+                <div class="flex-1 min-w-0">
+                  <h4 
+                    class="text-sm lg:text-base font-bold mb-1"
+                    style={`color: ${colors.midnight};`}
+                  >
+                    {item.title}
+                  </h4>
+                  <p 
+                    class="text-xs lg:text-sm leading-relaxed"
+                    style={`color: ${colors.gray600};`}
+                  >
+                    {item.desc}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        
+        <!-- Flow Indicator -->
+        <div class="flex justify-center py-3">
+          <div class="flex items-center gap-2 text-gray-300">
+            <div class="w-8 h-0.5 bg-gray-200 rounded-full"></div>
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+              <path d="m6 9 6 6 6-6" />
+            </svg>
+            <div class="w-8 h-0.5 bg-gray-200 rounded-full"></div>
+          </div>
+        </div>
+        
+        <!-- Process Grid - Row 2 (Steps 4-6) -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {processSteps.slice(3, 6).map((item) => (
+            <div class="bg-white rounded-xl p-5 shadow-lg border border-gray-100">
+              <div class="flex items-start gap-4">
+                <!-- Icon with step badge -->
+                <div class="relative shrink-0">
+                  <div 
+                    class="w-12 h-12 lg:w-14 lg:h-14 rounded-lg flex items-center justify-center"
+                    style={`background-color: ${colors.coralBg}; color: ${colors.coral};`}
+                  >
+                    <svg class="w-6 h-6 lg:w-7 lg:h-7" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                      {item.icon === 'filecheck' && <><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" /><path d="m14 2 6 6m-9 5 2 2 4-4" /></>}
+                      {item.icon === 'wrench' && <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" />}
+                      {item.icon === 'trending' && <><path d="m23 6-9.5 9.5-5-5L1 18" /><path d="M17 6h6v6" /></>}
+                    </svg>
+                  </div>
+                  <div 
+                    class="absolute -top-1.5 -right-1.5 w-6 h-6 rounded-full flex items-center justify-center text-white font-bold text-xs"
+                    style={`background-color: ${colors.coral};`}
+                  >
+                    {item.step}
+                  </div>
+                </div>
+                
+                <!-- Content -->
+                <div class="flex-1 min-w-0">
+                  <h4 
+                    class="text-sm lg:text-base font-bold mb-1"
+                    style={`color: ${colors.midnight};`}
+                  >
+                    {item.title}
+                  </h4>
+                  <p 
+                    class="text-xs lg:text-sm leading-relaxed"
+                    style={`color: ${colors.gray600};`}
+                  >
+                    {item.desc}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         SECTION 5: OUR COMMITMENT
+         - Dark navy background
+         - 3-column card layout
+         ============================================ -->
+    <section class="w-full" style={`background-color: ${colors.midnight};`}>
+      <div class="max-w-7xl mx-auto px-4 lg:px-8 py-12 lg:py-20">
+        
+        <!-- Section Header -->
+        <div class="text-center mb-10 lg:mb-12">
+          <h2 class="text-2xl lg:text-3xl font-bold text-white mb-3">
+            Our Commitment
+          </h2>
+          <p class="text-base lg:text-lg text-gray-300 max-w-2xl mx-auto">
+            We hold ourselves accountable to our partners, tenants, and communities
+          </p>
+        </div>
+        
+        <!-- Commitment Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {commitments.map((item) => (
+            <div 
+              class="rounded-xl p-6 border"
+              style={`background-color: rgba(255,255,255,0.03); border-color: rgba(255,255,255,0.1);`}
+            >
+              <!-- Icon -->
+              <div 
+                class="w-12 h-12 rounded-xl flex items-center justify-center mb-4"
+                style={`background-color: ${colors.coral};`}
+              >
+                <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24">
+                  {item.icon === 'briefcase' && <><rect x="2" y="7" width="20" height="14" rx="2" /><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" /></>}
+                  {item.icon === 'home' && <><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" /><path d="M9 22V12h6v10" /></>}
+                  {item.icon === 'heart' && <path d="M19 14c1.49-1.46 3-3.21 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.76 0-3 .5-4.5 2-1.5-1.5-2.74-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4.05 3 5.5l7 7Z" />}
+                </svg>
+              </div>
+              
+              <h4 class="text-lg lg:text-xl font-bold text-white mb-2">
+                {item.title}
+              </h4>
+              <p class="text-sm lg:text-base text-gray-400 leading-relaxed">
+                {item.text}
+              </p>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         SECTION 6: THE GROWTHWAVE DIFFERENCE
+         - Light gray background
+         - Asymmetric 2-column layout
+         - Flywheel cards
+         ============================================ -->
+    <section class="w-full" style={`background-color: ${colors.gray50};`}>
+      <div class="max-w-7xl mx-auto px-4 lg:px-8 py-12 lg:py-20">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+          
+          <!-- Left Content -->
+          <div>
+            <div 
+              class="inline-block px-3 py-1 rounded-full text-xs lg:text-sm font-semibold tracking-wider uppercase mb-4"
+              style={`background-color: ${colors.coralBg}; color: ${colors.coral};`}
+            >
+              Integrated Platform
+            </div>
+            <h2 
+              class="text-2xl lg:text-3xl font-bold mb-4"
+              style={`color: ${colors.midnight};`}
+            >
+              The GrowthWave Difference
+            </h2>
+            <p 
+              class="text-base lg:text-lg mb-4"
+              style={`color: ${colors.gray600};`}
+            >
+              We're part of a comprehensive financial services platform designed to help investors 
+              overcome the barriers that prevent wealth building.
+            </p>
+            <p style={`color: ${colors.gray600};`}>
+              Our partners arrive{' '}
+              <span class="font-semibold" style={`color: ${colors.ocean};`}>better prepared</span>,{' '}
+              <span class="font-semibold" style={`color: ${colors.ocean};`}>better capitalized</span>, and{' '}
+              <span class="font-semibold" style={`color: ${colors.ocean};`}>better positioned</span>{' '}
+              for success.
+            </p>
+          </div>
+          
+          <!-- Right - Flywheel Cards -->
+          <div class="space-y-4">
+            {flywheel.map((item) => (
+              <div 
+                class="bg-white rounded-lg p-5 shadow-sm border-l-4"
+                style={`border-color: ${item.color};`}
+              >
+                <div class="flex items-center justify-between mb-2">
+                  <div 
+                    class="font-bold text-base lg:text-lg"
+                    style={`color: ${item.color};`}
+                  >
+                    {item.name}
+                  </div>
+                  <span 
+                    class="text-xs font-semibold px-2 py-0.5 rounded-full"
+                    style={`background-color: ${item.color}15; color: ${item.color};`}
+                  >
+                    {item.tag}
+                  </span>
+                </div>
+                <p 
+                  class="text-sm lg:text-base"
+                  style={`color: ${colors.gray600};`}
+                >
+                  {item.text}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         SECTION 7: CTA
+         - Gradient background (ocean → midnight)
+         ============================================ -->
+    <section 
+      class="w-full relative overflow-hidden"
+      style={`background: linear-gradient(135deg, ${colors.ocean} 0%, ${colors.midnight} 100%);`}
+    >
+      <div class="max-w-4xl mx-auto px-4 lg:px-8 py-16 lg:py-24 text-center relative z-10">
+        <h2 class="text-2xl lg:text-4xl font-bold text-white mb-4">
+          Ready to Invest Alongside Experienced Operators?
+        </h2>
+        <p class="text-base lg:text-xl text-gray-300 mb-8 max-w-2xl mx-auto">
+          Join our investor list for notifications about new opportunities and market insights.
+        </p>
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <Button brand="properties" href="/contact" size="lg">
+            Join Our Investor List
+          </Button>
+          <Button brand="properties" variant="outline" href="/contact" size="lg">
+            Schedule a Consultation
+          </Button>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer brand="properties" />
+</BaseLayout>

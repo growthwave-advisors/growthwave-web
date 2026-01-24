@@ -1,230 +1,303 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Header from '../../components/shared/Header.astro';
-import Footer from '../../components/shared/Footer.astro';
-import Button from '../../components/shared/Button.astro';
+/**
+ * GrowthWave Properties - About Page
+ * ===================================
+ * Updated: January 2026
+ * 
+ * Design Decision: Option 6 (Stats Hero)
+ * - Clean, institutional presentation
+ * - Stats as dominant visual element
+ * - Regional badge instead of map
+ * 
+ * Note: Uses inline styles for brand colors to ensure rendering
+ * regardless of Tailwind config. Once colors are added to 
+ * tailwind.config.js, these can be converted to utility classes.
+ * 
+ * @see Website_Design_System_STRATEGY.md
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+
+// Brand Colors (matching your design system)
+const colors = {
+  coral: '#FF6B4A',
+  coralLight: '#ff8a6b',
+  coralBg: '#fff5f3',
+  coralGlassBg: 'rgba(255,107,74,0.15)',
+  coralGlassBgLight: 'rgba(255,107,74,0.08)',
+  ocean: '#265077',
+  midnight: '#022140',
+  gray50: '#f9fafb',
+  gray100: '#f3f4f6',
+  gray500: '#6b7280',
+  gray600: '#4b5563',
+};
+
+// UPDATED STATS - McKinsey-style institutional language
+const stats = [
+  { 
+    value: '15', 
+    label: 'Years in Financial Services',
+    sublabel: 'Banking & technology leadership'
+  },
+  { 
+    value: 'Deep', 
+    label: 'Institutional Expertise',
+    sublabel: 'Executive-level experience'
+  },
+  { 
+    value: 'Enterprise', 
+    label: 'Grade Technology',
+    sublabel: 'Data-driven analysis & reporting'
+  },
+];
+
+const philosophyItems = [
+  { 
+    title: 'Data-Driven Decisions', 
+    desc: 'Every deal is analyzed with enterprise-grade tools and conservative assumptions. We stress-test for worst-case scenarios.' 
+  },
+  { 
+    title: 'Technology-Enabled Operations', 
+    desc: 'From automated investor reporting to AI-powered market analysis, we leverage technology for competitive advantage.' 
+  },
+  { 
+    title: 'Conservative Underwriting', 
+    desc: 'We assume 7% vacancy, $450/unit annual capex reserves, and never underwrite to pro forma rents at acquisition.' 
+  },
+  { 
+    title: 'Long-Term Wealth Building', 
+    desc: 'Our 2-5 year hold periods and 1031 exchange strategy focus on compounding wealth, not quick flips.' 
+  },
+];
 ---
 
 <BaseLayout
-  title="About GrowthWave Properties | Experienced Multifamily Operators"
-  description="Learn about GrowthWave Properties' approach to Midwest multifamily investing, backed by 15+ years of financial services leadership and professional training."
   brand="properties"
+  title="About GrowthWave Properties | Technology Meets Real Estate Expertise"
+  description="GrowthWave Properties combines 15 years of financial services expertise with professional multifamily investment training. Deep institutional expertise, enterprise-grade technology."
 >
   <Header brand="properties" currentPath="/properties/about" />
 
   <main>
-    <!-- Hero Section -->
-    <section class="section-padding bg-gradient-to-b from-white to-gray-50">
-      <div class="container-custom text-center">
-        <h1 class="mb-6">Building Wealth Through Strategic Partnerships</h1>
-        <p class="text-xl text-neutral-gray mb-8 max-w-3xl mx-auto">
-          Experience, technology, and disciplined execution combined to deliver professionally managed multifamily investments.
-        </p>
-      </div>
-    </section>
-
-    <!-- Our Story Section -->
-    <section class="section-padding">
-      <div class="container-custom">
-        <h2 class="text-center mb-12">Our Story</h2>
-        <div class="max-w-4xl mx-auto space-y-6">
-          <p class="text-lg">
-            GrowthWave Properties was founded on a simple observation: most real estate investors face the same two challenges—finding quality deals and accessing the capital to execute them. While many firms address one or the other, we built an integrated platform that solves both.
-          </p>
-          <p class="text-lg">
-            Our approach combines over a decade of banking and financial services leadership with professional real estate training and enterprise technology expertise. This unique background allows us to underwrite properties with institutional rigor, operate with professional-grade systems, and provide transparency that builds lasting investor relationships.
-          </p>
-          <p class="text-lg">
-            As part of the GrowthWave Advisors ecosystem, we're not just real estate operators—we're wealth-building partners who help clients progress from credit optimization through business financing to property ownership. This integration creates better-prepared, better-capitalized partners who understand leverage and long-term value creation.
+    <!-- ============================================
+         HERO SECTION: OPTION 6 (STATS HERO)
+         - Centered headline with large stat cards
+         - Clean, institutional, McKinsey-style
+         - Regional badge at bottom
+         ============================================ -->
+    <section class="w-full" style={`background-color: ${colors.gray50};`}>
+      <div class="max-w-7xl mx-auto px-4 lg:px-8 py-16 lg:py-24">
+        
+        <!-- Centered Headline -->
+        <div class="text-center mb-12">
+          <h1 
+            class="text-3xl lg:text-4xl font-bold mb-6 leading-tight"
+            style={`color: ${colors.midnight};`}
+          >
+            Technology Meets Real Estate Expertise
+          </h1>
+          <p class="text-base lg:text-lg max-w-3xl mx-auto" style={`color: ${colors.gray600};`}>
+            GrowthWave Properties combines 15 years of financial services experience 
+            with professional multifamily investment training to deliver institutional-quality 
+            deals at a smaller scale.
           </p>
         </div>
-      </div>
-    </section>
-
-    <!-- Leadership Section -->
-    <section class="section-padding bg-gray-50">
-      <div class="container-custom">
-        <h2 class="text-center mb-12">Leadership</h2>
-        <div class="max-w-3xl mx-auto">
-          <div class="card">
-            <h3 class="text-properties-coral mb-4">Wilfred Morgan - Founder & CEO</h3>
-            <div class="space-y-4">
-              <p>
-                Wilfred brings 15+ years of banking and financial services leadership to multifamily real estate investing. As former Chief Technology Officer at a federal credit union, he led enterprise technology initiatives and gained deep insights into lending operations, risk management, and financial systems.
-              </p>
-              <p>
-                His background includes enterprise cloud architecture certification, software development expertise, and comprehensive understanding of both sides of the lending table. This technical foundation enables GrowthWave Properties to operate with institutional-grade systems while maintaining the agility of a focused operator.
-              </p>
-              <p>
-                Wilfred has completed extensive training with industry experts in multifamily acquisition, value-add operations, creative financing strategies, and asset management. His approach combines data-driven analysis with strategic execution—applying the same discipline and systematic thinking that built successful technology platforms to real estate operations.
-              </p>
+        
+        <!-- Stats Cards with Glass Icons -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-4xl mx-auto">
+          <!-- Stat 1: Years in Financial Services -->
+          <div 
+            class="text-center p-6 lg:p-8 rounded-xl bg-white border"
+            style="border-color: #e5e7eb; box-shadow: 0 4px 20px rgba(0,0,0,0.06);"
+          >
+            <div 
+              class="w-14 h-14 rounded-xl mx-auto mb-4 flex items-center justify-center"
+              style={`background: linear-gradient(135deg, ${colors.coralGlassBg} 0%, ${colors.coralGlassBgLight} 100%); border: 1px solid rgba(255,107,74,0.25); box-shadow: 0 4px 16px rgba(255,107,74,0.15);`}
+            >
+              <!-- Landmark/Bank Icon -->
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FF6B4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="22" x2="21" y2="22"></line>
+                <line x1="6" y1="18" x2="6" y2="11"></line>
+                <line x1="10" y1="18" x2="10" y2="11"></line>
+                <line x1="14" y1="18" x2="14" y2="11"></line>
+                <line x1="18" y1="18" x2="18" y2="11"></line>
+                <polygon points="12 2 20 7 4 7"></polygon>
+              </svg>
             </div>
+            <div 
+              class="text-4xl lg:text-[44px] font-bold mb-1"
+              style={`color: ${colors.coral};`}
+            >
+              15+
+            </div>
+            <div 
+              class="text-base font-semibold mb-1"
+              style={`color: ${colors.midnight};`}
+            >
+              Years Financial Services
+            </div>
+            <div class="text-sm text-gray-500">Banking & technology leadership</div>
           </div>
+          
+          <!-- Stat 2: Institutional Expertise -->
+          <div 
+            class="text-center p-6 lg:p-8 rounded-xl bg-white border"
+            style="border-color: #e5e7eb; box-shadow: 0 4px 20px rgba(0,0,0,0.06);"
+          >
+            <div 
+              class="w-14 h-14 rounded-xl mx-auto mb-4 flex items-center justify-center"
+              style={`background: linear-gradient(135deg, ${colors.coralGlassBg} 0%, ${colors.coralGlassBgLight} 100%); border: 1px solid rgba(255,107,74,0.25); box-shadow: 0 4px 16px rgba(255,107,74,0.15);`}
+            >
+              <!-- Layers Icon -->
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FF6B4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                <polyline points="2 17 12 22 22 17"></polyline>
+                <polyline points="2 12 12 17 22 12"></polyline>
+              </svg>
+            </div>
+            <div 
+              class="text-4xl lg:text-[44px] font-bold mb-1"
+              style={`color: ${colors.coral};`}
+            >
+              Deep
+            </div>
+            <div 
+              class="text-base font-semibold mb-1"
+              style={`color: ${colors.midnight};`}
+            >
+              Institutional Expertise
+            </div>
+            <div class="text-sm text-gray-500">Executive-level experience</div>
+          </div>
+          
+          <!-- Stat 3: Enterprise Grade Technology -->
+          <div 
+            class="text-center p-6 lg:p-8 rounded-xl bg-white border"
+            style="border-color: #e5e7eb; box-shadow: 0 4px 20px rgba(0,0,0,0.06);"
+          >
+            <div 
+              class="w-14 h-14 rounded-xl mx-auto mb-4 flex items-center justify-center"
+              style={`background: linear-gradient(135deg, ${colors.coralGlassBg} 0%, ${colors.coralGlassBgLight} 100%); border: 1px solid rgba(255,107,74,0.25); box-shadow: 0 4px 16px rgba(255,107,74,0.15);`}
+            >
+              <!-- Server Icon -->
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FF6B4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+                <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+                <line x1="6" y1="6" x2="6.01" y2="6"></line>
+                <line x1="6" y1="18" x2="6.01" y2="18"></line>
+              </svg>
+            </div>
+            <div 
+              class="text-4xl lg:text-[44px] font-bold mb-1"
+              style={`color: ${colors.coral};`}
+            >
+              Enterprise
+            </div>
+            <div 
+              class="text-base font-semibold mb-1"
+              style={`color: ${colors.midnight};`}
+            >
+              Grade Technology
+            </div>
+            <div class="text-sm text-gray-500">Data-driven analysis & reporting</div>
+          </div>
+        </div>
+        
+        <!-- Regional Badge -->
+        <div class="mt-10 lg:mt-12 text-center">
+          <span 
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm lg:text-base font-medium"
+            style={`background-color: ${colors.coralBg}; color: ${colors.coral};`}
+          >
+            <!-- Map Pin Icon -->
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            Active in high-growth Midwest & Southern markets
+          </span>
+        </div>
+        
+      </div>
+    </section>
+
+    <!-- ============================================
+         INVESTMENT PHILOSOPHY SECTION
+         ============================================ -->
+    <section class="w-full bg-white">
+      <div class="max-w-4xl mx-auto px-4 lg:px-8 py-12 lg:py-16">
+        <h2 
+          class="text-2xl lg:text-3xl font-bold text-center mb-10 lg:mb-12"
+          style={`color: ${colors.midnight};`}
+        >
+          Our Investment Philosophy
+        </h2>
+        <div class="space-y-6 lg:space-y-8">
+          {philosophyItems.map((item, i) => (
+            <div class="flex gap-4 lg:gap-6 items-start">
+              <!-- Number Circle -->
+              <div 
+                class="w-10 h-10 lg:w-12 lg:h-12 rounded-full flex items-center justify-center shrink-0"
+                style={`background-color: ${colors.coral};`}
+              >
+                <span class="text-white font-bold text-base lg:text-lg">{i + 1}</span>
+              </div>
+              <!-- Content -->
+              <div>
+                <h3 
+                  class="text-lg lg:text-xl font-semibold mb-2"
+                  style={`color: ${colors.ocean};`}
+                >
+                  {item.title}
+                </h3>
+                <p 
+                  class="text-base lg:text-lg"
+                  style={`color: ${colors.gray600};`}
+                >
+                  {item.desc}
+                </p>
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     </section>
 
-    <!-- Core Principles Section -->
-    <section class="section-padding">
-      <div class="container-custom">
-        <h2 class="text-center mb-12">Our Principles</h2>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          <div class="card">
-            <h3 class="text-properties-coral mb-3">Conservative Underwriting</h3>
-            <p>
-              We analyze dozens of properties for every acquisition. Our underwriting includes worst-case scenarios, meaningful reserves, and clear value-add pathways. If a deal doesn't meet our strict risk-adjusted return criteria, we walk away—even when it means waiting months for the next opportunity.
-            </p>
-          </div>
-          <div class="card">
-            <h3 class="text-properties-coral mb-3">Operational Excellence</h3>
-            <p>
-              Professional property management oversight, systematic renovation execution, and proactive tenant relations create stable operations and consistent performance. We treat every property as if our own capital were the only capital at risk.
-            </p>
-          </div>
-          <div class="card">
-            <h3 class="text-properties-coral mb-3">Technology-Enabled Transparency</h3>
-            <p>
-              Enterprise-grade systems provide real-time financial reporting, automated investor updates, and complete visibility into property performance. Our investors never have to chase us for information—data flows automatically through professional platforms.
-            </p>
-          </div>
-          <div class="card">
-            <h3 class="text-properties-coral mb-3">Aligned Interests</h3>
-            <p>
-              We invest alongside our partners and structure deals where our success depends entirely on delivering results. When our partners win, we win. This alignment drives every decision we make.
-            </p>
-          </div>
-          <div class="card">
-            <h3 class="text-properties-coral mb-3">Long-Term Relationships</h3>
-            <p>
-              We're building a portfolio and a reputation, not chasing transaction volume. Many partners complete multiple investment cycles with us, using 1031 exchanges to compound wealth across increasingly valuable properties.
-            </p>
-          </div>
-          <div class="card">
-            <h3 class="text-properties-coral mb-3">Integrated Wealth Building</h3>
-            <p>
-              As part of GrowthWave Advisors, we provide a complete pathway from credit optimization through business financing to real estate ownership. This integration creates momentum and removes the fragmentation that stalls most investors.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Why We Focus on the Midwest Section -->
-    <section class="section-padding bg-gray-50">
-      <div class="container-custom">
-        <h2 class="text-center mb-12">Why We Focus on the Midwest</h2>
-        <div class="max-w-4xl mx-auto space-y-6 mb-8">
-          <p class="text-lg">
-            While many investors chase diminishing returns in overheated coastal markets, we focus on the Midwest for fundamental reasons:
-          </p>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 max-w-6xl mx-auto">
-          <div class="card">
-            <h3 class="text-properties-coral mb-3">Affordable Basis</h3>
-            <p>
-              Acquisition prices that support actual cash flow from day one, not speculative appreciation years down the road.
-            </p>
-          </div>
-          <div class="card">
-            <h3 class="text-properties-coral mb-3">Landlord-Friendly Regulations</h3>
-            <p>
-              Reasonable eviction processes, limited rent control, and balanced tenant-landlord laws that allow efficient operations.
-            </p>
-          </div>
-          <div class="card">
-            <h3 class="text-properties-coral mb-3">Stable Employment</h3>
-            <p>
-              Diversified economies with healthcare, manufacturing, logistics, and government sectors that weather economic cycles.
-            </p>
-          </div>
-          <div class="card">
-            <h3 class="text-properties-coral mb-3">Workforce Housing Demand</h3>
-            <p>
-              Consistent need for quality affordable housing regardless of economic conditions. People always need places to live.
-            </p>
-          </div>
-          <div class="card">
-            <h3 class="text-properties-coral mb-3">Favorable Entry Pricing</h3>
-            <p>
-              Higher cap rates and lower competition mean better risk-adjusted returns compared to gateway markets.
-            </p>
-          </div>
-        </div>
-        <div class="max-w-4xl mx-auto mt-8">
-          <p class="text-lg">
-            Our market selection criteria focus on metros and submarkets with job growth, population stability, improving infrastructure, and supply-demand dynamics that favor landlords. We follow fundamentals, not headlines.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- The GrowthWave Difference Section -->
-    <section class="section-padding">
-      <div class="container-custom">
-        <h2 class="text-center mb-12">The GrowthWave Difference</h2>
-        <div class="max-w-4xl mx-auto space-y-6">
-          <p class="text-lg">
-            GrowthWave Properties isn't just another real estate syndication. We're part of a comprehensive financial services platform designed to help investors overcome the barriers that prevent wealth building:
-          </p>
-          <div class="space-y-4">
-            <p>
-              <strong class="text-properties-coral">Credit Sculpt Services</strong> optimizes credit profiles, opening doors to better financing and larger opportunities.
-            </p>
-            <p>
-              <strong class="text-properties-coral">GrowthWave Capital</strong> provides access to business credit and financing, giving investors the capital they need to participate.
-            </p>
-            <p>
-              <strong class="text-properties-coral">GrowthWave Properties</strong> delivers the investments—professionally managed, conservatively underwritten, strategically executed.
-            </p>
-          </div>
-          <p class="text-lg">
-            This integration means our partners arrive better prepared, better capitalized, and better positioned for success. No fragmentation, no starting over with strangers, no information loss between service providers.
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Our Commitment Section -->
-    <section class="section-padding bg-gray-50">
-      <div class="container-custom">
-        <h2 class="text-center mb-12">Our Commitment</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-          <div class="card">
-            <h3 class="text-properties-coral mb-4">To Our Partners</h3>
-            <p>
-              We treat your capital with the same care we treat our own. You'll receive transparent reporting, proactive communication, and honest assessments of both opportunities and challenges. No surprises, no excuses—just professional execution and accountability.
-            </p>
-          </div>
-          <div class="card">
-            <h3 class="text-properties-coral mb-4">To Our Tenants</h3>
-            <p>
-              We provide clean, safe, well-maintained housing at fair prices. Our renovations improve quality of life while respecting affordability. We respond promptly to maintenance needs and treat every resident with dignity and respect.
-            </p>
-          </div>
-          <div class="card">
-            <h3 class="text-properties-coral mb-4">To Our Markets</h3>
-            <p>
-              We invest in communities, not just properties. Our renovations improve neighborhoods, our management raises standards, and our long-term approach creates stability. We're proud to own properties in the markets we serve.
-            </p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- CTA Section -->
-    <section class="section-padding">
-      <div class="container-custom text-center">
-        <h2 class="mb-6">Ready to Learn More?</h2>
-        <p class="text-xl text-neutral-gray mb-8 max-w-2xl mx-auto">
-          Join our investor list to receive notifications about investment opportunities, market analysis, and portfolio updates.
+    <!-- ============================================
+         CTA SECTION
+         - Coral gradient background
+         - White text and buttons
+         ============================================ -->
+    <section 
+      class="w-full"
+      style={`background: linear-gradient(to right, ${colors.coral}, ${colors.coralLight});`}
+    >
+      <div class="max-w-4xl mx-auto px-4 lg:px-8 py-16 lg:py-24 text-center">
+        <h2 class="text-2xl lg:text-3xl font-bold text-white mb-4">
+          Ready to Build Your Real Estate Portfolio?
+        </h2>
+        <p class="text-base lg:text-lg text-white/90 mb-8 max-w-2xl mx-auto">
+          Join investors who are creating generational wealth through 
+          strategic multifamily acquisitions across high-growth regional markets.
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button href="/properties/contact" brand="properties" size="lg">
-            Join Our Investor List
-          </Button>
-          <Button href="/properties/contact" brand="properties" size="lg" variant="secondary">
-            Schedule a Consultation
-          </Button>
+          <!-- Primary Button (White) -->
+          <a 
+            href="/properties/contact" 
+            class="px-6 lg:px-8 py-3 lg:py-4 rounded-lg font-semibold text-base lg:text-lg bg-white transition-colors hover:bg-gray-50"
+            style={`color: ${colors.coral};`}
+          >
+            Join Investor List
+          </a>
+          <!-- Secondary Button (Outlined) -->
+          <a 
+            href="/properties/contact" 
+            class="px-6 lg:px-8 py-3 lg:py-4 rounded-lg font-semibold text-base lg:text-lg text-white border-2 border-white transition-colors hover:bg-white/10"
+          >
+            Schedule a Call
+          </a>
         </div>
       </div>
     </section>

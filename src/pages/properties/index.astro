@@ -1,70 +1,413 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import Header from '../../components/shared/Header.astro';
-import Footer from '../../components/shared/Footer.astro';
-import Button from '../../components/shared/Button.astro';
+/**
+ * GrowthWave Properties - Homepage
+ * =================================
+ * Updated: January 2026
+ * 
+ * Design System Compliance:
+ * - Two-layer "Fixed Island" pattern on all sections
+ * - Typography stops at lg breakpoint (no xl: or 2xl:)
+ * - Responsive padding: px-4 lg:px-8
+ * - Body content: max-w-7xl (1280px)
+ * 
+ * Copy Updates Applied:
+ * - "Midwest" → "Midwest & South" / "high-growth regional markets"
+ * - Regional focus expanded to include Southern markets
+ * 
+ * @see Website_Design_System_STRATEGY.md
+ * @see Website_Copy_Updates_January_2026.md
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import Button from '@components/Button.astro';
+
+// Brand Colors
+const colors = {
+  coral: '#FF6B4A',
+  coralLight: '#ff8a6b',
+  coralBg: 'rgba(255,107,74,0.2)',
+  ocean: '#265077',
+  midnight: '#022140',
+  gray50: '#f9fafb',
+  gray100: '#f3f4f6',
+  gray300: '#d1d5db',
+  gray400: '#9ca3af',
+  gray500: '#6b7280',
+  gray600: '#4b5563',
+  gray700: '#374151',
+  gray800: '#1f2937',
+};
+
+// UPDATED: Target Markets now includes South
+const investmentCriteria = [
+  { label: 'Property Size', value: '5-20 Units' },
+  { label: 'Asset Class', value: 'B/C Class' },
+  { label: 'Strategy', value: 'Value-Add' },
+  { label: 'Hold Period', value: '2-5 Years' },
+  { label: 'Target Markets', value: 'Midwest & South' },
+];
+
+// UPDATED: Regional Markets value prop
+const valueProps = [
+  { 
+    title: 'Technology-Enabled', 
+    desc: 'Enterprise-grade systems for analysis, reporting, and investor communications.' 
+  },
+  { 
+    title: 'Conservative Underwriting', 
+    desc: 'Every deal stress-tested with 7% vacancy and $450/unit reserves.' 
+  },
+  { 
+    title: 'Regional Markets', 
+    desc: 'High-growth markets across the Midwest and South with strong fundamentals.' 
+  },
+  { 
+    title: 'Value-Add Strategy', 
+    desc: 'Force appreciation through strategic renovations and operational improvements.' 
+  },
+  { 
+    title: 'Transparent Reporting', 
+    desc: 'Monthly updates with full financial transparency.' 
+  },
+  { 
+    title: '1031 Exchange Planning', 
+    desc: 'Strategic exits to compound wealth tax-efficiently.' 
+  },
+];
+
+const challenges = [
+  { 
+    title: 'Lack of Deal Flow', 
+    desc: "Finding off-market opportunities requires local relationships you haven't built." 
+  },
+  { 
+    title: 'Operational Complexity', 
+    desc: 'Managing tenants, maintenance, and renovations is a full-time job.' 
+  },
+  { 
+    title: 'Analysis Paralysis', 
+    desc: "Without proper underwriting, you can't separate good deals from bad ones." 
+  },
+];
+
+const solutions = [
+  'Professional deal analysis',
+  'Hands-off investment',
+  'Monthly reporting',
+  'Strategic exits via 1031',
+];
 ---
 
 <BaseLayout
-  title="GrowthWave Properties | Multifamily Investment Partnerships"
-  description="Partner with experienced operators on value-add multifamily properties across the Midwest."
   brand="properties"
+  title="GrowthWave Properties | Multifamily Investment Partnerships"
+  description="Partner with experienced operators on value-add multifamily properties across the Midwest and South. Professional management, transparent reporting, proven results."
 >
   <Header brand="properties" currentPath="/properties" />
 
   <main>
-    <!-- Hero Section -->
-    <section class="section-padding bg-gradient-to-b from-white to-gray-50">
-      <div class="container-custom text-center">
-        <h1 class="mb-6">Strategic Multifamily Partnerships in the Midwest</h1>
-        <p class="text-xl text-neutral-gray mb-8 max-w-3xl mx-auto">
-          Partner with experienced operators on professionally managed, cash-flowing properties. 
-          You bring the capital, we bring the deals and expertise.
+    <!-- ============================================
+         HERO SECTION
+         - Gradient background (full-width)
+         - Two-column layout
+         - Decorative wave at bottom
+         ============================================ -->
+    <section 
+      class="w-full relative overflow-hidden"
+      style={`background: linear-gradient(135deg, ${colors.midnight} 0%, ${colors.ocean} 100%);`}
+    >
+      <div class="max-w-7xl mx-auto px-4 lg:px-8 py-16 lg:py-24" style="border: 1px solid white;">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12 items-center">
+          
+          <!-- Content Column -->
+          <div>
+            <!-- Badge -->
+            <div 
+              class="inline-block px-3 py-1 rounded-full text-xs lg:text-sm font-medium mb-4"
+              style={`background-color: ${colors.coralBg}; color: ${colors.coral};`}
+            >
+              Value-Add Multifamily Investment
+            </div>
+            
+            <!-- Headline: stops at lg -->
+            <h1 class="text-3xl lg:text-4xl xl:text-5xl font-bold text-white leading-tight mb-6">
+              Build Wealth Through<br/>
+              <span style={`color: ${colors.coral};`}>Strategic Real Estate</span>
+            </h1>
+            
+            <!-- Subheadline: stops at lg -->
+            <p class="text-base lg:text-xl text-gray-300 mb-8 leading-relaxed">
+              Partner with experienced operators on cash-flowing multifamily properties 
+              across high-growth regional markets. You bring the capital, we bring the deals and expertise.
+            </p>
+            
+            <!-- CTAs -->
+            <div class="flex flex-col sm:flex-row gap-4">
+              <Button brand="properties" href="/properties/contact" size="lg">
+                Join Our Investor List
+              </Button>
+              <Button brand="properties" variant="outline" href="/properties/approach" size="lg" showArrow>
+                Learn Our Approach
+              </Button>
+            </div>
+          </div>
+          
+          <!-- Image Column -->
+          <div class="relative hidden lg:block">
+            <div 
+              class="flex items-center justify-center border-2 border-dashed rounded-lg aspect-[4/3]"
+              style={`background-color: rgba(255,255,255,0.1); border-color: ${colors.coral};`}
+            >
+              <span class="text-sm font-medium" style={`color: ${colors.gray400};`}>
+                Hero Image: Modern Apartment Building
+              </span>
+            </div>
+          </div>
+          
+        </div>
+      </div>
+      
+      <!-- Decorative wave -->
+      <div 
+        class="absolute bottom-0 left-0 right-0 h-12 lg:h-16 bg-white"
+        style="clip-path: polygon(0 100%, 100% 100%, 100% 0, 0 100%);"
+      ></div>
+    </section>
+
+    <!-- ============================================
+         CHALLENGE / SOLUTION SECTION
+         ============================================ -->
+    <section class="w-full" style={`background-color: ${colors.gray50};`}>
+      <div class="max-w-7xl mx-auto px-4 lg:px-8 py-12 lg:py-20">
+        
+        <!-- Section Header -->
+        <div class="text-center mb-12 lg:mb-16">
+          <h2 
+            class="text-2xl lg:text-3xl font-bold mb-4"
+            style={`color: ${colors.midnight};`}
+          >
+            The Real Estate Investor's Dilemma
+          </h2>
+          <p 
+            class="text-base lg:text-lg max-w-2xl mx-auto"
+            style={`color: ${colors.gray600};`}
+          >
+            You want to build wealth through real estate, but finding great deals 
+            and managing properties requires expertise you don't have time to develop.
+          </p>
+        </div>
+        
+        <!-- Two Column Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+          
+          <!-- Challenges Column -->
+          <div class="space-y-4 lg:space-y-6">
+            {challenges.map((item) => (
+              <div class="flex items-start gap-4">
+                <div class="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center shrink-0">
+                  <span class="text-red-500">✕</span>
+                </div>
+                <div>
+                  <h4 
+                    class="text-base lg:text-lg font-semibold"
+                    style={`color: ${colors.gray800};`}
+                  >
+                    {item.title}
+                  </h4>
+                  <p 
+                    class="text-sm lg:text-base"
+                    style={`color: ${colors.gray600};`}
+                  >
+                    {item.desc}
+                  </p>
+                </div>
+              </div>
+            ))}
+          </div>
+          
+          <!-- Solution Card -->
+          <div 
+            class="p-6 lg:p-8 rounded-2xl bg-white shadow-xl border-l-4"
+            style={`border-color: ${colors.coral};`}
+          >
+            <h3 
+              class="text-xl lg:text-2xl font-bold mb-4"
+              style={`color: ${colors.ocean};`}
+            >
+              Our Solution
+            </h3>
+            <p 
+              class="text-base lg:text-lg mb-6"
+              style={`color: ${colors.gray600};`}
+            >
+              We handle everything: deal sourcing, underwriting, acquisition, renovation, and management. 
+              You participate as a joint venture partner with full transparency.
+            </p>
+            <ul class="space-y-3">
+              {solutions.map((item) => (
+                <li class="flex items-center gap-3">
+                  <span style={`color: ${colors.coral};`}>✓</span>
+                  <span 
+                    class="text-sm lg:text-base"
+                    style={`color: ${colors.gray700};`}
+                  >
+                    {item}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+          
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         VALUE PROPS SECTION
+         ============================================ -->
+    <section class="w-full bg-white">
+      <div class="max-w-7xl mx-auto px-4 lg:px-8 py-12 lg:py-20">
+        
+        <!-- Section Header -->
+        <h2 
+          class="text-2xl lg:text-3xl font-bold text-center mb-4"
+          style={`color: ${colors.midnight};`}
+        >
+          Why Partner With GrowthWave Properties
+        </h2>
+        <p 
+          class="text-center text-base lg:text-lg mb-10 lg:mb-12 max-w-2xl mx-auto"
+          style={`color: ${colors.gray600};`}
+        >
+          We combine deep institutional expertise with technology-enabled operations.
+        </p>
+        
+        <!-- Value Props Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+          {valueProps.map((item, i) => (
+            <div 
+              class="p-5 lg:p-6 rounded-xl hover:shadow-lg transition-shadow border"
+              style={`background-color: ${colors.gray50}; border-color: ${colors.gray100};`}
+            >
+              <div 
+                class="w-10 h-10 lg:w-12 lg:h-12 rounded-lg mb-4 flex items-center justify-center"
+                style={`background-color: ${colors.coralBg};`}
+              >
+                <span 
+                  class="text-lg lg:text-xl font-bold"
+                  style={`color: ${colors.coral};`}
+                >
+                  {i + 1}
+                </span>
+              </div>
+              <h4 
+                class="text-base lg:text-lg font-semibold mb-2"
+                style={`color: ${colors.ocean};`}
+              >
+                {item.title}
+              </h4>
+              <p 
+                class="text-sm lg:text-base"
+                style={`color: ${colors.gray600};`}
+              >
+                {item.desc}
+              </p>
+            </div>
+          ))}
+        </div>
+        
+      </div>
+    </section>
+
+    <!-- ============================================
+         INVESTMENT CRITERIA SECTION
+         - Dark background (full-width)
+         ============================================ -->
+    <section class="w-full" style={`background-color: ${colors.midnight};`}>
+      <div class="max-w-7xl mx-auto px-4 lg:px-8 py-12 lg:py-20">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-16 items-center">
+          
+          <!-- Content Column -->
+          <div>
+            <h2 class="text-2xl lg:text-3xl font-bold text-white mb-6">
+              Our Investment Criteria
+            </h2>
+            <div class="space-y-4">
+              {investmentCriteria.map((item) => (
+                <div 
+                  class="flex justify-between items-center py-3 border-b"
+                  style={`border-color: ${colors.gray700};`}
+                >
+                  <span 
+                    class="text-sm lg:text-base"
+                    style={`color: ${colors.gray400};`}
+                  >
+                    {item.label}
+                  </span>
+                  <span 
+                    class="text-sm lg:text-base font-semibold"
+                    style={`color: ${colors.coral};`}
+                  >
+                    {item.value}
+                  </span>
+                </div>
+              ))}
+            </div>
+            <div class="mt-8">
+              <Button brand="properties" href="/properties/approach" showArrow>
+                View Full Approach
+              </Button>
+            </div>
+          </div>
+          
+          <!-- Map Placeholder -->
+          <div 
+            class="hidden lg:flex items-center justify-center border-2 border-dashed rounded-lg aspect-[4/3]"
+            style={`background-color: rgba(255,255,255,0.05); border-color: ${colors.coral};`}
+          >
+            <span 
+              class="text-sm font-medium"
+              style={`color: ${colors.gray500};`}
+            >
+              Market Map: Midwest & South Region
+            </span>
+          </div>
+          
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         CTA SECTION
+         - Coral gradient (full-width)
+         ============================================ -->
+    <section 
+      class="w-full"
+      style={`background: linear-gradient(135deg, ${colors.coral} 0%, ${colors.coralLight} 100%);`}
+    >
+      <div class="max-w-4xl mx-auto px-4 lg:px-8 py-16 lg:py-24 text-center">
+        <h2 class="text-2xl lg:text-3xl font-bold text-white mb-4">
+          Ready to Build Your Real Estate Portfolio?
+        </h2>
+        <p class="text-base lg:text-xl text-white/80 mb-8 max-w-2xl mx-auto">
+          Join our investor list to receive updates on current and upcoming 
+          opportunities across high-growth regional markets.
         </p>
         <div class="flex flex-col sm:flex-row gap-4 justify-center">
-          <Button href="/properties/contact" brand="properties" size="lg">
-            Join Our Investor List
-          </Button>
-          <Button href="/properties/approach" brand="properties" size="lg">
-            View Our Approach
-          </Button>
-        </div>
-      </div>
-    </section>
-
-    <!-- Brand Colors Test -->
-    <section class="section-padding">
-      <div class="container-custom">
-        <h2 class="text-center mb-12">GrowthWave Brand System</h2>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div class="card">
-            <div class="w-full h-24 bg-properties-coral rounded-lg mb-4"></div>
-            <h3 class="text-properties-coral mb-2">Properties Coral</h3>
-            <p class="text-sm text-neutral-gray">#FF6B4A</p>
-          </div>
-          <div class="card">
-            <div class="w-full h-24 bg-capital-purple rounded-lg mb-4"></div>
-            <h3 class="text-capital-purple mb-2">Capital Purple</h3>
-            <p class="text-sm text-neutral-gray">#7C3AED</p>
-          </div>
-          <div class="card">
-            <div class="w-full h-24 bg-ocean-blue rounded-lg mb-4"></div>
-            <h3 class="text-ocean-blue mb-2">Ocean Blue</h3>
-            <p class="text-sm text-neutral-gray">#265077</p>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Typography Test -->
-    <section class="section-padding bg-gray-50">
-      <div class="container-custom">
-        <h2 class="text-center mb-12">Typography System</h2>
-        <div class="space-y-4 max-w-3xl mx-auto">
-          <h1>Heading 1 - Outfit Font</h1>
-          <h2>Heading 2 - Outfit Font</h2>
-          <h3>Heading 3 - Outfit Font</h3>
-          <p>Body text in Outfit Regular. This should be clean, modern, and highly readable. The font should feel professional yet approachable.</p>
+          <a 
+            href="/properties/contact"
+            class="px-6 lg:px-8 py-3 lg:py-4 rounded-lg font-semibold text-base lg:text-lg bg-white transition-opacity hover:opacity-90"
+            style={`color: ${colors.coral};`}
+          >
+            Join Investor List
+          </a>
+          <a 
+            href="/properties/contact"
+            class="px-6 lg:px-8 py-3 lg:py-4 rounded-lg font-semibold text-base lg:text-lg border-2 border-white text-white transition-colors hover:bg-white/10"
+          >
+            Schedule a Call
+          </a>
         </div>
       </div>
     </section>
