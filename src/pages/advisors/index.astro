@@ -1,0 +1,799 @@
+---
+/**
+ * GrowthWave Advisors - Homepage
+ * ==============================
+ * Created: January 23, 2026
+ * REBUILT: Fixed Island pattern, proper responsive design
+ * 
+ * Design System Compliance:
+ * - Two-layer "Fixed Island" pattern: full-width bg + max-w-7xl content
+ * - Typography stops at lg breakpoint (no xl: or 2xl: font sizes)
+ * - Responsive padding: px-4 lg:px-8
+ * - Body content: max-w-7xl (1280px)
+ * - Wave Cyan #51A7F8 for CTAs and accents
+ * 
+ * Reference: MailChimp, Calendly, Notion, Dropbox large screen handling
+ * @see advisors-wireframes-v3.jsx (approved wireframe - adapted for responsive)
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+import FlywheelVisual from '@components/FlywheelVisual.astro';
+
+// Brand Colors - Advisors uses Wave Cyan accent
+const colors = {
+  // Primary accent - Wave Cyan
+  cyan: '#51A7F8',
+  cyanLight: '#7BBFFF',
+  cyanDark: '#3A8FE0',
+  cyanBg: 'rgba(81,167,248,0.15)',
+  cyanBgLight: 'rgba(81,167,248,0.08)',
+  
+  // Structure colors
+  ocean: '#265077',
+  oceanLight: '#3A6B94',
+  midnight: '#022140',
+  
+  // Division accent colors
+  creditGreen: '#10B981',
+  capitalPurple: '#7C3AED',
+  propertiesCoral: '#FF6B4A',
+  
+  // Light backgrounds (blue-tinted for warmth)
+  light: '#f0f9ff',
+  lightAlt: '#f5faff',
+  
+  // Neutrals
+  gray50: '#f9fafb',
+  gray100: '#f3f4f6',
+  gray200: '#e5e7eb',
+  gray300: '#d1d5db',
+  gray400: '#9ca3af',
+  gray500: '#6b7280',
+  gray600: '#4b5563',
+  gray700: '#374151',
+  gray800: '#1f2937',
+  white: '#FFFFFF',
+};
+
+// Hero Stats (3 items) - with icon names
+const heroStats = [
+  { value: '3', label: 'Integrated Services', icon: 'layers' },
+  { value: '24/7', label: 'Platform Access', icon: 'clock' },
+  { value: 'FREE', label: 'Strategy Session', icon: 'calendar' },
+];
+
+// Flywheel Stages (simplified for responsive grid layout)
+const flywheelStages = [
+  { 
+    num: 1, 
+    name: 'Credit Sculpt', 
+    desc: '3-6 months to 680+', 
+    color: colors.creditGreen, 
+    benefit: 'Build credit foundation',
+    href: 'https://creditsculpt.com',
+  },
+  { 
+    num: 2, 
+    name: 'GrowthWave Capital', 
+    desc: '$50K-$250K+ funding', 
+    color: colors.capitalPurple, 
+    benefit: 'Access business capital',
+    href: 'https://growthwavecapital.com',
+  },
+  { 
+    num: 3, 
+    name: 'GrowthWave Properties', 
+    desc: '8-12% CoC returns', 
+    color: colors.propertiesCoral, 
+    benefit: 'Invest in real estate',
+    href: 'https://growthwaveproperties.com',
+  },
+];
+
+// Barriers (3 items)
+const barriers = [
+  { title: 'Credit Barriers', desc: 'Low scores or thin files block access to favorable lending terms.' },
+  { title: 'Financing Gaps', desc: "Banks don't understand non-W-2 income from investments and business." },
+  { title: 'Deal Flow Access', desc: 'Quality investment opportunities require networks most investors lack.' },
+];
+
+// Full Division Cards (for Flywheel Solution section)
+const divisions = [
+  { 
+    num: 1, 
+    name: 'Credit Sculpt', 
+    tagline: 'Crafting Your Credit Success', 
+    desc: 'Transform credit barriers into competitive advantages. 3-6 months to 680+ scores.', 
+    color: colors.creditGreen, 
+    timeline: '3-6 months', 
+    outcome: '680+ credit score', 
+    cta: 'Start Credit Journey',
+    href: 'https://creditsculpt.com',
+  },
+  { 
+    num: 2, 
+    name: 'GrowthWave Capital', 
+    tagline: 'Fueling Your Business Growth', 
+    desc: 'Access $50K-$250K+ in business credit without W-2 requirements.', 
+    color: colors.capitalPurple, 
+    timeline: '1-3 months', 
+    outcome: '$50K-$250K+ capital', 
+    cta: 'Explore Financing',
+    href: 'https://growthwavecapital.com',
+  },
+  { 
+    num: 3, 
+    name: 'GrowthWave Properties', 
+    tagline: 'Building Wealth Through Real Estate', 
+    desc: 'Joint venture partnerships in value-add multifamily. 8-12% CoC returns.', 
+    color: colors.propertiesCoral, 
+    timeline: '2-4 year holds', 
+    outcome: '8-12% CoC returns', 
+    cta: 'View Opportunities',
+    href: 'https://growthwaveproperties.com',
+  },
+];
+
+// Why GrowthWave (4 items)
+const whyUs = [
+  { title: 'Complete Integration', desc: 'One platform, three services. No handoffs or starting over.' },
+  { title: 'Banking Expertise', desc: '15+ years institutional experience. We know how lenders think.' },
+  { title: 'Technology-Enabled', desc: 'Enterprise-grade systems providing 24/7 access and transparency.' },
+  { title: 'Investor-Focused', desc: 'Built specifically for real estate investors and business owners.' },
+];
+
+// Personas (4 items)
+const personas = [
+  { title: 'Aspiring Investors', desc: 'Credit barriers blocking your first deal? Start with Credit Sculpt.' },
+  { title: 'Active Investors', desc: 'Need capital for your next property? GrowthWave Capital can help.' },
+  { title: 'Experienced Investors', desc: 'Seeking JV partnerships and deal flow? Explore Properties.' },
+  { title: 'High-Income Professionals', desc: 'Transitioning from W-2? We understand your unique situation.' },
+];
+---
+
+<BaseLayout
+  brand="advisors"
+  title="GrowthWave Advisors | The Investor Success Flywheelâ„¢"
+  description="The only integrated platform that takes you from credit optimization through business financing to multifamily real estate. One relationship, complete journey."
+>
+  <Header brand="advisors" activePage="Home" />
+
+  <main>
+    <!-- ============================================
+         HERO SECTION
+         - Gradient background (full-width)
+         - CENTERED content (not two-column)
+         - Full Flywheel visual BELOW content
+         - Matches wireframe layout exactly
+         ============================================ -->
+    <section 
+      class="w-full relative overflow-visible"
+      style={`background: linear-gradient(135deg, ${colors.midnight} 0%, ${colors.ocean} 100%);`}
+    >
+      <div class="max-w-7xl mx-auto px-4 lg:px-8 py-12 lg:py-16">
+        
+        <!-- Hero Content - CENTERED -->
+        <div class="text-center max-w-[800px] mx-auto mb-8">
+          
+          <!-- Badge -->
+          <div 
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-semibold mb-5"
+            style={`background-color: ${colors.cyanBg}; color: ${colors.cyan};`}
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 3L14.5 8.5L20 11L14.5 13.5L12 19L9.5 13.5L4 11L9.5 8.5L12 3Z"></path>
+            </svg>
+            The Investor Success Flywheelâ„¢
+          </div>
+          
+          <!-- Headline -->
+          <h1 class="text-3xl lg:text-5xl font-bold text-white leading-tight mb-5 tracking-tight">
+            From Credit Repair to
+            <span style={`color: ${colors.cyan};`}> Cash-Flowing Properties</span>
+          </h1>
+          
+          <!-- Subheadline -->
+          <p class="text-base lg:text-lg text-gray-300 mb-8 leading-relaxed max-w-[650px] mx-auto">
+            The only integrated platform that takes you from credit optimization through 
+            business financing to multifamily real estate. One relationship, complete journey.
+          </p>
+          
+          <!-- CTAs -->
+          <div class="flex flex-col sm:flex-row gap-4 justify-center mb-8">
+            <a 
+              href="#flywheel"
+              class="px-6 py-3.5 rounded-lg font-semibold text-white text-base flex items-center justify-center gap-2 transition-opacity hover:opacity-90"
+              style={`background-color: ${colors.cyan}; box-shadow: 0 4px 16px ${colors.cyan}40;`}
+            >
+              See How It Works
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7"></path>
+              </svg>
+            </a>
+            <a 
+            href="/advisors/services"
+              class="px-6 py-3.5 rounded-lg font-semibold border-2 border-white/30 text-white text-base text-center transition-colors hover:bg-white/10"
+            >
+              Explore Our Services
+            </a>
+          </div>
+          
+          <!-- Stats Row - Consistent alignment on all viewports -->
+          <div class="flex flex-col sm:flex-row items-center sm:items-start justify-center gap-6 sm:gap-8 pt-6 border-t border-white/15">
+            <!-- Stat 1: Integrated Services -->
+            <div class="flex items-center gap-3 w-48 sm:w-auto">
+              <div 
+                class="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
+                style={`background: ${colors.cyan}20; border: 1px solid ${colors.cyan}40;`}
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#51A7F8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                  <polyline points="2 17 12 22 22 17"></polyline>
+                  <polyline points="2 12 12 17 22 12"></polyline>
+                </svg>
+              </div>
+              <div class="text-left">
+                <div class="text-2xl font-bold text-white">3</div>
+                <div class="text-sm text-gray-400">Integrated Services</div>
+              </div>
+            </div>
+            <!-- Stat 2: Platform Access -->
+            <div class="flex items-center gap-3 w-48 sm:w-auto">
+              <div 
+                class="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
+                style={`background: ${colors.cyan}20; border: 1px solid ${colors.cyan}40;`}
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#51A7F8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <circle cx="12" cy="12" r="10"></circle>
+                  <polyline points="12 6 12 12 16 14"></polyline>
+                </svg>
+              </div>
+              <div class="text-left">
+                <div class="text-2xl font-bold text-white">24/7</div>
+                <div class="text-sm text-gray-400">Platform Access</div>
+              </div>
+            </div>
+            <!-- Stat 3: Strategy Session -->
+            <div class="flex items-center gap-3 w-48 sm:w-auto">
+              <div 
+                class="w-11 h-11 rounded-xl flex items-center justify-center flex-shrink-0"
+                style={`background: ${colors.cyan}20; border: 1px solid ${colors.cyan}40;`}
+              >
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#51A7F8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+              </div>
+              <div class="text-left">
+                <div class="text-2xl font-bold text-white">FREE</div>
+                <div class="text-sm text-gray-400">Strategy Session</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- ============================================
+             FLYWHEEL VISUAL COMPONENT
+             Responsive flywheel: Desktop circular, Mobile vertical
+             ============================================ -->
+        <div class="mt-4" id="flywheel">
+          <FlywheelVisual />
+        </div>
+        
+      </div>
+    </section>
+
+    <!-- ============================================
+         BARRIERS SECTION
+         - White background
+         - 3-column grid
+         ============================================ -->
+    <section class="w-full py-14 lg:py-20 px-4 lg:px-8 bg-white">
+      <div class="max-w-5xl mx-auto text-center">
+        
+        <h2 
+          class="text-2xl lg:text-4xl font-bold mb-4"
+          style={`color: ${colors.midnight};`}
+        >
+          The Barriers Real Estate Investors Face
+        </h2>
+        <p class="text-base lg:text-lg text-gray-500 mb-10 lg:mb-14">
+          Traditional financial services weren't built for entrepreneurs who generate wealth differently.
+        </p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <!-- Barrier 1: Credit Barriers -->
+          <div 
+            class="p-6 rounded-xl text-center bg-white border"
+            style={`border-color: ${colors.gray200}; box-shadow: 0 4px 20px rgba(0,0,0,0.06);`}
+          >
+            <div 
+              class="w-14 h-14 rounded-xl mx-auto mb-4 flex items-center justify-center"
+              style={`background: linear-gradient(135deg, ${colors.cyanBg} 0%, ${colors.cyanBgLight} 100%); border: 1px solid rgba(81,167,248,0.25); box-shadow: 0 4px 16px rgba(81,167,248,0.15);`}
+            >
+              <!-- Trending Up Icon -->
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#51A7F8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline>
+                <polyline points="17 6 23 6 23 12"></polyline>
+              </svg>
+            </div>
+            <h3 
+              class="text-lg font-bold mb-2"
+              style={`color: ${colors.midnight};`}
+            >
+              Credit Barriers
+            </h3>
+            <p class="text-base text-gray-600 leading-relaxed">Low scores or thin files block access to favorable lending terms.</p>
+          </div>
+          
+          <!-- Barrier 2: Financing Gaps -->
+          <div 
+            class="p-6 rounded-xl text-center bg-white border"
+            style={`border-color: ${colors.gray200}; box-shadow: 0 4px 20px rgba(0,0,0,0.06);`}
+          >
+            <div 
+              class="w-14 h-14 rounded-xl mx-auto mb-4 flex items-center justify-center"
+              style={`background: linear-gradient(135deg, ${colors.cyanBg} 0%, ${colors.cyanBgLight} 100%); border: 1px solid rgba(81,167,248,0.25); box-shadow: 0 4px 16px rgba(81,167,248,0.15);`}
+            >
+              <!-- Landmark/Bank Icon -->
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#51A7F8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="22" x2="21" y2="22"></line>
+                <line x1="6" y1="18" x2="6" y2="11"></line>
+                <line x1="10" y1="18" x2="10" y2="11"></line>
+                <line x1="14" y1="18" x2="14" y2="11"></line>
+                <line x1="18" y1="18" x2="18" y2="11"></line>
+                <polygon points="12 2 20 7 4 7"></polygon>
+              </svg>
+            </div>
+            <h3 
+              class="text-lg font-bold mb-2"
+              style={`color: ${colors.midnight};`}
+            >
+              Financing Gaps
+            </h3>
+            <p class="text-base text-gray-600 leading-relaxed">Banks don't understand non-W-2 income from investments and business.</p>
+          </div>
+          
+          <!-- Barrier 3: Deal Flow Access -->
+          <div 
+            class="p-6 rounded-xl text-center bg-white border"
+            style={`border-color: ${colors.gray200}; box-shadow: 0 4px 20px rgba(0,0,0,0.06);`}
+          >
+            <div 
+              class="w-14 h-14 rounded-xl mx-auto mb-4 flex items-center justify-center"
+              style={`background: linear-gradient(135deg, ${colors.cyanBg} 0%, ${colors.cyanBgLight} 100%); border: 1px solid rgba(81,167,248,0.25); box-shadow: 0 4px 16px rgba(81,167,248,0.15);`}
+            >
+              <!-- Eye Icon -->
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#51A7F8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </div>
+            <h3 
+              class="text-lg font-bold mb-2"
+              style={`color: ${colors.midnight};`}
+            >
+              Deal Flow Access
+            </h3>
+            <p class="text-base text-gray-600 leading-relaxed">Quality investment opportunities require networks most investors lack.</p>
+          </div>
+        </div>
+        
+      </div>
+    </section>
+
+    <!-- ============================================
+         FLYWHEEL SOLUTION SECTION
+         - Light blue-tinted background
+         - 3 division cards with colored borders
+         ============================================ -->
+    <section 
+      id="flywheel" 
+      class="w-full py-14 lg:py-20 px-4 lg:px-8 scroll-mt-20"
+      style={`background-color: ${colors.light};`}
+    >
+      <div class="max-w-6xl mx-auto">
+        
+        <!-- Section header -->
+        <div class="text-center mb-10 lg:mb-12">
+          <div 
+            class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm font-medium mb-4"
+            style={`background-color: ${colors.cyanBgLight}; color: ${colors.cyan};`}
+          >
+            <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="23 4 23 10 17 10" /><polyline points="1 20 1 14 7 14" /><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15" />
+            </svg>
+            The Solution
+          </div>
+          
+          <h2 
+            class="text-2xl lg:text-4xl font-bold"
+            style={`color: ${colors.midnight};`}
+          >
+            The Investor Success Flywheelâ„¢
+          </h2>
+          <p class="text-base lg:text-lg text-gray-500 mt-3 max-w-2xl mx-auto">
+            Three integrated services that build on each other. No fragmentation. No starting over.
+          </p>
+        </div>
+        
+        <!-- Division cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+          {divisions.map((d) => (
+            <div 
+              class="bg-white rounded-2xl p-6 relative"
+              style={`border: 2px solid ${d.color}; box-shadow: 0 8px 24px ${d.color}15;`}
+            >
+              <!-- Number badge -->
+              <div 
+                class="absolute -top-3 left-1/2 -translate-x-1/2 w-7 h-7 rounded-lg flex items-center justify-center text-white text-sm font-bold"
+                style={`background-color: ${d.color}; box-shadow: 0 4px 12px ${d.color}40;`}
+              >{d.num}</div>
+              
+              <div class="text-center mt-2">
+                <h3 
+                  class="text-lg lg:text-xl font-bold"
+                  style={`color: ${d.color};`}
+                >
+                  {d.name}
+                </h3>
+                <p class="text-sm text-gray-500 italic mb-3">{d.tagline}</p>
+                <p class="text-sm lg:text-base text-gray-600 leading-relaxed mb-5">{d.desc}</p>
+                
+                <!-- Timeline/Outcome boxes -->
+                <div class="flex gap-3 mb-5">
+                  <div 
+                    class="flex-1 p-2.5 rounded-lg text-center"
+                    style={`background-color: ${d.color}08;`}
+                  >
+                    <div class="text-[10px] text-gray-500 uppercase tracking-wide">Timeline</div>
+                    <div class="text-sm font-semibold" style={`color: ${colors.midnight};`}>{d.timeline}</div>
+                  </div>
+                  <div 
+                    class="flex-1 p-2.5 rounded-lg text-center"
+                    style={`background-color: ${d.color}08;`}
+                  >
+                    <div class="text-[10px] text-gray-500 uppercase tracking-wide">Outcome</div>
+                    <div class="text-sm font-semibold" style={`color: ${colors.midnight};`}>{d.outcome}</div>
+                  </div>
+                </div>
+                
+                <!-- CTA Button -->
+                <a 
+                  href={d.href}
+                  class="w-full py-3 rounded-lg font-semibold text-sm text-white flex items-center justify-center gap-2 transition-opacity hover:opacity-90"
+                  style={`background-color: ${d.color}; box-shadow: 0 4px 12px ${d.color}30;`}
+                >
+                  {d.cta}
+                  <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M5 12h14M12 5l7 7-7 7" />
+                  </svg>
+                </a>
+              </div>
+            </div>
+          ))}
+        </div>
+        
+      </div>
+    </section>
+
+    <!-- ============================================
+         WHY GROWTHWAVE SECTION
+         - White background
+         - 2x2 grid
+         ============================================ -->
+    <section class="w-full py-14 lg:py-20 px-4 lg:px-8 bg-white">
+      <div class="max-w-5xl mx-auto">
+        
+        <h2 
+          class="text-2xl lg:text-4xl font-bold mb-3 text-center"
+          style={`color: ${colors.midnight};`}
+        >
+          Why GrowthWave Advisors?
+        </h2>
+        <p class="text-base lg:text-lg text-gray-500 mb-10 text-center">
+          We combine institutional expertise with technology-enabled efficiency.
+        </p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <!-- Item 1: Complete Integration -->
+          <div 
+            class="flex items-start gap-4 p-5 rounded-xl bg-white border"
+            style={`border-color: ${colors.gray200}; box-shadow: 0 4px 16px rgba(0,0,0,0.04);`}
+          >
+            <div 
+              class="w-13 h-13 rounded-xl flex-shrink-0 flex items-center justify-center"
+              style={`width: 52px; height: 52px; background: linear-gradient(135deg, ${colors.cyanBg} 0%, ${colors.cyanBgLight} 100%); border: 1px solid rgba(81,167,248,0.25); box-shadow: 0 4px 16px rgba(81,167,248,0.15);`}
+            >
+              <!-- Link Icon -->
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#51A7F8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+              </svg>
+            </div>
+            <div>
+              <h3 
+                class="text-base lg:text-lg font-bold mb-1"
+                style={`color: ${colors.midnight};`}
+              >
+                Complete Integration
+              </h3>
+              <p class="text-sm lg:text-base text-gray-600 leading-relaxed">One platform, three services. No handoffs or starting over.</p>
+            </div>
+          </div>
+          
+          <!-- Item 2: Banking Expertise -->
+          <div 
+            class="flex items-start gap-4 p-5 rounded-xl bg-white border"
+            style={`border-color: ${colors.gray200}; box-shadow: 0 4px 16px rgba(0,0,0,0.04);`}
+          >
+            <div 
+              class="flex-shrink-0 flex items-center justify-center rounded-xl"
+              style={`width: 52px; height: 52px; background: linear-gradient(135deg, ${colors.cyanBg} 0%, ${colors.cyanBgLight} 100%); border: 1px solid rgba(81,167,248,0.25); box-shadow: 0 4px 16px rgba(81,167,248,0.15);`}
+            >
+              <!-- Landmark Icon -->
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#51A7F8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="22" x2="21" y2="22"></line>
+                <line x1="6" y1="18" x2="6" y2="11"></line>
+                <line x1="10" y1="18" x2="10" y2="11"></line>
+                <line x1="14" y1="18" x2="14" y2="11"></line>
+                <line x1="18" y1="18" x2="18" y2="11"></line>
+                <polygon points="12 2 20 7 4 7"></polygon>
+              </svg>
+            </div>
+            <div>
+              <h3 
+                class="text-base lg:text-lg font-bold mb-1"
+                style={`color: ${colors.midnight};`}
+              >
+                Banking Expertise
+              </h3>
+              <p class="text-sm lg:text-base text-gray-600 leading-relaxed">15+ years institutional experience. We know how lenders think.</p>
+            </div>
+          </div>
+          
+          <!-- Item 3: Technology-Enabled -->
+          <div 
+            class="flex items-start gap-4 p-5 rounded-xl bg-white border"
+            style={`border-color: ${colors.gray200}; box-shadow: 0 4px 16px rgba(0,0,0,0.04);`}
+          >
+            <div 
+              class="flex-shrink-0 flex items-center justify-center rounded-xl"
+              style={`width: 52px; height: 52px; background: linear-gradient(135deg, ${colors.cyanBg} 0%, ${colors.cyanBgLight} 100%); border: 1px solid rgba(81,167,248,0.25); box-shadow: 0 4px 16px rgba(81,167,248,0.15);`}
+            >
+              <!-- Zap Icon -->
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#51A7F8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+              </svg>
+            </div>
+            <div>
+              <h3 
+                class="text-base lg:text-lg font-bold mb-1"
+                style={`color: ${colors.midnight};`}
+              >
+                Technology-Enabled
+              </h3>
+              <p class="text-sm lg:text-base text-gray-600 leading-relaxed">Enterprise-grade systems providing 24/7 access and transparency.</p>
+            </div>
+          </div>
+          
+          <!-- Item 4: Investor-Focused -->
+          <div 
+            class="flex items-start gap-4 p-5 rounded-xl bg-white border"
+            style={`border-color: ${colors.gray200}; box-shadow: 0 4px 16px rgba(0,0,0,0.04);`}
+          >
+            <div 
+              class="flex-shrink-0 flex items-center justify-center rounded-xl"
+              style={`width: 52px; height: 52px; background: linear-gradient(135deg, ${colors.cyanBg} 0%, ${colors.cyanBgLight} 100%); border: 1px solid rgba(81,167,248,0.25); box-shadow: 0 4px 16px rgba(81,167,248,0.15);`}
+            >
+              <!-- Target Icon -->
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="#51A7F8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <circle cx="12" cy="12" r="6"></circle>
+                <circle cx="12" cy="12" r="2"></circle>
+              </svg>
+            </div>
+            <div>
+              <h3 
+                class="text-base lg:text-lg font-bold mb-1"
+                style={`color: ${colors.midnight};`}
+              >
+                Investor-Focused
+              </h3>
+              <p class="text-sm lg:text-base text-gray-600 leading-relaxed">Built specifically for real estate investors and business owners.</p>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </section>
+
+    <!-- ============================================
+         PERSONAS SECTION
+         - Light blue background
+         - 4-column grid (responsive)
+         ============================================ -->
+    <section 
+      class="w-full py-14 lg:py-20 px-4 lg:px-8"
+      style={`background-color: ${colors.light};`}
+    >
+      <div class="max-w-5xl mx-auto text-center">
+        
+        <h2 
+          class="text-2xl lg:text-[32px] font-bold mb-10"
+          style={`color: ${colors.midnight};`}
+        >
+          Where Are You in Your Journey?
+        </h2>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <!-- Persona 1: Aspiring Investors -->
+          <div 
+            class="p-5 rounded-xl text-center bg-white border"
+            style={`border-color: ${colors.gray200}; box-shadow: 0 4px 16px rgba(0,0,0,0.04);`}
+          >
+            <div 
+              class="mx-auto mb-3 flex items-center justify-center rounded-xl"
+              style={`width: 48px; height: 48px; background: linear-gradient(135deg, ${colors.cyanBg} 0%, ${colors.cyanBgLight} 100%); border: 1px solid rgba(81,167,248,0.25); box-shadow: 0 4px 16px rgba(81,167,248,0.15);`}
+            >
+              <!-- Sparkles Icon -->
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#51A7F8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m12 3-1.912 5.813a2 2 0 0 1-1.275 1.275L3 12l5.813 1.912a2 2 0 0 1 1.275 1.275L12 21l1.912-5.813a2 2 0 0 1 1.275-1.275L21 12l-5.813-1.912a2 2 0 0 1-1.275-1.275L12 3Z"></path>
+                <path d="M5 3v4"></path>
+                <path d="M19 17v4"></path>
+                <path d="M3 5h4"></path>
+                <path d="M17 19h4"></path>
+              </svg>
+            </div>
+            <h3 
+              class="text-sm lg:text-base font-bold mb-1.5"
+              style={`color: ${colors.midnight};`}
+            >
+              Aspiring Investors
+            </h3>
+            <p class="text-sm text-gray-600 leading-snug">Credit barriers blocking your first deal? Start with Credit Sculpt.</p>
+          </div>
+          
+          <!-- Persona 2: Active Investors -->
+          <div 
+            class="p-5 rounded-xl text-center bg-white border"
+            style={`border-color: ${colors.gray200}; box-shadow: 0 4px 16px rgba(0,0,0,0.04);`}
+          >
+            <div 
+              class="mx-auto mb-3 flex items-center justify-center rounded-xl"
+              style={`width: 48px; height: 48px; background: linear-gradient(135deg, ${colors.cyanBg} 0%, ${colors.cyanBgLight} 100%); border: 1px solid rgba(81,167,248,0.25); box-shadow: 0 4px 16px rgba(81,167,248,0.15);`}
+            >
+              <!-- Bar Chart Icon -->
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#51A7F8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 3v18h18"></path>
+                <path d="M18 17V9"></path>
+                <path d="M13 17V5"></path>
+                <path d="M8 17v-3"></path>
+              </svg>
+            </div>
+            <h3 
+              class="text-sm lg:text-base font-bold mb-1.5"
+              style={`color: ${colors.midnight};`}
+            >
+              Active Investors
+            </h3>
+            <p class="text-sm text-gray-600 leading-snug">Need capital for your next property? GrowthWave Capital can help.</p>
+          </div>
+          
+          <!-- Persona 3: Experienced Investors -->
+          <div 
+            class="p-5 rounded-xl text-center bg-white border"
+            style={`border-color: ${colors.gray200}; box-shadow: 0 4px 16px rgba(0,0,0,0.04);`}
+          >
+            <div 
+              class="mx-auto mb-3 flex items-center justify-center rounded-xl"
+              style={`width: 48px; height: 48px; background: linear-gradient(135deg, ${colors.cyanBg} 0%, ${colors.cyanBgLight} 100%); border: 1px solid rgba(81,167,248,0.25); box-shadow: 0 4px 16px rgba(81,167,248,0.15);`}
+            >
+              <!-- Users Icon -->
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#51A7F8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+            </div>
+            <h3 
+              class="text-sm lg:text-base font-bold mb-1.5"
+              style={`color: ${colors.midnight};`}
+            >
+              Experienced Investors
+            </h3>
+            <p class="text-sm text-gray-600 leading-snug">Seeking JV partnerships and deal flow? Explore Properties.</p>
+          </div>
+          
+          <!-- Persona 4: High-Income Professionals -->
+          <div 
+            class="p-5 rounded-xl text-center bg-white border"
+            style={`border-color: ${colors.gray200}; box-shadow: 0 4px 16px rgba(0,0,0,0.04);`}
+          >
+            <div 
+              class="mx-auto mb-3 flex items-center justify-center rounded-xl"
+              style={`width: 48px; height: 48px; background: linear-gradient(135deg, ${colors.cyanBg} 0%, ${colors.cyanBgLight} 100%); border: 1px solid rgba(81,167,248,0.25); box-shadow: 0 4px 16px rgba(81,167,248,0.15);`}
+            >
+              <!-- Award Icon -->
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#51A7F8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="8" r="6"></circle>
+                <path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"></path>
+              </svg>
+            </div>
+            <h3 
+              class="text-sm lg:text-base font-bold mb-1.5"
+              style={`color: ${colors.midnight};`}
+            >
+              High-Income Professionals
+            </h3>
+            <p class="text-sm text-gray-600 leading-snug">Transitioning from W-2? We understand your unique situation.</p>
+          </div>
+        </div>
+        
+      </div>
+    </section>
+
+    <!-- ============================================
+         CTA SECTION
+         - Gradient background (cyan â†’ ocean â†’ midnight)
+         - Centered content
+         ============================================ -->
+    <section 
+      class="w-full py-16 lg:py-24 px-4 lg:px-8"
+      style={`background: linear-gradient(135deg, ${colors.cyan} 0%, ${colors.ocean} 50%, ${colors.midnight} 100%);`}
+    >
+      <div class="max-w-3xl mx-auto text-center">
+        
+        <!-- Icon -->
+        <div 
+          class="mx-auto mb-6 flex items-center justify-center rounded-xl"
+          style="width: 56px; height: 56px; background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.05) 100%); border: 1px solid rgba(255,255,255,0.2);"
+        >
+          <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+            <line x1="16" y1="2" x2="16" y2="6"></line>
+            <line x1="8" y1="2" x2="8" y2="6"></line>
+            <line x1="3" y1="10" x2="21" y2="10"></line>
+          </svg>
+        </div>
+        
+        <h2 class="text-2xl lg:text-4xl font-bold text-white mb-4">
+          Ready to Start Your Journey?
+        </h2>
+        <p class="text-base lg:text-lg text-white/80 mb-8 max-w-xl mx-auto">
+          Schedule a free strategy session to map your path from where you are to where you want to be.
+        </p>
+        
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a 
+            href="/advisors/contact"
+            class="inline-flex items-center justify-center gap-2 px-6 lg:px-8 py-3 lg:py-4 rounded-lg font-semibold text-base lg:text-lg transition-opacity hover:opacity-90"
+            style={`background-color: white; color: ${colors.ocean}; box-shadow: 0 4px 16px rgba(0,0,0,0.15);`}
+          >
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            Schedule Free Consultation
+          </a>
+          <a 
+            href="/advisors/services"
+            class="inline-flex items-center justify-center px-6 lg:px-8 py-3 lg:py-4 rounded-lg font-semibold text-base lg:text-lg text-white border-2 border-white/30 transition-colors hover:bg-white/10"
+          >
+            Explore Services
+          </a>
+        </div>
+        
+      </div>
+    </section>
+
+  </main>
+
+  <Footer brand="advisors" />
+</BaseLayout>

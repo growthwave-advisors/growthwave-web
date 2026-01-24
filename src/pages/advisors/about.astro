@@ -1,0 +1,694 @@
+---
+/**
+ * GrowthWave Advisors - About Page
+ * ================================
+ * Created: January 23, 2026
+ * 
+ * Design System Compliance:
+ * - Two-layer "Fixed Island" pattern: full-width bg + max-w-7xl content
+ * - Typography stops at lg breakpoint (no xl: or 2xl: font sizes)
+ * - Responsive padding: px-4 lg:px-8
+ * - Body content: max-w-7xl (1280px)
+ * - Wave Cyan #51A7F8 for CTAs and accents
+ * 
+ * @see advisors-wireframes-v3.jsx (AboutPage section, lines 963-1114)
+ * @see GrowthWave_Advisors_Website_Copy_COMPLETED.md
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+
+// Brand Colors - Advisors uses Wave Cyan accent
+const colors = {
+  // Primary accent - Wave Cyan
+  cyan: '#51A7F8',
+  cyanLight: '#7BBFFF',
+  cyanDark: '#3A8FE0',
+  cyanBg: 'rgba(81,167,248,0.15)',
+  cyanBgLight: 'rgba(81,167,248,0.08)',
+  
+  // Structure colors
+  ocean: '#265077',
+  oceanLight: '#3A6B94',
+  midnight: '#022140',
+  
+  // Division accent colors
+  creditGreen: '#10B981',
+  capitalPurple: '#7C3AED',
+  propertiesCoral: '#FF6B4A',
+  
+  // Light backgrounds (blue-tinted for warmth)
+  light: '#f0f9ff',
+  lightAlt: '#f5faff',
+  
+  // Neutrals
+  gray50: '#f9fafb',
+  gray100: '#f3f4f6',
+  gray200: '#e5e7eb',
+  gray300: '#d1d5db',
+  gray400: '#9ca3af',
+  gray500: '#6b7280',
+  gray600: '#4b5563',
+  gray700: '#374151',
+  gray800: '#1f2937',
+  white: '#FFFFFF',
+};
+
+// Hero Stats (3 items) - from wireframe
+const heroStats = [
+  { 
+    value: '15+', 
+    label: 'Years Financial Services', 
+    sublabel: 'Banking & technology leadership',
+  },
+  { 
+    value: '3', 
+    label: 'Integrated Divisions', 
+    sublabel: 'Credit • Capital • Properties',
+  },
+  { 
+    value: 'Enterprise', 
+    label: 'Grade Technology', 
+    sublabel: 'Institutional-quality systems',
+  },
+];
+
+// Core Competencies (4 items) - from wireframe
+const competencies = [
+  { 
+    title: 'Financial Services Leadership', 
+    desc: '15+ years of banking operations experience, including executive technology roles with direct lending oversight.',
+  },
+  { 
+    title: 'Enterprise Technology', 
+    desc: 'Cloud architecture expertise and AI certification enable sophisticated automation tailored for investor needs.',
+  },
+  { 
+    title: 'Active Investment Practice', 
+    desc: 'Direct experience as multifamily investors using the same services we provide.',
+  },
+  { 
+    title: 'Integrated Platform', 
+    desc: 'The Investor Success Flywheel connects credit optimization, business financing, and investment opportunities.',
+  },
+];
+
+// Operating Principles (6 items) - from wireframe
+const principles = [
+  { 
+    title: 'Data-Driven Decisions', 
+    desc: 'Comprehensive analysis before every recommendation.',
+  },
+  { 
+    title: 'Technology-Enabled', 
+    desc: 'Enterprise systems that multiply effectiveness.',
+  },
+  { 
+    title: 'Strategic Matching', 
+    desc: 'Right products for right situations.',
+  },
+  { 
+    title: 'Transparent Expectations', 
+    desc: 'Honest assessments, realistic timelines.',
+  },
+  { 
+    title: 'Integrated Journey', 
+    desc: 'Progress through stages with accumulated knowledge.',
+  },
+  { 
+    title: 'Long-Term Relationships', 
+    desc: 'We succeed when clients build lasting wealth.',
+  },
+];
+---
+
+<BaseLayout
+  brand="advisors"
+  title="About GrowthWave Advisors | Integrated Financial Services for Real Estate Investors"
+  description="Learn how GrowthWave Advisors was built to solve the biggest challenges facing real estate investors—credit barriers, financing access, and quality deal flow—through one integrated platform."
+>
+  <Header brand="advisors" activePage="About" />
+
+  <main>
+    <!-- ============================================
+         HERO SECTION
+         - Light blue-tinted background (full-width)
+         - Centered content
+         - 3 stat cards in grid
+         - Badge at bottom
+         ============================================ -->
+    <section 
+      class="w-full py-14 lg:py-20 px-4 lg:px-8"
+      style={`background-color: ${colors.light};`}
+    >
+      <div class="max-w-5xl mx-auto text-center">
+        
+        <!-- Page Headline -->
+        <h1 
+          class="text-3xl lg:text-[44px] font-bold leading-tight mb-5"
+          style={`color: ${colors.midnight};`}
+        >
+          Building the Path to Financial Independence
+        </h1>
+        
+        <!-- Subheadline -->
+        <p class="text-base lg:text-lg text-gray-500 leading-relaxed max-w-3xl mx-auto mb-10 lg:mb-14">
+          GrowthWave Advisors was built to solve a fundamental problem: financial services are fragmented, 
+          and investors waste time navigating disconnected providers.
+        </p>
+        
+        <!-- Stats Grid (3 cards) -->
+        <div class="grid grid-cols-1 sm:grid-cols-3 gap-6">
+          <!-- Stat 1: Years Financial Services -->
+          <div 
+            class="p-6 lg:p-8 rounded-xl text-center bg-white border"
+            style={`border-color: ${colors.gray200}; box-shadow: 0 4px 20px rgba(0,0,0,0.06);`}
+          >
+            <div 
+              class="w-14 h-14 rounded-xl mx-auto mb-4 flex items-center justify-center"
+              style={`background: linear-gradient(135deg, ${colors.cyanBg} 0%, ${colors.cyanBgLight} 100%); border: 1px solid rgba(81,167,248,0.25); box-shadow: 0 4px 16px rgba(81,167,248,0.15);`}
+            >
+              <!-- Landmark/Bank Icon -->
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#51A7F8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <line x1="3" y1="22" x2="21" y2="22"></line>
+                <line x1="6" y1="18" x2="6" y2="11"></line>
+                <line x1="10" y1="18" x2="10" y2="11"></line>
+                <line x1="14" y1="18" x2="14" y2="11"></line>
+                <line x1="18" y1="18" x2="18" y2="11"></line>
+                <polygon points="12 2 20 7 4 7"></polygon>
+              </svg>
+            </div>
+            <div 
+              class="text-4xl lg:text-[44px] font-bold mb-1"
+              style={`color: ${colors.cyan};`}
+            >
+              15+
+            </div>
+            <div 
+              class="text-base font-semibold mb-1"
+              style={`color: ${colors.midnight};`}
+            >
+              Years Financial Services
+            </div>
+            <div class="text-sm text-gray-500">Banking & technology leadership</div>
+          </div>
+          
+          <!-- Stat 2: Integrated Divisions -->
+          <div 
+            class="p-6 lg:p-8 rounded-xl text-center bg-white border"
+            style={`border-color: ${colors.gray200}; box-shadow: 0 4px 20px rgba(0,0,0,0.06);`}
+          >
+            <div 
+              class="w-14 h-14 rounded-xl mx-auto mb-4 flex items-center justify-center"
+              style={`background: linear-gradient(135deg, ${colors.cyanBg} 0%, ${colors.cyanBgLight} 100%); border: 1px solid rgba(81,167,248,0.25); box-shadow: 0 4px 16px rgba(81,167,248,0.15);`}
+            >
+              <!-- Layers Icon -->
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#51A7F8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                <polyline points="2 17 12 22 22 17"></polyline>
+                <polyline points="2 12 12 17 22 12"></polyline>
+              </svg>
+            </div>
+            <div 
+              class="text-4xl lg:text-[44px] font-bold mb-1"
+              style={`color: ${colors.cyan};`}
+            >
+              3
+            </div>
+            <div 
+              class="text-base font-semibold mb-1"
+              style={`color: ${colors.midnight};`}
+            >
+              Integrated Divisions
+            </div>
+            <div class="text-sm text-gray-500">Credit • Capital • Properties</div>
+          </div>
+          
+          <!-- Stat 3: Enterprise Grade Technology -->
+          <div 
+            class="p-6 lg:p-8 rounded-xl text-center bg-white border"
+            style={`border-color: ${colors.gray200}; box-shadow: 0 4px 20px rgba(0,0,0,0.06);`}
+          >
+            <div 
+              class="w-14 h-14 rounded-xl mx-auto mb-4 flex items-center justify-center"
+              style={`background: linear-gradient(135deg, ${colors.cyanBg} 0%, ${colors.cyanBgLight} 100%); border: 1px solid rgba(81,167,248,0.25); box-shadow: 0 4px 16px rgba(81,167,248,0.15);`}
+            >
+              <!-- Server Icon -->
+              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#51A7F8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+                <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+                <line x1="6" y1="6" x2="6.01" y2="6"></line>
+                <line x1="6" y1="18" x2="6.01" y2="18"></line>
+              </svg>
+            </div>
+            <div 
+              class="text-4xl lg:text-[44px] font-bold mb-1"
+              style={`color: ${colors.cyan};`}
+            >
+              Enterprise
+            </div>
+            <div 
+              class="text-base font-semibold mb-1"
+              style={`color: ${colors.midnight};`}
+            >
+              Grade Technology
+            </div>
+            <div class="text-sm text-gray-500">Institutional-quality systems</div>
+          </div>
+        </div>
+        
+        <!-- Badge below stats -->
+        <div class="mt-10">
+          <div 
+            class="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium"
+            style={`background-color: ${colors.cyanBgLight}; color: ${colors.cyan};`}
+          >
+            <!-- Target Icon -->
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10"></circle>
+              <circle cx="12" cy="12" r="6"></circle>
+              <circle cx="12" cy="12" r="2"></circle>
+            </svg>
+            Specialized in non-W-2 income strategies
+          </div>
+        </div>
+        
+      </div>
+    </section>
+
+    <!-- ============================================
+         MISSION SECTION
+         - White background
+         - Narrower content width (max-w-4xl)
+         - Quote block with cyan left border
+         ============================================ -->
+    <section class="w-full py-14 lg:py-20 px-4 lg:px-8 bg-white">
+      <div class="max-w-4xl mx-auto">
+        
+        <h2 
+          class="text-2xl lg:text-[32px] font-bold mb-6"
+          style={`color: ${colors.midnight};`}
+        >
+          Our Mission
+        </h2>
+        
+        <p class="text-base lg:text-[17px] text-gray-600 leading-relaxed mb-6">
+          Traditional financial services weren't designed for people who build wealth through investments, businesses, and real estate.
+        </p>
+        
+        <!-- Quote Block -->
+        <div 
+          class="my-8 lg:my-10 py-6 pr-6 pl-6 lg:pl-8 rounded-r-xl"
+          style={`border-left: 4px solid ${colors.cyan}; background: linear-gradient(90deg, rgba(81,167,248,0.08) 0%, transparent 100%);`}
+        >
+          <p 
+            class="text-xl lg:text-[22px] italic font-semibold leading-relaxed"
+            style={`color: ${colors.ocean};`}
+          >
+            "We exist to bridge that gap—providing integrated services that understand how real estate investors actually generate wealth."
+          </p>
+        </div>
+        
+        <p class="text-base lg:text-[17px] text-gray-600 leading-relaxed">
+          GrowthWave Advisors deploys technology and institutional expertise to create efficient pathways from credit optimization through business financing to cash-flowing real estate.
+        </p>
+        
+      </div>
+    </section>
+
+    <!-- ============================================
+         CORE COMPETENCIES SECTION
+         - Light blue-tinted background
+         - 2-column grid on desktop
+         - Cards with glass icons
+         ============================================ -->
+    <section 
+      class="w-full py-14 lg:py-20 px-4 lg:px-8"
+      style={`background-color: ${colors.light};`}
+    >
+      <div class="max-w-5xl mx-auto">
+        
+        <h2 
+          class="text-2xl lg:text-[32px] font-bold mb-10 lg:mb-12 text-center"
+          style={`color: ${colors.midnight};`}
+        >
+          Core Competencies
+        </h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
+          <!-- Competency 1: Financial Services Leadership -->
+          <div 
+            class="p-6 rounded-xl bg-white border"
+            style={`border-color: ${colors.gray200}; box-shadow: 0 4px 20px rgba(0,0,0,0.06);`}
+          >
+            <div class="flex items-center gap-3 mb-3">
+              <div 
+                class="w-12 h-12 rounded-xl flex-shrink-0 flex items-center justify-center"
+                style={`background: linear-gradient(135deg, ${colors.cyanBg} 0%, ${colors.cyanBgLight} 100%); border: 1px solid rgba(81,167,248,0.25); box-shadow: 0 4px 16px rgba(81,167,248,0.15);`}
+              >
+                <!-- Landmark Icon -->
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#51A7F8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <line x1="3" y1="22" x2="21" y2="22"></line>
+                  <line x1="6" y1="18" x2="6" y2="11"></line>
+                  <line x1="10" y1="18" x2="10" y2="11"></line>
+                  <line x1="14" y1="18" x2="14" y2="11"></line>
+                  <line x1="18" y1="18" x2="18" y2="11"></line>
+                  <polygon points="12 2 20 7 4 7"></polygon>
+                </svg>
+              </div>
+              <h3 
+                class="text-lg font-bold"
+                style={`color: ${colors.midnight};`}
+              >
+                Financial Services Leadership
+              </h3>
+            </div>
+            <p class="text-base text-gray-600 leading-relaxed">
+              15+ years of banking operations experience, including executive technology roles with direct lending oversight.
+            </p>
+          </div>
+          
+          <!-- Competency 2: Enterprise Technology -->
+          <div 
+            class="p-6 rounded-xl bg-white border"
+            style={`border-color: ${colors.gray200}; box-shadow: 0 4px 20px rgba(0,0,0,0.06);`}
+          >
+            <div class="flex items-center gap-3 mb-3">
+              <div 
+                class="w-12 h-12 rounded-xl flex-shrink-0 flex items-center justify-center"
+                style={`background: linear-gradient(135deg, ${colors.cyanBg} 0%, ${colors.cyanBgLight} 100%); border: 1px solid rgba(81,167,248,0.25); box-shadow: 0 4px 16px rgba(81,167,248,0.15);`}
+              >
+                <!-- Server Icon -->
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#51A7F8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect>
+                  <rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect>
+                  <line x1="6" y1="6" x2="6.01" y2="6"></line>
+                  <line x1="6" y1="18" x2="6.01" y2="18"></line>
+                </svg>
+              </div>
+              <h3 
+                class="text-lg font-bold"
+                style={`color: ${colors.midnight};`}
+              >
+                Enterprise Technology
+              </h3>
+            </div>
+            <p class="text-base text-gray-600 leading-relaxed">
+              Cloud architecture expertise and AI certification enable sophisticated automation tailored for investor needs.
+            </p>
+          </div>
+          
+          <!-- Competency 3: Active Investment Practice -->
+          <div 
+            class="p-6 rounded-xl bg-white border"
+            style={`border-color: ${colors.gray200}; box-shadow: 0 4px 20px rgba(0,0,0,0.06);`}
+          >
+            <div class="flex items-center gap-3 mb-3">
+              <div 
+                class="w-12 h-12 rounded-xl flex-shrink-0 flex items-center justify-center"
+                style={`background: linear-gradient(135deg, ${colors.cyanBg} 0%, ${colors.cyanBgLight} 100%); border: 1px solid rgba(81,167,248,0.25); box-shadow: 0 4px 16px rgba(81,167,248,0.15);`}
+              >
+                <!-- Home Icon -->
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#51A7F8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                  <polyline points="9 22 9 12 15 12 15 22"></polyline>
+                </svg>
+              </div>
+              <h3 
+                class="text-lg font-bold"
+                style={`color: ${colors.midnight};`}
+              >
+                Active Investment Practice
+              </h3>
+            </div>
+            <p class="text-base text-gray-600 leading-relaxed">
+              Direct experience as multifamily investors using the same services we provide.
+            </p>
+          </div>
+          
+          <!-- Competency 4: Integrated Platform -->
+          <div 
+            class="p-6 rounded-xl bg-white border"
+            style={`border-color: ${colors.gray200}; box-shadow: 0 4px 20px rgba(0,0,0,0.06);`}
+          >
+            <div class="flex items-center gap-3 mb-3">
+              <div 
+                class="w-12 h-12 rounded-xl flex-shrink-0 flex items-center justify-center"
+                style={`background: linear-gradient(135deg, ${colors.cyanBg} 0%, ${colors.cyanBgLight} 100%); border: 1px solid rgba(81,167,248,0.25); box-shadow: 0 4px 16px rgba(81,167,248,0.15);`}
+              >
+                <!-- Workflow Icon -->
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#51A7F8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <rect x="3" y="3" width="6" height="6" rx="1"></rect>
+                  <rect x="15" y="3" width="6" height="6" rx="1"></rect>
+                  <rect x="9" y="15" width="6" height="6" rx="1"></rect>
+                  <path d="M6 9v3a1 1 0 0 0 1 1h4"></path>
+                  <path d="M18 9v3a1 1 0 0 1-1 1h-4"></path>
+                  <path d="M12 13v2"></path>
+                </svg>
+              </div>
+              <h3 
+                class="text-lg font-bold"
+                style={`color: ${colors.midnight};`}
+              >
+                Integrated Platform
+              </h3>
+            </div>
+            <p class="text-base text-gray-600 leading-relaxed">
+              The Investor Success Flywheel connects credit optimization, business financing, and investment opportunities.
+            </p>
+          </div>
+        </div>
+        
+      </div>
+    </section>
+
+    <!-- ============================================
+         OPERATING PRINCIPLES SECTION
+         - White background
+         - 3-column grid on desktop
+         - Compact cards with glass icons
+         ============================================ -->
+    <section class="w-full py-14 lg:py-20 px-4 lg:px-8 bg-white">
+      <div class="max-w-6xl mx-auto">
+        
+        <h2 
+          class="text-2xl lg:text-[32px] font-bold mb-10 lg:mb-12 text-center"
+          style={`color: ${colors.midnight};`}
+        >
+          Operating Principles
+        </h2>
+        
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <!-- Principle 1: Data-Driven Decisions -->
+          <div 
+            class="p-6 rounded-xl"
+            style={`background-color: ${colors.light};`}
+          >
+            <div 
+              class="w-12 h-12 rounded-xl mb-4 flex items-center justify-center"
+              style={`background: linear-gradient(135deg, ${colors.cyanBg} 0%, ${colors.cyanBgLight} 100%); border: 1px solid rgba(81,167,248,0.25); box-shadow: 0 4px 16px rgba(81,167,248,0.15);`}
+            >
+              <!-- Bar Chart Icon -->
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#51A7F8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M3 3v18h18"></path>
+                <path d="M18 17V9"></path>
+                <path d="M13 17V5"></path>
+                <path d="M8 17v-3"></path>
+              </svg>
+            </div>
+            <h3 
+              class="text-base font-bold mb-2"
+              style={`color: ${colors.midnight};`}
+            >
+              Data-Driven Decisions
+            </h3>
+            <p class="text-sm text-gray-600 leading-relaxed">
+              Comprehensive analysis before every recommendation.
+            </p>
+          </div>
+          
+          <!-- Principle 2: Technology-Enabled -->
+          <div 
+            class="p-6 rounded-xl"
+            style={`background-color: ${colors.light};`}
+          >
+            <div 
+              class="w-12 h-12 rounded-xl mb-4 flex items-center justify-center"
+              style={`background: linear-gradient(135deg, ${colors.cyanBg} 0%, ${colors.cyanBgLight} 100%); border: 1px solid rgba(81,167,248,0.25); box-shadow: 0 4px 16px rgba(81,167,248,0.15);`}
+            >
+              <!-- Zap Icon -->
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#51A7F8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon>
+              </svg>
+            </div>
+            <h3 
+              class="text-base font-bold mb-2"
+              style={`color: ${colors.midnight};`}
+            >
+              Technology-Enabled
+            </h3>
+            <p class="text-sm text-gray-600 leading-relaxed">
+              Enterprise systems that multiply effectiveness.
+            </p>
+          </div>
+          
+          <!-- Principle 3: Strategic Matching -->
+          <div 
+            class="p-6 rounded-xl"
+            style={`background-color: ${colors.light};`}
+          >
+            <div 
+              class="w-12 h-12 rounded-xl mb-4 flex items-center justify-center"
+              style={`background: linear-gradient(135deg, ${colors.cyanBg} 0%, ${colors.cyanBgLight} 100%); border: 1px solid rgba(81,167,248,0.25); box-shadow: 0 4px 16px rgba(81,167,248,0.15);`}
+            >
+              <!-- Target Icon -->
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#51A7F8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <circle cx="12" cy="12" r="6"></circle>
+                <circle cx="12" cy="12" r="2"></circle>
+              </svg>
+            </div>
+            <h3 
+              class="text-base font-bold mb-2"
+              style={`color: ${colors.midnight};`}
+            >
+              Strategic Matching
+            </h3>
+            <p class="text-sm text-gray-600 leading-relaxed">
+              Right products for right situations.
+            </p>
+          </div>
+          
+          <!-- Principle 4: Transparent Expectations -->
+          <div 
+            class="p-6 rounded-xl"
+            style={`background-color: ${colors.light};`}
+          >
+            <div 
+              class="w-12 h-12 rounded-xl mb-4 flex items-center justify-center"
+              style={`background: linear-gradient(135deg, ${colors.cyanBg} 0%, ${colors.cyanBgLight} 100%); border: 1px solid rgba(81,167,248,0.25); box-shadow: 0 4px 16px rgba(81,167,248,0.15);`}
+            >
+              <!-- Eye Icon -->
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#51A7F8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"></path>
+                <circle cx="12" cy="12" r="3"></circle>
+              </svg>
+            </div>
+            <h3 
+              class="text-base font-bold mb-2"
+              style={`color: ${colors.midnight};`}
+            >
+              Transparent Expectations
+            </h3>
+            <p class="text-sm text-gray-600 leading-relaxed">
+              Honest assessments, realistic timelines.
+            </p>
+          </div>
+          
+          <!-- Principle 5: Integrated Journey -->
+          <div 
+            class="p-6 rounded-xl"
+            style={`background-color: ${colors.light};`}
+          >
+            <div 
+              class="w-12 h-12 rounded-xl mb-4 flex items-center justify-center"
+              style={`background: linear-gradient(135deg, ${colors.cyanBg} 0%, ${colors.cyanBgLight} 100%); border: 1px solid rgba(81,167,248,0.25); box-shadow: 0 4px 16px rgba(81,167,248,0.15);`}
+            >
+              <!-- Link Icon -->
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#51A7F8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"></path>
+                <path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"></path>
+              </svg>
+            </div>
+            <h3 
+              class="text-base font-bold mb-2"
+              style={`color: ${colors.midnight};`}
+            >
+              Integrated Journey
+            </h3>
+            <p class="text-sm text-gray-600 leading-relaxed">
+              Progress through stages with accumulated knowledge.
+            </p>
+          </div>
+          
+          <!-- Principle 6: Long-Term Relationships -->
+          <div 
+            class="p-6 rounded-xl"
+            style={`background-color: ${colors.light};`}
+          >
+            <div 
+              class="w-12 h-12 rounded-xl mb-4 flex items-center justify-center"
+              style={`background: linear-gradient(135deg, ${colors.cyanBg} 0%, ${colors.cyanBgLight} 100%); border: 1px solid rgba(81,167,248,0.25); box-shadow: 0 4px 16px rgba(81,167,248,0.15);`}
+            >
+              <!-- Users Icon -->
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#51A7F8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"></path>
+                <circle cx="9" cy="7" r="4"></circle>
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87"></path>
+                <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+              </svg>
+            </div>
+            <h3 
+              class="text-base font-bold mb-2"
+              style={`color: ${colors.midnight};`}
+            >
+              Long-Term Relationships
+            </h3>
+            <p class="text-sm text-gray-600 leading-relaxed">
+              We succeed when clients build lasting wealth.
+            </p>
+          </div>
+        </div>
+        
+      </div>
+    </section>
+
+    <!-- ============================================
+         CTA SECTION
+         - Gradient background (cyan → ocean → midnight)
+         - Centered content
+         - Dual buttons
+         ============================================ -->
+    <section 
+      class="w-full py-16 lg:py-24 px-4 lg:px-8"
+      style={`background: linear-gradient(135deg, ${colors.cyan} 0%, ${colors.ocean} 50%, ${colors.midnight} 100%);`}
+    >
+      <div class="max-w-3xl mx-auto text-center">
+        
+        <h2 class="text-2xl lg:text-[32px] font-bold text-white mb-4">
+          Ready to Experience the Difference?
+        </h2>
+        <p class="text-base lg:text-[17px] text-white/80 mb-8 max-w-xl mx-auto">
+          Connect with our team for a strategic assessment of your financial journey.
+        </p>
+        
+        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+          <a 
+            href="/advisors/contact"
+            class="inline-flex items-center justify-center gap-2 px-6 lg:px-8 py-3 lg:py-4 rounded-lg font-semibold text-base lg:text-lg transition-opacity hover:opacity-90"
+            style={`background-color: white; color: ${colors.ocean}; box-shadow: 0 4px 16px rgba(0,0,0,0.15);`}
+          >
+            <!-- Calendar Icon -->
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+              <line x1="16" y1="2" x2="16" y2="6"></line>
+              <line x1="8" y1="2" x2="8" y2="6"></line>
+              <line x1="3" y1="10" x2="21" y2="10"></line>
+            </svg>
+            Schedule Consultation
+          </a>
+          <a 
+            href="/advisors/services"
+            class="inline-flex items-center justify-center px-6 lg:px-8 py-3 lg:py-4 rounded-lg font-semibold text-base lg:text-lg text-white border-2 border-white/30 transition-colors hover:bg-white/10"
+          >
+            Explore Services
+          </a>
+        </div>
+        
+      </div>
+    </section>
+
+  </main>
+
+  <Footer brand="advisors" />
+</BaseLayout>
