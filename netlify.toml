@@ -1,6 +1,11 @@
 # Netlify Configuration
 # =====================
-# Build settings and host-based redirects for GrowthWave multi-brand site.
+# Build settings and edge function configuration for GrowthWave multi-brand site.
+#
+# ARCHITECTURE:
+# - Edge Function (router.ts) handles hostname-based URL rewriting
+# - Enables clean URLs: growthwaveadvisors.com/about → serves /advisors/about
+# - No redirects needed - edge function rewrites at the CDN level
 
 [build]
   command = "npm run build"
@@ -9,7 +14,20 @@
 [build.environment]
   NODE_VERSION = "18"
 
+# ===========================================
+# Edge Functions Configuration
+# ===========================================
+# The router edge function handles all domain-based routing
+# See: netlify/edge-functions/router.ts
+
+[[edge_functions]]
+  path = "/*"
+  function = "router"
+
+# ===========================================
 # Security & Performance Headers
+# ===========================================
+
 [[headers]]
   for = "/*"
   [headers.values]
@@ -18,7 +36,7 @@
     X-XSS-Protection = "1; mode=block"
     Referrer-Policy = "strict-origin-when-cross-origin"
 
-# Cache static assets
+# Cache static assets aggressively
 [[headers]]
   for = "/images/*"
   [headers.values]
@@ -29,31 +47,7 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-# ===========================================
-# Host-Based Redirects (200 = rewrite/proxy)
-# Using inline conditions syntax
-# ===========================================
-
-# GrowthWave Advisors
-[[redirects]]
-  from = "/*"
-  to = "/advisors/:splat"
-  status = 200
-  force = true
-  conditions = {Host = ["growthwaveadvisors.com", "www.growthwaveadvisors.com"]}
-
-# GrowthWave Capital
-[[redirects]]
-  from = "/*"
-  to = "/capital/:splat"
-  status = 200
-  force = true
-  conditions = {Host = ["growthwavecapital.com", "www.growthwavecapital.com"]}
-
-# GrowthWave Properties
-[[redirects]]
-  from = "/*"
-  to = "/properties/:splat"
-  status = 200
-  force = true
-  conditions = {Host = ["growthwaveproperties.com", "www.growthwaveproperties.com"]}
+[[headers]]
+  for = "/_astro/*"
+  [headers.values]
+    Cache-Control = "public, max-age=31536000, immutable"

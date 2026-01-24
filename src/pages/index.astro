@@ -2,11 +2,18 @@
 /**
  * GrowthWave Hub Page
  * ===================
- * Landing page for direct Netlify URL or local development.
- * Routes visitors to the appropriate brand site.
+ * Landing page for direct Netlify URL (growthwave-web.netlify.app) or localhost.
+ * 
+ * ROUTING HANDLED BY EDGE FUNCTION:
+ * - growthwaveadvisors.com → Edge function rewrites to /advisors/
+ * - growthwavecapital.com → Edge function rewrites to /capital/
+ * - growthwaveproperties.com → Edge function rewrites to /properties/
+ * 
+ * This Hub page only displays for:
+ * - Direct Netlify URL: growthwave-web.netlify.app
+ * - Local development: localhost:4321
  * 
  * NOTE: This page is noindexed and won't appear in search results.
- * Public visitors arrive via custom domains which route directly to brand sections.
  */
 ---
 
@@ -143,21 +150,21 @@
       <p class="tagline">The Investor Success Flywheel™</p>
       
       <nav class="brand-links">
-        <a href="/advisors" class="brand-link advisors">
+        <a href="/advisors/" class="brand-link advisors">
           <span class="name">
             <span class="dot"></span>
             GrowthWave Advisors
           </span>
           <span class="arrow">→</span>
         </a>
-        <a href="/capital" class="brand-link capital">
+        <a href="/capital/" class="brand-link capital">
           <span class="name">
             <span class="dot"></span>
             GrowthWave Capital
           </span>
           <span class="arrow">→</span>
         </a>
-        <a href="/properties" class="brand-link properties">
+        <a href="/properties/" class="brand-link properties">
           <span class="name">
             <span class="dot"></span>
             GrowthWave Properties
@@ -167,7 +174,7 @@
       </nav>
       
       <div class="dev-note">
-        <p>Developer? <a href="/dev">View Style Guide</a></p>
+        <p>Developer? <a href="/dev/">View Style Guide</a></p>
       </div>
     </div>
   </body>
