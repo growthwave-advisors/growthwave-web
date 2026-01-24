@@ -22,3 +22,24 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# archive files
+_archive*/
+*.zip
+*.rar
+*.7z
+*.tar
+*.gz
+*.bz2
+*.wim
+*.iso
+*.img
+
+# Local development files
+_development/
+_local/
+.vscode/
+.cursorrules
+.cursor/
+.cursorignore
+.cursorignore
