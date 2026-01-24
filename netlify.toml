@@ -31,6 +31,7 @@
 
 # ===========================================
 # Host-Based Redirects (200 = rewrite/proxy)
+# Using inline conditions syntax
 # ===========================================
 
 # GrowthWave Advisors
@@ -39,8 +40,7 @@
   to = "/advisors/:splat"
   status = 200
   force = true
-  [redirects.conditions]
-    Host = ["growthwaveadvisors.com", "www.growthwaveadvisors.com"]
+  conditions = {Host = ["growthwaveadvisors.com", "www.growthwaveadvisors.com"]}
 
 # GrowthWave Capital
 [[redirects]]
@@ -48,8 +48,7 @@
   to = "/capital/:splat"
   status = 200
   force = true
-  [redirects.conditions]
-    Host = ["growthwavecapital.com", "www.growthwavecapital.com"]
+  conditions = {Host = ["growthwavecapital.com", "www.growthwavecapital.com"]}
 
 # GrowthWave Properties
 [[redirects]]
@@ -57,5 +56,4 @@
   to = "/properties/:splat"
   status = 200
   force = true
-  [redirects.conditions]
-    Host = ["growthwaveproperties.com", "www.growthwaveproperties.com"]
+  conditions = {Host = ["growthwaveproperties.com", "www.growthwaveproperties.com"]}
