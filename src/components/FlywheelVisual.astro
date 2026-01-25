@@ -4,9 +4,10 @@
  * ========================
  * The Investor Success Flywheel™ visualization
  * 
- * UPDATED: January 23, 2026
+ * UPDATED: January 25, 2026
+ * - Clockwise flow: Credit Sculpt (top) → Capital (bottom-right) → Properties (bottom-left)
  * - Hub: 280px diameter at 60% (mathematically calculated)
- * - Cards: 240px wide, Credit Sculpt at top:0, Capital/Properties at bottom:0
+ * - Cards: 240px wide, Credit Sculpt at top:0, Capital at bottom-right:0, Properties at bottom-left:0
  * - All SVG icons use hardcoded stroke colors (fixes Astro rendering)
  * 
  * MATHEMATICAL DERIVATION FOR EQUAL OVERLAP:
@@ -75,9 +76,9 @@ const colors = {
         </filter>
       </defs>
       
-      <!-- Arc 1→2: Credit Sculpt to Capital -->
+      <!-- Arc 1→2: Credit Sculpt to Capital (top to bottom-right) -->
       <path 
-        d="M 280 190 Q 60 350 150 470" 
+        d="M 400 190 Q 620 350 530 470" 
         stroke="url(#fw-arc1)" 
         stroke-width="4" 
         fill="none" 
@@ -85,9 +86,9 @@ const colors = {
         stroke-linecap="round"
         opacity="0.8"
       ></path>
-      <!-- Arc 2→3: Capital to Properties -->
+      <!-- Arc 2→3: Capital to Properties (bottom-right to bottom-left) -->
       <path 
-        d="M 240 560 Q 340 650 440 560" 
+        d="M 440 560 Q 340 650 240 560" 
         stroke="url(#fw-arc2)" 
         stroke-width="4" 
         fill="none" 
@@ -95,9 +96,9 @@ const colors = {
         stroke-linecap="round"
         opacity="0.8"
       ></path>
-      <!-- Arc 3→1: Properties to Credit Sculpt -->
+      <!-- Arc 3→1: Properties to Credit Sculpt (bottom-left to top) -->
       <path 
-        d="M 530 470 Q 620 350 400 190" 
+        d="M 150 470 Q 60 350 280 190" 
         stroke="url(#fw-arc3)" 
         stroke-width="4" 
         fill="none" 
@@ -426,16 +427,18 @@ const colors = {
   }
   
   /* FIXED: bottom: 0 instead of 30px */
+  /* Capital now on RIGHT for clockwise flow */
   .stage-2 {
     bottom: 0;
-    left: 0;
+    right: 0;
     border: 3px solid #7C3AED;
     box-shadow: 0 12px 40px rgba(124, 58, 237, 0.35), 0 0 0 1px rgba(124, 58, 237, 0.2);
   }
   
+  /* Properties now on LEFT for clockwise flow */
   .stage-3 {
     bottom: 0;
-    right: 0;
+    left: 0;
     border: 3px solid #FF6B4A;
     box-shadow: 0 12px 40px rgba(255, 107, 74, 0.35), 0 0 0 1px rgba(255, 107, 74, 0.2);
   }
