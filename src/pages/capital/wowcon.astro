@@ -1,0 +1,674 @@
+---
+/**
+ * GrowthWave Capital - WOWCON 2026 Conference Landing Page
+ * ========================================================
+ * Created: February 2026
+ *
+ * Dedicated landing page for WOWCON (RMFIA) virtual conference attendees.
+ * Conference: Feb 21-22, 2026 — Multifamily RE investors learning to scale.
+ *
+ * Design System Compliance:
+ * - Two-layer "Fixed Island" pattern on all sections
+ * - Typography stops at lg breakpoint (no xl: or 2xl:)
+ * - Responsive padding: px-4 lg:px-8
+ * - Body content: max-w-7xl (1280px)
+ * - Royal Purple #7C3AED accent color
+ *
+ * GHL Integration (AdvisorHub by Impruvu):
+ * - Pre-Qualification Form ID: uftEVszVPv6XT7Woa7MF
+ * - Calendar ID: AsuuzTkGKAx6v6K8L4xp (Investment Partnership Discussion)
+ * - Location ID: dJsBnS06sWTWcGSn1Mjp
+ *
+ * Lead Magnet: "The RE Investor's Guide to Business Credit" (PDF)
+ * - Gated behind email capture form
+ * - Dual submission: Netlify Forms + GHL
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Header from '@components/Header.astro';
+import Footer from '@components/Footer.astro';
+
+// Brand Colors - Capital uses Royal Purple accent
+const colors = {
+  purple: '#7C3AED',
+  purpleLight: '#8B5CF6',
+  purpleBg: 'rgba(124,58,237,0.15)',
+  purpleBgLight: 'rgba(124,58,237,0.08)',
+  ocean: '#265077',
+  midnight: '#022140',
+  gray50: '#f9fafb',
+  gray100: '#f3f4f6',
+  gray200: '#e5e7eb',
+  gray300: '#d1d5db',
+  gray400: '#9ca3af',
+  gray500: '#6b7280',
+  gray600: '#4b5563',
+  gray700: '#374151',
+  gray800: '#1f2937',
+  creditGreen: '#10B981',
+  propertiesCoral: '#FF6B4A',
+};
+
+// Stats for credibility
+const stats = [
+  { value: '$5K–$5M+', label: 'Funding Range' },
+  { value: '15–45', label: 'Day Timelines' },
+  { value: '24/7', label: 'Digital Access' },
+  { value: '$0', label: 'Upfront Fees' },
+];
+
+// What's inside the guide
+const guideHighlights = [
+  'The 5-step framework to build business credit from scratch',
+  'How to access $5K–$50K+ in business credit cards — without personal guarantees',
+  'The exact vendor accounts and trade lines that build your profile fastest',
+  'DSCR loans, bridge financing, and lines of credit for multifamily deals',
+  'A 90-day action plan you can start during WOWCON',
+];
+
+// Flywheel steps
+const flywheelSteps = [
+  { icon: '🏗️', title: 'Build Credit', desc: 'Establish your business credit profile with the right entity structure, trade lines, and vendor accounts.' },
+  { icon: '💰', title: 'Access Capital', desc: 'Unlock business credit cards, lines of credit, and DSCR loans based on your business — not your personal score.' },
+  { icon: '🏢', title: 'Fund Deals', desc: 'Use business credit for earnest money, rehab costs, bridge gaps, and down payments on multifamily properties.' },
+  { icon: '📈', title: 'Scale Portfolio', desc: 'Each funded deal strengthens your credit profile, giving you access to even more capital for the next one.' },
+];
+
+// Funding products relevant to multifamily
+const products = [
+  { icon: '💳', name: 'Business Credit Cards', range: '$5K–$50K+', desc: 'Working capital without personal guarantees' },
+  { icon: '🏦', name: 'Lines of Credit', range: '$10K–$250K', desc: 'Flexible draw-down for operational needs' },
+  { icon: '🏢', name: 'DSCR Loans', range: '$100K–$5M+', desc: 'Qualify on property cash flow, not personal income' },
+  { icon: '🌉', name: 'Bridge Financing', range: '$50K–$2M', desc: 'Fast capital to close on time-sensitive deals' },
+];
+---
+
+<BaseLayout
+  brand="capital"
+  title="WOWCON 2026 | Fund Your Next Multifamily Deal | GrowthWave Capital"
+  description="WOWCON attendees: Learn how to fund your next multifamily deal without relying on your own capital. Free guide + strategy call with GrowthWave Capital."
+>
+  <Header brand="capital" activePage="" />
+
+  <main>
+    <!-- ============================================
+         HERO SECTION
+         - Conference-branded, urgency + relevance
+         ============================================ -->
+    <section
+      class="w-full"
+      style={`background: linear-gradient(135deg, ${colors.midnight} 0%, ${colors.ocean} 50%, ${colors.purple} 100%);`}
+    >
+      <div class="max-w-5xl mx-auto px-4 lg:px-8 py-14 lg:py-24 text-center">
+        <!-- Conference Badge -->
+        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 mb-6">
+          <span class="text-base font-semibold text-white">WOWCON 2026</span>
+          <span class="text-white/60">•</span>
+          <span class="text-base text-gray-300">Feb 21–22</span>
+        </div>
+
+        <!-- Headline -->
+        <h1 class="text-3xl lg:text-4xl font-bold text-white leading-tight mb-5">
+          Fund Your Next Multifamily Deal<br />
+          <span style={`color: ${colors.purpleLight};`}>Without Relying on Your Own Capital</span>
+        </h1>
+
+        <!-- Subheadline -->
+        <p class="text-lg text-gray-300 mb-8 max-w-2xl mx-auto">
+          You find the deals. You know the numbers. But accessing capital shouldn't be the bottleneck.
+          GrowthWave Capital helps RE investors unlock $5K–$5M+ in business credit and funding — so you can close deals and scale your portfolio.
+        </p>
+
+        <!-- Dual CTA -->
+        <div class="flex flex-col lg:flex-row items-center justify-center gap-4 mb-10">
+          <a
+            href="#free-guide"
+            class="inline-block px-8 py-4 rounded-lg font-bold text-base text-white transition-transform hover:scale-[1.02]"
+            style={`background-color: ${colors.purple};`}
+          >
+            Download the Free Guide →
+          </a>
+          <a
+            href="#strategy-call"
+            class="inline-block px-8 py-4 rounded-lg font-bold text-base border-2 border-white/30 text-white transition-transform hover:scale-[1.02] hover:bg-white/10"
+          >
+            Book a Strategy Call
+          </a>
+        </div>
+
+        <!-- Stats Row -->
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 max-w-3xl mx-auto">
+          {stats.map((stat) => (
+            <div class="bg-white/10 rounded-lg p-4 border border-white/10">
+              <div class="text-2xl font-bold text-white">{stat.value}</div>
+              <div class="text-sm text-gray-400">{stat.label}</div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         PROBLEM / SOLUTION SECTION
+         ============================================ -->
+    <section class="w-full py-14 lg:py-20 px-4 lg:px-8 bg-white">
+      <div class="max-w-4xl mx-auto">
+        <div class="text-center mb-10">
+          <h2 class="text-2xl lg:text-3xl font-bold mb-4" style={`color: ${colors.midnight};`}>
+            The #1 Thing Holding Back Multifamily Investors
+          </h2>
+          <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+            You learned how to analyze deals, evaluate markets, and structure partnerships. But when it's time to fund the deal, most investors hit the same wall: limited personal capital and no clear path to business financing.
+          </p>
+        </div>
+
+        <!-- Before / After -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          <!-- Before -->
+          <div class="p-6 rounded-2xl border-2 border-red-200 bg-red-50">
+            <div class="text-2xl mb-3">🚫</div>
+            <h3 class="text-lg font-bold mb-3" style={`color: ${colors.midnight};`}>Without a Funding Strategy</h3>
+            <ul class="space-y-2 text-base text-gray-600">
+              <li class="flex items-start gap-2"><span class="text-red-400 mt-1">✕</span> Stuck waiting to save enough for down payments</li>
+              <li class="flex items-start gap-2"><span class="text-red-400 mt-1">✕</span> Losing deals to better-funded competitors</li>
+              <li class="flex items-start gap-2"><span class="text-red-400 mt-1">✕</span> Over-relying on personal credit and savings</li>
+              <li class="flex items-start gap-2"><span class="text-red-400 mt-1">✕</span> No systematic way to access larger amounts</li>
+            </ul>
+          </div>
+          <!-- After -->
+          <div class="p-6 rounded-2xl border-2" style={`border-color: ${colors.purple}; background-color: ${colors.purpleBgLight};`}>
+            <div class="text-2xl mb-3">🚀</div>
+            <h3 class="text-lg font-bold mb-3" style={`color: ${colors.midnight};`}>With GrowthWave Capital</h3>
+            <ul class="space-y-2 text-base text-gray-600">
+              <li class="flex items-start gap-2"><span style={`color: ${colors.purple};`} class="mt-1">✓</span> Business credit profile working independently of personal finances</li>
+              <li class="flex items-start gap-2"><span style={`color: ${colors.purple};`} class="mt-1">✓</span> Access to $5K–$5M+ through multiple funding channels</li>
+              <li class="flex items-start gap-2"><span style={`color: ${colors.purple};`} class="mt-1">✓</span> Capital for earnest money, rehab, bridge gaps, and down payments</li>
+              <li class="flex items-start gap-2"><span style={`color: ${colors.purple};`} class="mt-1">✓</span> Each deal strengthens your profile for the next one</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         LEAD MAGNET SECTION
+         - Email-gated PDF download
+         ============================================ -->
+    <section
+      id="free-guide"
+      class="w-full py-14 lg:py-20 px-4 lg:px-8"
+      style={`background-color: ${colors.gray50};`}
+    >
+      <div class="max-w-5xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 items-center">
+          <!-- Left: Guide Preview -->
+          <div class="text-center lg:text-left">
+            <!-- Guide Visual -->
+            <div
+              class="inline-block rounded-2xl p-8 mb-6"
+              style={`background: linear-gradient(135deg, ${colors.midnight} 0%, ${colors.ocean} 100%);`}
+            >
+              <div class="text-5xl mb-4">📘</div>
+              <p class="text-lg font-bold text-white mb-1">FREE GUIDE</p>
+              <p class="text-base text-gray-300 leading-snug">
+                The RE Investor's Guide<br />to Business Credit
+              </p>
+            </div>
+
+            <!-- What's Inside -->
+            <h3 class="text-lg font-bold mb-3" style={`color: ${colors.midnight};`}>What's Inside:</h3>
+            <ul class="space-y-2 text-base text-gray-600 text-left">
+              {guideHighlights.map((item) => (
+                <li class="flex items-start gap-2">
+                  <span style={`color: ${colors.purple};`} class="mt-0.5 font-bold">→</span>
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <!-- Right: Email Capture Form -->
+          <div class="rounded-2xl p-6 lg:p-8 bg-white border border-gray-200 shadow-lg">
+            <h2 class="text-xl lg:text-2xl font-bold mb-2" style={`color: ${colors.midnight};`}>
+              Get Your Free Copy
+            </h2>
+            <p class="text-base text-gray-500 mb-6">
+              Instant download — no spam, no fluff. Just a practical framework you can act on during WOWCON.
+            </p>
+
+            <!-- Lead Magnet Form -->
+            <form id="lead-magnet-form" class="space-y-3" data-netlify="true" name="wowcon-lead-magnet" method="POST">
+              <p class="hidden"><label>Leave blank: <input name="bot-field" /></label></p>
+              <input type="hidden" name="form-name" value="wowcon-lead-magnet" />
+              <input type="hidden" name="formId" value="uftEVszVPv6XT7Woa7MF" />
+              <input type="hidden" name="location_id" value="dJsBnS06sWTWcGSn1Mjp" />
+              <input type="hidden" name="source" value="wowcon-lead-magnet" />
+              <input type="hidden" name="tag" value="source:rmfia,engagement:lead-magnet-downloaded" />
+
+              <input
+                type="text"
+                name="full_name"
+                placeholder="Full Name *"
+                required
+                class="w-full px-4 py-3 rounded-lg border border-gray-300 text-base focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              />
+              <input
+                type="email"
+                name="email"
+                placeholder="Email *"
+                required
+                class="w-full px-4 py-3 rounded-lg border border-gray-300 text-base focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              />
+              <input
+                type="tel"
+                name="phone"
+                placeholder="Phone (optional)"
+                class="w-full px-4 py-3 rounded-lg border border-gray-300 text-base focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              />
+              <button
+                type="submit"
+                id="lead-magnet-btn"
+                class="w-full py-3.5 rounded-lg font-bold text-base text-white transition-transform hover:scale-[1.02]"
+                style={`background-color: ${colors.purple};`}
+              >
+                DOWNLOAD THE FREE GUIDE →
+              </button>
+              <p class="text-sm text-gray-400 text-center">
+                We respect your inbox. Unsubscribe anytime.
+              </p>
+            </form>
+
+            <!-- Success State (hidden by default) -->
+            <div id="lead-magnet-success" class="hidden text-center py-6">
+              <div class="text-4xl mb-3">🎉</div>
+              <h3 class="text-xl font-bold mb-2" style={`color: ${colors.midnight};`}>You're In!</h3>
+              <p class="text-gray-600 mb-4">Your guide is ready to download.</p>
+              <a
+                href="/downloads/re-investors-guide-business-credit.pdf"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="inline-block px-6 py-3 rounded-lg font-bold text-base text-white transition-transform hover:scale-[1.02]"
+                style={`background-color: ${colors.purple};`}
+              >
+                📥 Download Your Guide (PDF)
+              </a>
+              <p class="text-sm text-gray-500 mt-4">
+                Want to take the next step?
+                <a href="#strategy-call" class="font-semibold underline" style={`color: ${colors.purple};`}>Book a free strategy call →</a>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         GROWTHWAVE FLYWHEEL
+         - 4-step visual process
+         ============================================ -->
+    <section class="w-full py-14 lg:py-20 px-4 lg:px-8 bg-white">
+      <div class="max-w-5xl mx-auto">
+        <div class="text-center mb-10">
+          <h2 class="text-2xl lg:text-3xl font-bold mb-4" style={`color: ${colors.midnight};`}>
+            The GrowthWave Flywheel
+          </h2>
+          <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+            A repeatable system that turns business credit into funded deals — and funded deals into even more capital.
+          </p>
+        </div>
+
+        <!-- Flywheel Steps -->
+        <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+          {flywheelSteps.map((step, i) => (
+            <div class="text-center p-6 rounded-2xl bg-gray-50 border border-gray-100 relative">
+              {i < 3 && (
+                <div class="hidden lg:block absolute top-1/2 -right-3 transform -translate-y-1/2 text-gray-300 text-2xl font-bold">→</div>
+              )}
+              <div class="text-4xl mb-3">{step.icon}</div>
+              <h3 class="text-lg font-bold mb-2" style={`color: ${colors.midnight};`}>{step.title}</h3>
+              <p class="text-base text-gray-600">{step.desc}</p>
+              <div
+                class="absolute top-3 left-3 w-7 h-7 rounded-full flex items-center justify-center text-sm font-bold text-white"
+                style={`background-color: ${colors.purple};`}
+              >
+                {i + 1}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <!-- Repeat indicator -->
+        <div class="text-center mt-6">
+          <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-purple-50 border border-purple-100">
+            <span class="text-base font-semibold" style={`color: ${colors.purple};`}>🔄 Then repeat — each cycle unlocks more capital</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         FUNDING PRODUCTS
+         ============================================ -->
+    <section
+      class="w-full py-14 lg:py-20 px-4 lg:px-8"
+      style={`background-color: ${colors.gray50};`}
+    >
+      <div class="max-w-5xl mx-auto">
+        <div class="text-center mb-10">
+          <h2 class="text-2xl lg:text-3xl font-bold mb-4" style={`color: ${colors.midnight};`}>
+            Funding Solutions for Multifamily Investors
+          </h2>
+          <p class="text-lg text-gray-600">
+            From your first $5K business credit card to $5M+ DSCR loans — we match you to the right capital.
+          </p>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-5">
+          {products.map((product) => (
+            <div class="p-5 rounded-xl bg-white border border-gray-200 flex items-start gap-4">
+              <div class="text-3xl">{product.icon}</div>
+              <div>
+                <div class="flex items-center gap-3 mb-1">
+                  <h3 class="text-lg font-bold" style={`color: ${colors.midnight};`}>{product.name}</h3>
+                  <span class="text-sm font-semibold px-2 py-0.5 rounded-full bg-purple-50" style={`color: ${colors.purple};`}>{product.range}</span>
+                </div>
+                <p class="text-base text-gray-600">{product.desc}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+
+        <div class="text-center mt-8">
+          <a
+            href="https://crm.advisorhub.io/widget/form/uftEVszVPv6XT7Woa7MF"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-block px-8 py-3.5 rounded-lg font-bold text-base text-white transition-transform hover:scale-[1.02]"
+            style={`background-color: ${colors.purple};`}
+          >
+            See What You Qualify For →
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         STRATEGY CALL CTA
+         - GHL Calendar embed
+         ============================================ -->
+    <section
+      id="strategy-call"
+      class="w-full py-14 lg:py-20 px-4 lg:px-8"
+      style={`background: linear-gradient(135deg, ${colors.midnight} 0%, ${colors.ocean} 100%);`}
+    >
+      <div class="max-w-4xl mx-auto">
+        <div class="text-center mb-8">
+          <h2 class="text-2xl lg:text-3xl font-bold text-white mb-4">
+            Book Your Free Strategy Call
+          </h2>
+          <p class="text-lg text-gray-300 max-w-2xl mx-auto">
+            30-minute conversation about your multifamily goals, current capital position, and the specific funding paths available to you. No pressure, no sales pitch — just clarity.
+          </p>
+        </div>
+
+        <!-- What to Expect -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 mb-8">
+          <div class="bg-white/10 rounded-lg p-4 text-center border border-white/10">
+            <div class="text-2xl mb-2">🎯</div>
+            <p class="text-base text-white font-semibold">Personalized Assessment</p>
+            <p class="text-sm text-gray-400">Where you stand and what you qualify for</p>
+          </div>
+          <div class="bg-white/10 rounded-lg p-4 text-center border border-white/10">
+            <div class="text-2xl mb-2">🗺️</div>
+            <p class="text-base text-white font-semibold">Custom Roadmap</p>
+            <p class="text-sm text-gray-400">Specific steps to access the capital you need</p>
+          </div>
+          <div class="bg-white/10 rounded-lg p-4 text-center border border-white/10">
+            <div class="text-2xl mb-2">⚡</div>
+            <p class="text-base text-white font-semibold">Quick Timeline</p>
+            <p class="text-sm text-gray-400">Most clients see first results within 15–45 days</p>
+          </div>
+        </div>
+
+        <!-- GHL Calendar Embed -->
+        <div class="bg-white rounded-2xl overflow-hidden shadow-lg" style="min-height: 400px;">
+          <iframe
+            src="https://crm.advisorhub.io/widget/booking/AsuuzTkGKAx6v6K8L4xp"
+            style="width: 100%; height: 100%; min-height: 400px; border: none;"
+            scrolling="no"
+            id="wowcon-calendar-iframe"
+            title="Book Investment Partnership Discussion"
+          ></iframe>
+        </div>
+
+        <!-- Fallback CTA -->
+        <div class="text-center mt-6">
+          <a
+            href="https://crm.advisorhub.io/widget/booking/AsuuzTkGKAx6v6K8L4xp"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-base text-gray-400 underline hover:text-white transition-colors"
+          >
+            Calendar not loading? Click here to book directly →
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         ABOUT WILFRED / TRUST SECTION
+         ============================================ -->
+    <section class="w-full py-14 lg:py-20 px-4 lg:px-8 bg-white">
+      <div class="max-w-4xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-5 gap-8 items-center">
+          <!-- Left: Text (3 cols) -->
+          <div class="lg:col-span-3">
+            <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-purple-50 border border-purple-100 mb-4">
+              <span class="text-sm font-semibold" style={`color: ${colors.purple};`}>Your Capital Partner</span>
+            </div>
+            <h2 class="text-2xl lg:text-3xl font-bold mb-4" style={`color: ${colors.midnight};`}>
+              Hi, I'm Wilfred Morgan
+            </h2>
+            <p class="text-base text-gray-600 mb-4 leading-relaxed">
+              I started GrowthWave Capital because I saw too many talented RE investors stuck on the sidelines — not because they couldn't find deals, but because they couldn't access the capital to close them.
+            </p>
+            <p class="text-base text-gray-600 mb-4 leading-relaxed">
+              We help investors build business credit profiles, access multiple funding channels, and create sustainable capital strategies so they can stop relying on personal savings and start scaling.
+            </p>
+            <p class="text-base text-gray-600 leading-relaxed">
+              Based in Orlando, FL — working with RE investors nationwide. I'm excited to connect with the RMFIA community at WOWCON.
+            </p>
+          </div>
+
+          <!-- Right: Credentials Card (2 cols) -->
+          <div class="lg:col-span-2">
+            <div class="p-6 rounded-2xl border border-gray-200 bg-gray-50">
+              <h3 class="text-lg font-bold mb-4" style={`color: ${colors.midnight};`}>GrowthWave Capital</h3>
+              <div class="space-y-3">
+                <div class="flex items-start gap-3">
+                  <span class="text-xl">🏢</span>
+                  <div>
+                    <p class="text-base font-semibold" style={`color: ${colors.midnight};`}>Orlando, FL</p>
+                    <p class="text-sm text-gray-500">Serving investors nationwide</p>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3">
+                  <span class="text-xl">💼</span>
+                  <div>
+                    <p class="text-base font-semibold" style={`color: ${colors.midnight};`}>Business Credit + Lending</p>
+                    <p class="text-sm text-gray-500">Not a direct lender — we match and optimize</p>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3">
+                  <span class="text-xl">🎯</span>
+                  <div>
+                    <p class="text-base font-semibold" style={`color: ${colors.midnight};`}>RE Investor Focus</p>
+                    <p class="text-sm text-gray-500">Built specifically for multifamily investors</p>
+                  </div>
+                </div>
+                <div class="flex items-start gap-3">
+                  <span class="text-xl">⚡</span>
+                  <div>
+                    <p class="text-base font-semibold" style={`color: ${colors.midnight};`}>Tech-Forward</p>
+                    <p class="text-sm text-gray-500">24/7 digital access, real-time tracking</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         FINAL CTA — DUAL ACTION
+         ============================================ -->
+    <section
+      class="w-full py-14 lg:py-20 px-4 lg:px-8"
+      style={`background: linear-gradient(135deg, ${colors.purple} 0%, ${colors.midnight} 100%);`}
+    >
+      <div class="max-w-3xl mx-auto text-center">
+        <h2 class="text-2xl lg:text-3xl font-bold text-white mb-4">
+          Ready to Fund Your Next Deal?
+        </h2>
+        <p class="text-lg text-gray-300 mb-8">
+          WOWCON taught you how to find and analyze multifamily deals. Now let's make sure capital never holds you back.
+        </p>
+
+        <div class="flex flex-col lg:flex-row items-center justify-center gap-4 mb-8">
+          <a
+            href="#free-guide"
+            class="inline-block px-8 py-4 rounded-lg font-bold text-base bg-white transition-transform hover:scale-[1.02]"
+            style={`color: ${colors.purple};`}
+          >
+            📘 Get the Free Guide
+          </a>
+          <a
+            href="#strategy-call"
+            class="inline-block px-8 py-4 rounded-lg font-bold text-base border-2 border-white/30 text-white transition-transform hover:scale-[1.02] hover:bg-white/10"
+          >
+            📅 Book a Strategy Call
+          </a>
+          <a
+            href="https://crm.advisorhub.io/widget/form/uftEVszVPv6XT7Woa7MF"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-block px-8 py-4 rounded-lg font-bold text-base border-2 border-white/30 text-white transition-transform hover:scale-[1.02] hover:bg-white/10"
+          >
+            ⚡ Start Pre-Qualification
+          </a>
+        </div>
+
+        <p class="text-sm text-gray-400">
+          Questions? Email <a href="mailto:info@growthwavecapital.com" class="underline text-gray-300 hover:text-white">info@growthwavecapital.com</a> — response within 24 hours.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================
+         LEGAL DISCLAIMER
+         ============================================ -->
+    <section class="w-full py-6 px-4 lg:px-8" style={`background-color: ${colors.gray50};`}>
+      <div class="max-w-4xl mx-auto">
+        <p class="text-sm text-gray-500 text-center leading-relaxed">
+          GrowthWave Capital provides consulting services and lender placement. We are not a direct lender.
+          Financing subject to lender approval and qualification. No guarantee of approval, specific amounts, or exact terms.
+        </p>
+      </div>
+    </section>
+
+  </main>
+
+  <Footer brand="capital" />
+</BaseLayout>
+
+<style>
+  /* Glass-morphism icon container */
+  .icon-glass {
+    background: linear-gradient(135deg, rgba(124,58,237,0.15) 0%, rgba(124,58,237,0.05) 100%);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(124,58,237,0.2);
+  }
+</style>
+
+<script>
+  /**
+   * WOWCON Landing Page — Client-Side Functionality
+   * - Lead magnet form handling (Netlify + GHL dual submission)
+   * - Smooth scroll for anchor links
+   */
+
+  document.addEventListener('DOMContentLoaded', () => {
+    // ============================================
+    // LEAD MAGNET FORM SUBMISSION
+    // ============================================
+    const leadForm = document.getElementById('lead-magnet-form');
+    const leadSuccess = document.getElementById('lead-magnet-success');
+
+    if (leadForm) {
+      leadForm.addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(leadForm);
+        const submitBtn = document.getElementById('lead-magnet-btn');
+
+        submitBtn.textContent = 'PROCESSING...';
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = '0.7';
+
+        try {
+          // 1) Submit to Netlify Forms (primary capture)
+          await fetch('/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams(formData).toString(),
+          });
+        } catch (err) {
+          console.warn('Netlify form error:', err);
+        }
+
+        try {
+          // 2) Submit to GHL (CRM capture)
+          await fetch('https://crm.advisorhub.io/forms/submit', {
+            method: 'POST',
+            mode: 'no-cors',
+            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+            body: new URLSearchParams({
+              formId: 'uftEVszVPv6XT7Woa7MF',
+              location_id: 'dJsBnS06sWTWcGSn1Mjp',
+              full_name: formData.get('full_name') || '',
+              email: formData.get('email') || '',
+              phone: formData.get('phone') || '',
+              source: 'wowcon-lead-magnet',
+              tags: 'source:rmfia,engagement:lead-magnet-downloaded',
+            }).toString(),
+          });
+        } catch (err) {
+          console.warn('GHL form error:', err);
+        }
+
+        // Show success state with download link
+        leadForm.classList.add('hidden');
+        leadSuccess.classList.remove('hidden');
+      });
+    }
+
+    // ============================================
+    // SMOOTH SCROLL FOR ANCHOR LINKS
+    // ============================================
+    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
+      anchor.addEventListener('click', (e) => {
+        const targetId = anchor.getAttribute('href');
+        if (targetId && targetId !== '#') {
+          const target = document.querySelector(targetId);
+          if (target) {
+            e.preventDefault();
+            target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+          }
+        }
+      });
+    });
+  });
+</script>
+
+<!-- GHL Widget Script — handles calendar iframe auto-resize -->
+<script src="https://crm.advisorhub.io/js/form_embed.js" is:inline></script>
