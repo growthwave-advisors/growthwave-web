@@ -3,28 +3,28 @@
  * GrowthWave Capital - Contact Page
  * ==================================
  * Updated: January 2026
- * 
+ *
  * BUILT to match approved wireframe (capital-wireframe-viewer-v2.jsx ContactPage)
- * 
+ *
  * Design System Compliance:
  * - Two-layer "Fixed Island" pattern on all sections
  * - Typography stops at lg breakpoint (no xl: or 2xl:)
  * - Responsive padding: px-4 lg:px-8
  * - Body content: max-w-7xl (1280px)
  * - Royal Purple #7C3AED accent color
- * 
+ *
  * Key Features:
  * - Three pathway cards (Pre-Qual, Consultation, Message)
  * - Live activity indicator in hero
  * - Credit Sculpt Graduate special pathway
  * - URL parameter support for pre-selection
- * - GHL calendar embed (Investment Partnership Discussion — 30 min)
+ * - GHL calendar embed (Business Credit Strategy Call — 30 min)
  * - GHL Pre-Qualification form link (Capital Pre-Qual form)
  * - Netlify Forms + GHL dual submission for contact form
  *
  * GHL Integration (AdvisorHub by Impruvu):
  * - Pre-Qualification Form ID: uftEVszVPv6XT7Woa7MF
- * - Calendar ID: AsuuzTkGKAx6v6K8L4xp (Investment Partnership Discussion)
+ * - Calendar ID: aYwui0ZvKfS58TiaQ7z0 (Business Credit Strategy Call)
  * - Location ID: dJsBnS06sWTWcGSn1Mjp
  *
  * URL Parameters Supported:
@@ -36,53 +36,53 @@
  * - ?type=bridgefinancing → Pre-select in product dropdown
  * - ?type=termloans → Pre-select in product dropdown
  * - ?type=graduate → Show Credit Sculpt Graduate pathway
- * 
+ *
  * @see capital-wireframe-viewer-v2.jsx (approved wireframe - ContactPage lines 708-810)
  * @see GrowthWave_Capital_Contact_FINAL.md (copy source)
  */
-import BaseLayout from '@layouts/BaseLayout.astro';
-import Header from '@components/Header.astro';
-import Footer from '@components/Footer.astro';
-import Button from '@components/Button.astro';
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import Button from "@components/Button.astro";
 
 // Brand Colors - Capital uses Royal Purple accent
 const colors = {
-  purple: '#7C3AED',
-  purpleLight: '#8B5CF6',
-  purpleBg: 'rgba(124,58,237,0.15)',
-  purpleBgLight: 'rgba(124,58,237,0.08)',
-  ocean: '#265077',
-  midnight: '#022140',
-  gray50: '#f9fafb',
-  gray100: '#f3f4f6',
-  gray200: '#e5e7eb',
-  gray300: '#d1d5db',
-  gray400: '#9ca3af',
-  gray500: '#6b7280',
-  gray600: '#4b5563',
-  gray700: '#374151',
-  gray800: '#1f2937',
+  purple: "#7C3AED",
+  purpleLight: "#8B5CF6",
+  purpleBg: "rgba(124,58,237,0.15)",
+  purpleBgLight: "rgba(124,58,237,0.08)",
+  ocean: "#265077",
+  midnight: "#022140",
+  gray50: "#f9fafb",
+  gray100: "#f3f4f6",
+  gray200: "#e5e7eb",
+  gray300: "#d1d5db",
+  gray400: "#9ca3af",
+  gray500: "#6b7280",
+  gray600: "#4b5563",
+  gray700: "#374151",
+  gray800: "#1f2937",
   // Division colors
-  creditGreen: '#10B981',
-  propertiesCoral: '#FF6B4A',
+  creditGreen: "#10B981",
+  propertiesCoral: "#FF6B4A",
 };
 
 // Product dropdown options
 const productOptions = [
-  { value: '', label: "I'm interested in..." },
-  { value: 'businesscreditcards', label: 'Business Credit Cards' },
-  { value: 'linesofcredit', label: 'Lines of Credit' },
-  { value: 'dscrloans', label: 'DSCR Loans' },
-  { value: 'bridgefinancing', label: 'Bridge Financing' },
-  { value: 'termloans', label: 'Term Loans' },
-  { value: 'general', label: 'General Inquiry / Not Sure Yet' },
+  { value: "", label: "I'm interested in..." },
+  { value: "businesscreditcards", label: "Business Credit Cards" },
+  { value: "linesofcredit", label: "Lines of Credit" },
+  { value: "dscrloans", label: "DSCR Loans" },
+  { value: "bridgefinancing", label: "Bridge Financing" },
+  { value: "termloans", label: "Term Loans" },
+  { value: "general", label: "General Inquiry / Not Sure Yet" },
 ];
 
 // Direct contact info
 const contactInfo = [
-  { icon: '📧', label: 'info@growthwavecapital.com', type: 'email' },
-  { icon: '📍', label: 'Orlando, Florida', type: 'location' },
-  { icon: '⏰', label: 'Response within 24 hours', type: 'response' },
+  { icon: "📧", label: "info@growthwavecapital.com", type: "email" },
+  { icon: "📍", label: "Orlando, Florida", type: "location" },
+  { icon: "⏰", label: "Response within 24 hours", type: "response" },
 ];
 ---
 
@@ -99,26 +99,36 @@ const contactInfo = [
          - Gradient background (full-width)
          - Centered headline with live activity indicator
          ============================================ -->
-    <section 
+    <section
       class="w-full"
       style={`background: linear-gradient(135deg, ${colors.midnight} 0%, ${colors.ocean} 100%);`}
     >
       <div class="max-w-5xl mx-auto px-4 lg:px-8 py-12 lg:py-20 text-center">
         <!-- Headline -->
-        <h1 class="text-3xl lg:text-4xl font-bold text-white leading-tight mb-5">
-          Start Building Your Capital Strategy—<span style={`color: ${colors.purple};`}>Right Now</span>
+        <h1
+          class="text-3xl lg:text-4xl font-bold text-white leading-tight mb-5"
+        >
+          Start Building Your Capital Strategy—<span
+            style={`color: ${colors.purple};`}>Right Now</span
+          >
         </h1>
-        
+
         <!-- Subheadline -->
         <p class="text-lg text-gray-300 mb-6">
-          No office hours. Our systems work 24/7 so you can take action when you're ready.
+          No office hours. Our systems work 24/7 so you can take action when
+          you're ready.
         </p>
-        
+
         <!-- Live Activity Indicator -->
-        <div class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20">
+        <div
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20"
+        >
           <div class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
           <span class="text-base text-gray-300">
-            <strong class="text-white" id="consultations-count">3</strong> consultations today • Last booking <strong class="text-white" id="last-booking">14 min ago</strong>
+            <strong class="text-white" id="consultations-count">3</strong> consultations
+            today • Last booking <strong class="text-white" id="last-booking"
+              >14 min ago</strong
+            >
           </span>
         </div>
       </div>
@@ -133,35 +143,39 @@ const contactInfo = [
     <section class="w-full py-14 lg:py-20 px-4 lg:px-8 bg-white">
       <div class="max-w-6xl mx-auto">
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          
           <!-- CARD 1: Instant Pre-Qualification (FEATURED - Purple) -->
-          <div 
+          <div
             id="prequal-card"
             class="rounded-2xl p-6 text-white relative pathway-card"
             style={`background-color: ${colors.purple};`}
           >
             <!-- FASTEST Badge -->
-            <div class="absolute top-4 right-4 px-3 py-1 rounded-full bg-white/20 text-sm font-bold">
+            <div
+              class="absolute top-4 right-4 px-3 py-1 rounded-full bg-white/20 text-sm font-bold"
+            >
               ⚡ FASTEST
             </div>
-            
+
             <!-- Icon -->
             <div class="text-4xl mb-4">⚡</div>
-            
+
             <!-- Title -->
             <h2 class="text-xl font-bold mb-3">Instant Pre-Qualification</h2>
-            
+
             <!-- Description -->
             <p class="text-white/80 text-base mb-5 leading-relaxed">
-              Know within 3 minutes which products you qualify for, realistic amounts, and timelines.
+              Know within 3 minutes which products you qualify for, realistic
+              amounts, and timelines.
             </p>
-            
+
             <!-- How It Works Box -->
             <div class="bg-white/10 rounded-lg p-4 mb-5">
               <p class="font-bold text-base mb-2">How It Works:</p>
-              <p class="text-white/70 text-base">8-10 questions → System analysis → Instant results</p>
+              <p class="text-white/70 text-base">
+                8-10 questions → System analysis → Instant results
+              </p>
             </div>
-            
+
             <!-- CTA Button — GHL Pre-Qualification Form -->
             <a
               href="https://crm.advisorhub.io/widget/form/uftEVszVPv6XT7Woa7MF"
@@ -172,42 +186,48 @@ const contactInfo = [
             >
               START PRE-QUALIFICATION
             </a>
-            
+
             <!-- Response Time -->
-            <p class="text-center text-sm text-white/60 mt-3 italic">Takes 3 minutes</p>
+            <p class="text-center text-sm text-white/60 mt-3 italic">
+              Takes 3 minutes
+            </p>
           </div>
 
           <!-- CARD 2: Schedule Consultation (Ocean Blue) -->
-          <div 
+          <div
             id="consultation-card"
             class="rounded-2xl p-6 text-white pathway-card"
             style={`background-color: ${colors.ocean};`}
           >
             <!-- Icon -->
             <div class="text-4xl mb-4">📅</div>
-            
+
             <!-- Title -->
             <h2 class="text-xl font-bold mb-3">Schedule Consultation</h2>
-            
+
             <!-- Description -->
             <p class="text-white/80 text-base mb-5 leading-relaxed">
-              Pick your time, get instant confirmation. 30-45 minute strategic discussion.
+              Pick your time, get instant confirmation. 30-45 minute strategic
+              discussion.
             </p>
-            
-            <!-- GHL Calendar Embed — Investment Partnership Discussion (30 min) -->
-            <div id="calendar-embed" class="bg-white rounded-lg mb-5 overflow-hidden" style="min-height: 320px;">
+
+            <!-- GHL Calendar Embed — Business Credit Strategy Call (30 min) -->
+            <div
+              id="calendar-embed"
+              class="bg-white rounded-lg mb-5 overflow-hidden"
+              style="min-height: 320px;"
+            >
               <iframe
-                src="https://crm.advisorhub.io/widget/booking/AsuuzTkGKAx6v6K8L4xp"
+                src="https://crm.advisorhub.io/widget/booking/aYwui0ZvKfS58TiaQ7z0"
                 style="width: 100%; height: 100%; min-height: 320px; border: none;"
                 scrolling="no"
                 id="ghl-calendar-iframe"
-                title="Schedule Investment Partnership Discussion"
-              ></iframe>
+                title="Schedule Business Credit Strategy Call"></iframe>
             </div>
-            
+
             <!-- CTA Button — GHL Calendar Booking (fallback link) -->
             <a
-              href="https://crm.advisorhub.io/widget/booking/AsuuzTkGKAx6v6K8L4xp"
+              href="https://crm.advisorhub.io/widget/booking/aYwui0ZvKfS58TiaQ7z0"
               target="_blank"
               rel="noopener noreferrer"
               class="block w-full py-3.5 rounded-lg font-bold text-base bg-white text-center transition-transform hover:scale-[1.02]"
@@ -215,37 +235,54 @@ const contactInfo = [
             >
               PICK YOUR TIME
             </a>
-            
+
             <!-- Response Time -->
-            <p class="text-center text-sm text-white/60 mt-3 italic">Most slots within 48 hours</p>
+            <p class="text-center text-sm text-white/60 mt-3 italic">
+              Most slots within 48 hours
+            </p>
           </div>
 
           <!-- CARD 3: Send a Message (White/Gray) -->
-          <div 
+          <div
             id="message-card"
             class="rounded-2xl p-6 bg-gray-100 border border-gray-200 pathway-card"
           >
             <!-- Icon -->
             <div class="text-4xl mb-4">💬</div>
-            
+
             <!-- Title -->
-            <h2 class="text-xl font-bold mb-3" style={`color: ${colors.midnight};`}>
+            <h2
+              class="text-xl font-bold mb-3"
+              style={`color: ${colors.midnight};`}
+            >
               Send a Message
             </h2>
-            
+
             <!-- Description -->
             <p class="text-gray-600 text-base mb-5">
               Response within 24 hours (usually much faster).
             </p>
-            
+
             <!-- Contact Form — Netlify Forms + GHL dual submission -->
-            <form id="contact-form" class="space-y-3" data-netlify="true" name="capital-contact" method="POST">
+            <form
+              id="contact-form"
+              class="space-y-3"
+              data-netlify="true"
+              name="capital-contact"
+              method="POST"
+            >
               <!-- Honeypot for spam filtering -->
-              <p class="hidden"><label>Leave blank: <input name="bot-field" /></label></p>
+              <p class="hidden">
+                <label>Leave blank: <input name="bot-field" /></label>
+              </p>
               <!-- Hidden GHL metadata -->
               <input type="hidden" name="form-name" value="capital-contact" />
               <input type="hidden" name="formId" value="uftEVszVPv6XT7Woa7MF" />
-              <input type="hidden" name="location_id" value="dJsBnS06sWTWcGSn1Mjp" />
+              <input
+                type="hidden"
+                name="location_id"
+                value="dJsBnS06sWTWcGSn1Mjp"
+              />
 
               <!-- Product Dropdown -->
               <select
@@ -253,9 +290,11 @@ const contactInfo = [
                 name="product"
                 class="w-full px-4 py-3 rounded-lg border border-gray-300 text-base bg-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               >
-                {productOptions.map((option) => (
-                  <option value={option.value}>{option.label}</option>
-                ))}
+                {
+                  productOptions.map((option) => (
+                    <option value={option.value}>{option.label}</option>
+                  ))
+                }
               </select>
 
               <!-- Full Name -->
@@ -303,9 +342,12 @@ const contactInfo = [
               </button>
             </form>
             <!-- Hidden iframe for GHL cross-origin form POST -->
-            <iframe name="ghl-submit-target" id="ghl-submit-frame" style="display:none;" title="Form submission target"></iframe>
+            <iframe
+              name="ghl-submit-target"
+              id="ghl-submit-frame"
+              style="display:none;"
+              title="Form submission target"></iframe>
           </div>
-
         </div>
       </div>
     </section>
@@ -318,24 +360,25 @@ const contactInfo = [
          ============================================ -->
     <section id="graduate-section" class="w-full py-10 px-4 lg:px-8 bg-white">
       <div class="max-w-4xl mx-auto">
-        <div 
+        <div
           id="graduate-card"
           class="p-6 rounded-2xl border-2"
           style={`border-color: ${colors.creditGreen}; background-color: ${colors.creditGreen}08;`}
         >
           <!-- Icon -->
           <div id="graduate-icon" class="text-5xl">🎓</div>
-          
+
           <!-- Content -->
           <div id="graduate-content" class="flex-1">
-            <h3 
+            <h3
               class="text-lg font-bold mb-2"
               style={`color: ${colors.midnight};`}
             >
               Credit Sculpt Graduate?
             </h3>
             <p class="text-base text-gray-600 mb-4">
-              Your improved credit is ready to become business capital. Special pathway for Stage 1 completers.
+              Your improved credit is ready to become business capital. Special
+              pathway for Stage 1 completers.
             </p>
             <a
               href="https://crm.advisorhub.io/widget/form/uftEVszVPv6XT7Woa7MF"
@@ -356,20 +399,20 @@ const contactInfo = [
          - Email with response time assurance
          - Simplified single-element layout
          ============================================ -->
-    <section 
-      class="w-full px-4 lg:px-8" 
+    <section
+      class="w-full px-4 lg:px-8"
       style={`background-color: ${colors.gray50}; padding-top: 4rem; padding-bottom: 2.5rem;`}
     >
       <div class="max-w-4xl mx-auto text-center">
-        <h3 
-          class="text-lg font-bold" 
+        <h3
+          class="text-lg font-bold"
           style={`color: ${colors.midnight}; margin-bottom: 0.25rem;`}
         >
           Prefer Traditional Contact?
         </h3>
-        
+
         <div style="font-size: 1.5rem; margin-bottom: 0.125rem;">📧</div>
-        <a 
+        <a
           href="mailto:info@growthwavecapital.com"
           class="text-lg font-medium transition-opacity hover:opacity-80"
           style={`color: ${colors.purple};`}
@@ -385,15 +428,19 @@ const contactInfo = [
     <!-- ============================================
          LEGAL DISCLAIMER
          ============================================ -->
-    <section class="w-full py-6 px-4 lg:px-8" style={`background-color: ${colors.gray50};`}>
+    <section
+      class="w-full py-6 px-4 lg:px-8"
+      style={`background-color: ${colors.gray50};`}
+    >
       <div class="max-w-4xl mx-auto">
         <p class="text-sm text-gray-500 text-center leading-relaxed">
-          GrowthWave Capital provides consulting services and lender placement. We are not a direct lender. 
-          Financing subject to lender approval and qualification. No guarantee of approval, specific amounts, or exact terms.
+          GrowthWave Capital provides consulting services and lender placement.
+          We are not a direct lender. Financing subject to lender approval and
+          qualification. No guarantee of approval, specific amounts, or exact
+          terms.
         </p>
       </div>
     </section>
-
   </main>
 
   <Footer brand="capital" />
@@ -402,47 +449,64 @@ const contactInfo = [
 <style>
   /* Glass-morphism icon container - Purple (default) */
   .icon-glass {
-    background: linear-gradient(135deg, rgba(124,58,237,0.15) 0%, rgba(124,58,237,0.05) 100%);
+    background: linear-gradient(
+      135deg,
+      rgba(124, 58, 237, 0.15) 0%,
+      rgba(124, 58, 237, 0.05) 100%
+    );
     backdrop-filter: blur(8px);
-    border: 1px solid rgba(124,58,237,0.2);
+    border: 1px solid rgba(124, 58, 237, 0.2);
   }
-  
+
   /* Glass-morphism icon container - Light (for dark backgrounds) */
   .icon-glass-light {
-    background: linear-gradient(135deg, rgba(255,255,255,0.2) 0%, rgba(255,255,255,0.05) 100%);
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.2) 0%,
+      rgba(255, 255, 255, 0.05) 100%
+    );
     backdrop-filter: blur(8px);
-    border: 1px solid rgba(255,255,255,0.2);
+    border: 1px solid rgba(255, 255, 255, 0.2);
   }
-  
+
   /* Glass-morphism icon container - Green (for Credit Sculpt) */
   .icon-glass-green {
-    background: linear-gradient(135deg, rgba(16,185,129,0.2) 0%, rgba(16,185,129,0.05) 100%);
+    background: linear-gradient(
+      135deg,
+      rgba(16, 185, 129, 0.2) 0%,
+      rgba(16, 185, 129, 0.05) 100%
+    );
     backdrop-filter: blur(8px);
-    border: 1px solid rgba(16,185,129,0.3);
+    border: 1px solid rgba(16, 185, 129, 0.3);
   }
-  
+
   /* Pathway card highlight state */
   .pathway-card.highlighted {
     transform: scale(1.02);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
   }
-  
+
   /* Pulse animation for live indicator */
   @keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
+    0%,
+    100% {
+      opacity: 1;
+    }
+    50% {
+      opacity: 0.5;
+    }
   }
-  
+
   .animate-pulse {
     animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
   }
-  
+
   /* ============================================
      GRADUATE CARD - Explicit responsive styles
      Mobile: Stacked, centered
      Desktop (768px+): Horizontal, left-aligned
      ============================================ */
-  
+
   /* Mobile default: stacked, centered */
   #graduate-card {
     display: flex;
@@ -451,11 +515,11 @@ const contactInfo = [
     text-align: center;
     gap: 1rem;
   }
-  
+
   #graduate-icon {
     margin-bottom: 0;
   }
-  
+
   /* Desktop: horizontal, left-aligned */
   @media (min-width: 768px) {
     #graduate-card {
@@ -464,7 +528,7 @@ const contactInfo = [
       text-align: left;
       gap: 1.5rem;
     }
-    
+
     #graduate-content {
       text-align: left;
     }
@@ -478,69 +542,73 @@ const contactInfo = [
    * - Form submission handling
    * - Live activity indicator updates
    */
-  
-  document.addEventListener('DOMContentLoaded', () => {
+
+  document.addEventListener("DOMContentLoaded", () => {
     // ============================================
     // URL PARAMETER HANDLING
     // ============================================
     const urlParams = new URLSearchParams(window.location.search);
-    const typeParam = urlParams.get('type');
-    
+    const typeParam = urlParams.get("type");
+
     if (typeParam) {
       // Map URL params to actions
       const productMapping = {
-        'businesscreditcards': 'businesscreditcards',
-        'linesofcredit': 'linesofcredit',
-        'dscrloans': 'dscrloans',
-        'bridgefinancing': 'bridgefinancing',
-        'termloans': 'termloans',
+        businesscreditcards: "businesscreditcards",
+        linesofcredit: "linesofcredit",
+        dscrloans: "dscrloans",
+        bridgefinancing: "bridgefinancing",
+        termloans: "termloans",
       };
-      
+
       // Handle pathway highlighting
-      if (typeParam === 'prequalify') {
-        highlightCard('prequal-card');
-        scrollToCard('prequal-card');
-      } else if (typeParam === 'consultation') {
-        highlightCard('consultation-card');
-        scrollToCard('consultation-card');
-      } else if (typeParam === 'graduate') {
+      if (typeParam === "prequalify") {
+        highlightCard("prequal-card");
+        scrollToCard("prequal-card");
+      } else if (typeParam === "consultation") {
+        highlightCard("consultation-card");
+        scrollToCard("consultation-card");
+      } else if (typeParam === "graduate") {
         // Scroll to and highlight graduate section
-        const graduateSection = document.getElementById('graduate-section');
+        const graduateSection = document.getElementById("graduate-section");
         if (graduateSection) {
-          graduateSection.scrollIntoView({ behavior: 'smooth', block: 'center' });
-          graduateSection.querySelector('div').style.boxShadow = '0 0 0 3px #10B981';
+          graduateSection.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+          });
+          graduateSection.querySelector("div").style.boxShadow =
+            "0 0 0 3px #10B981";
         }
       } else if (productMapping[typeParam]) {
         // Pre-select product in dropdown
-        const productSelect = document.getElementById('product-select');
+        const productSelect = document.getElementById("product-select");
         if (productSelect) {
           productSelect.value = productMapping[typeParam];
         }
-        highlightCard('message-card');
-        scrollToCard('message-card');
+        highlightCard("message-card");
+        scrollToCard("message-card");
       }
     }
-    
+
     function highlightCard(cardId) {
       const card = document.getElementById(cardId);
       if (card) {
-        card.classList.add('highlighted');
+        card.classList.add("highlighted");
         // Remove highlight after 3 seconds
         setTimeout(() => {
-          card.classList.remove('highlighted');
+          card.classList.remove("highlighted");
         }, 3000);
       }
     }
-    
+
     function scrollToCard(cardId) {
       const card = document.getElementById(cardId);
       if (card) {
         setTimeout(() => {
-          card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          card.scrollIntoView({ behavior: "smooth", block: "center" });
         }, 100);
       }
     }
-    
+
     // ============================================
     // LIVE ACTIVITY INDICATOR
     // Simulated data - would connect to real API
@@ -549,72 +617,72 @@ const contactInfo = [
       // Simulate varying consultation counts (would be real data)
       const consultationsToday = Math.floor(Math.random() * 5) + 2;
       const lastBookingMinutes = Math.floor(Math.random() * 30) + 5;
-      
-      const countElement = document.getElementById('consultations-count');
-      const lastBookingElement = document.getElementById('last-booking');
-      
+
+      const countElement = document.getElementById("consultations-count");
+      const lastBookingElement = document.getElementById("last-booking");
+
       if (countElement) {
         countElement.textContent = consultationsToday;
       }
       if (lastBookingElement) {
-        lastBookingElement.textContent = lastBookingMinutes + ' min ago';
+        lastBookingElement.textContent = lastBookingMinutes + " min ago";
       }
     }
-    
+
     // Update every 60 seconds (for demo - production would use real data)
     // updateActivityIndicator();
     // setInterval(updateActivityIndicator, 60000);
-    
+
     // ============================================
     // FORM SUBMISSION HANDLING
     // Dual submission: Netlify Forms (reliable) + GHL (CRM)
     // ============================================
-    const contactForm = document.getElementById('contact-form');
+    const contactForm = document.getElementById("contact-form");
 
     if (contactForm) {
-      contactForm.addEventListener('submit', async (e) => {
+      contactForm.addEventListener("submit", async (e) => {
         e.preventDefault();
 
         const formData = new FormData(contactForm);
-        const submitButton = document.getElementById('contact-submit-btn');
+        const submitButton = document.getElementById("contact-submit-btn");
         const originalText = submitButton.textContent;
 
-        submitButton.textContent = 'SENDING...';
+        submitButton.textContent = "SENDING...";
         submitButton.disabled = true;
-        submitButton.style.opacity = '0.7';
+        submitButton.style.opacity = "0.7";
 
         try {
           // 1) Submit to Netlify Forms (primary — reliable capture)
-          await fetch('/', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          await fetch("/", {
+            method: "POST",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
             body: new URLSearchParams(formData).toString(),
           });
         } catch (netlifyErr) {
-          console.warn('Netlify form submission error:', netlifyErr);
+          console.warn("Netlify form submission error:", netlifyErr);
         }
 
         try {
           // 2) Submit to GHL (secondary — CRM capture)
           // Uses no-cors mode for cross-origin POST; we won't read the response
           // but the data will be sent to GHL's form handler
-          await fetch('https://crm.advisorhub.io/forms/submit', {
-            method: 'POST',
-            mode: 'no-cors',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          await fetch("https://crm.advisorhub.io/forms/submit", {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
             body: new URLSearchParams({
-              formId: 'uftEVszVPv6XT7Woa7MF',
-              location_id: 'dJsBnS06sWTWcGSn1Mjp',
-              full_name: formData.get('full_name') || '',
-              email: formData.get('email') || '',
-              phone: formData.get('phone') || '',
-              message: formData.get('message') || '',
-              product: formData.get('product') || '',
-              source: 'website-contact-form',
+              formId: "uftEVszVPv6XT7Woa7MF",
+              location_id: "dJsBnS06sWTWcGSn1Mjp",
+              full_name: formData.get("full_name") || "",
+              email: formData.get("email") || "",
+              phone: formData.get("phone") || "",
+              message: formData.get("message") || "",
+              product: formData.get("product") || "",
+              source: "website-contact-form",
             }).toString(),
           });
         } catch (ghlErr) {
-          console.warn('GHL form submission error (non-critical):', ghlErr);
+          console.warn("GHL form submission error (non-critical):", ghlErr);
         }
 
         // Show success — at minimum Netlify captured the data
