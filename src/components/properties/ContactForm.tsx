@@ -2,20 +2,26 @@
  * ContactForm Component
  * =====================
  * Smart contact form with conditional fields based on inquiry type.
- * Integrates with Go High Level CRM.
- * 
+ * Submits to Go High Level CRM via Properties Contact form.
+ *
+ * GHL Integration (AdvisorHub by Impruvu):
+ * - Properties Contact Form ID: 7kpPe28E6X4uw0cu1zjd
+ * - Location ID: dJsBnS06sWTWcGSn1Mjp
+ * - Submission URL: https://crm.advisorhub.io/forms/submit
+ * - Custom fields mapped via GHL_FIELD_MAP → "Form | Properties Contact" folder
+ *
  * Conditional Fields:
  * - Investment Opportunities: accredited status, timeline, amount
  * - Property Submission: location, units, price, relationship
  * - Partnership/JV: interest description
- * 
+ *
  * URL Parameter Support:
  * - /contact?type=investment   → Preselects "Investment Opportunities"
  * - /contact?type=partnership  → Preselects "Partnership/JV Inquiries"
  * - /contact?type=property     → Preselects "Property Submission"
  * - /contact?type=general      → Preselects "General Questions"
  * - /contact?type=media        → Preselects "Media/Press Inquiries"
- * 
+ *
  * @see GrowthWave_Properties_Website_Copy_MASTER.md
  */
 import { useState, useEffect, type FormEvent } from 'react';
@@ -39,9 +45,40 @@ type InquiryType = '' | 'investment' | 'property' | 'partnership' | 'general' | 
 // Valid inquiry types for URL parameter validation
 const validInquiryTypes: InquiryType[] = ['investment', 'property', 'partnership', 'general', 'media'];
 
+// GHL Integration Constants
+const GHL_FORM_ID = '7kpPe28E6X4uw0cu1zjd';
+const GHL_LOCATION_ID = 'dJsBnS06sWTWcGSn1Mjp';
+const GHL_SUBMIT_URL = 'https://crm.advisorhub.io/forms/submit';
+
+// Map React form field names → GHL custom field keys
+// These keys match GHL Custom Fields in "Form | Properties Contact" folder
+const GHL_FIELD_MAP: Record<string, string> = {
+  inquiryType: 'contact.inquiry_type',
+  message: 'contact.message',
+  referralSource: 'contact.referral_source',
+  accredited: 'contact.accredited_investor',
+  investmentTimeline: 'contact.investment_timeline',
+  investmentAmount: 'contact.investment_amount',
+  propertyLocation: 'contact.property_location',
+  unitCount: 'contact.unit_count',
+  askingPrice: 'contact.asking_price',
+  propertyRelationship: 'contact.property_relationship',
+  partnershipInterest: 'contact.partnership_interest',
+};
+
+// Inquiry type short values → GHL-friendly labels
+const INQUIRY_LABELS: Record<string, string> = {
+  investment: 'Investment Opportunities',
+  property: 'Property Submission',
+  partnership: 'Partnership / JV Inquiries',
+  general: 'General Questions',
+  media: 'Media / Press Inquiries',
+};
+
 export default function ContactForm() {
   const [inquiryType, setInquiryType] = useState<InquiryType>('');
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
   const [showAccreditedInfo, setShowAccreditedInfo] = useState(false);
 
   // Read URL parameter on mount and preselect inquiry type
@@ -57,20 +94,87 @@ export default function ContactForm() {
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // TODO: Integrate with Go High Level CRM
-    // const formData = new FormData(e.currentTarget);
-    
-    // Simulate submission
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    setIsSubmitting(false);
-    alert('Thank you for your message! We\'ll be in touch within one business day.');
+
+    const formData = new FormData(e.currentTarget);
+
+    // Build GHL submission payload
+    // Standard GHL contact fields
+    const payload: Record<string, string> = {
+      formId: GHL_FORM_ID,
+      location_id: GHL_LOCATION_ID,
+      first_name: (formData.get('firstName') as string) || '',
+      last_name: (formData.get('lastName') as string) || '',
+      email: (formData.get('email') as string) || '',
+      phone: (formData.get('phone') as string) || '',
+    };
+
+    // Map custom fields through GHL_FIELD_MAP
+    for (const [formName, ghlKey] of Object.entries(GHL_FIELD_MAP)) {
+      let value = formData.get(formName) as string;
+      if (value) {
+        // Convert inquiry type short value to GHL label
+        if (formName === 'inquiryType' && INQUIRY_LABELS[value]) {
+          value = INQUIRY_LABELS[value];
+        }
+        payload[ghlKey] = value;
+      }
+    }
+
+    // Add source tag for tracking
+    payload['source'] = 'website-properties-contact';
+    payload['tags'] = 'source:website-organic';
+
+    try {
+      // Submit to GHL CRM — Properties Contact form
+      // Uses no-cors mode (GHL returns opaque response for cross-origin)
+      await fetch(GHL_SUBMIT_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams(payload).toString(),
+      });
+
+      // GHL no-cors always resolves — show success
+      setFormSubmitted(true);
+    } catch (err) {
+      console.warn('GHL form submission error:', err);
+      // Still show success — GHL may have received the data
+      setFormSubmitted(true);
+    } finally {
+      setIsSubmitting(false);
+    }
   };
+
+  // Success State
+  if (formSubmitted) {
+    return (
+      <div className="text-center py-10">
+        <div className="text-5xl mb-4">✅</div>
+        <h3
+          className="text-xl lg:text-2xl font-bold mb-3"
+          style={{ color: colors.midnight }}
+        >
+          Message Received!
+        </h3>
+        <p className="text-base lg:text-lg mb-4" style={{ color: colors.gray600 }}>
+          We'll respond within one business day—usually much faster.
+        </p>
+        <p className="text-sm italic" style={{ color: colors.gray500 }}>
+          {inquiryType === 'investment'
+            ? 'Our investment team will reach out with next steps.'
+            : inquiryType === 'property'
+              ? 'Our acquisitions team will review your submission promptly.'
+              : inquiryType === 'partnership'
+                ? 'Looking forward to exploring partnership opportunities with you.'
+                : 'Thank you for reaching out to GrowthWave Properties.'}
+        </p>
+      </div>
+    );
+  }
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
-      
+
       {/* Inquiry Type - Primary Selector */}
       <div>
         <label 
@@ -153,14 +257,14 @@ export default function ContactForm() {
             )}
             
             <div className="flex gap-4 flex-wrap">
-              {['Yes', 'No', 'Not sure'].map((opt) => (
+              {['Yes', 'No', 'Not sure yet'].map((opt) => (
                 <label key={opt} className="flex items-center gap-2 cursor-pointer">
-                  <input 
-                    type="radio" 
-                    name="accredited" 
-                    value={opt.toLowerCase().replace(' ', '-')}
-                    className="w-4 h-4" 
-                    style={{ accentColor: colors.coral }} 
+                  <input
+                    type="radio"
+                    name="accredited"
+                    value={opt}
+                    className="w-4 h-4"
+                    style={{ accentColor: colors.coral }}
                   />
                   <span className="text-sm lg:text-base" style={{ color: colors.gray600 }}>{opt}</span>
                 </label>
@@ -180,10 +284,11 @@ export default function ContactForm() {
               className="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm lg:text-base focus:outline-none focus:ring-2"
               style={{ '--tw-ring-color': colors.coral } as React.CSSProperties}
             >
-              <option value="immediately">Immediately</option>
-              <option value="3-6-months">3-6 months</option>
-              <option value="6-12-months">6-12 months</option>
-              <option value="longer-term">Longer term</option>
+              <option value="Immediately">Immediately</option>
+              <option value="1-3 months">1-3 months</option>
+              <option value="3-6 months">3-6 months</option>
+              <option value="6-12 months">6-12 months</option>
+              <option value="Just exploring">Just exploring</option>
             </select>
           </div>
           
@@ -199,11 +304,10 @@ export default function ContactForm() {
               className="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm lg:text-base focus:outline-none focus:ring-2"
               style={{ '--tw-ring-color': colors.coral } as React.CSSProperties}
             >
-              <option value="25k-50k">$25K - $50K</option>
-              <option value="50k-100k">$50K - $100K</option>
-              <option value="100k-250k">$100K - $250K</option>
-              <option value="250k-plus">$250K+</option>
-              <option value="evaluating">Still evaluating</option>
+              <option value="$50K - $100K">$50K - $100K</option>
+              <option value="$100K - $250K">$100K - $250K</option>
+              <option value="$250K - $500K">$250K - $500K</option>
+              <option value="$500K+">$500K+</option>
             </select>
           </div>
         </div>
@@ -274,10 +378,10 @@ export default function ContactForm() {
               className="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm lg:text-base focus:outline-none focus:ring-2"
               style={{ '--tw-ring-color': colors.ocean } as React.CSSProperties}
             >
-              <option value="broker">Broker</option>
-              <option value="owner">Owner</option>
-              <option value="off-market">Off-market source</option>
-              <option value="other">Other</option>
+              <option value="Broker">Broker</option>
+              <option value="Owner">Owner</option>
+              <option value="Off-market source">Off-market source</option>
+              <option value="Other">Other</option>
             </select>
           </div>
         </div>
@@ -386,12 +490,12 @@ export default function ContactForm() {
           style={{ '--tw-ring-color': colors.coral } as React.CSSProperties}
         >
           <option value="">Select...</option>
-          <option value="google">Google Search</option>
-          <option value="linkedin">LinkedIn</option>
-          <option value="referral">Referral</option>
-          <option value="event">Real Estate Event</option>
-          <option value="social">Social Media</option>
-          <option value="other">Other</option>
+          <option value="Google">Google Search</option>
+          <option value="LinkedIn">LinkedIn</option>
+          <option value="RMFIA">RMFIA</option>
+          <option value="2nd Mountain Climbers">2nd Mountain Climbers</option>
+          <option value="Referral">Referral</option>
+          <option value="Other">Other</option>
         </select>
       </div>
       
