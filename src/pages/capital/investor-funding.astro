@@ -18,6 +18,11 @@
  * - Pre-Qualification Form ID: uftEVszVPv6XT7Woa7MF
  * - Calendar ID: aYwui0ZvKfS58TiaQ7z0 (Business Credit Funding Consultation)
  * - Location ID: dJsBnS06sWTWcGSn1Mjp
+ *
+ * GHL Custom Field IDs (for pre-qualification form):
+ * - Funding Amount Needed: bjDh1YbEzwnqKsGd1CdK
+ * - Business Type: tgQRqiAFGfHw8wY5Lg4m
+ * - Estimated Credit Score Range: UisGlkFgMAsw2Cq4andT
  */
 import BaseLayout from '@layouts/BaseLayout.astro';
 import Header from '@components/Header.astro';
@@ -243,13 +248,23 @@ const differentiators = [
               <input type="hidden" name="source" value="investor-funding-page" />
               <input type="hidden" name="tag" value="source:website-organic,track:investor-funding" />
 
-              <input
-                type="text"
-                name="full_name"
-                placeholder="Full Name *"
-                required
-                class="w-full px-4 py-3 rounded-lg border border-gray-300 text-base focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
-              />
+              <!-- Name Fields (split for GHL: first_name + last_name) -->
+              <div class="grid grid-cols-2 gap-3">
+                <input
+                  type="text"
+                  name="first_name"
+                  placeholder="First Name *"
+                  required
+                  class="w-full px-4 py-3 rounded-lg border border-gray-300 text-base focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                />
+                <input
+                  type="text"
+                  name="last_name"
+                  placeholder="Last Name *"
+                  required
+                  class="w-full px-4 py-3 rounded-lg border border-gray-300 text-base focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                />
+              </div>
               <input
                 type="email"
                 name="email"
@@ -260,19 +275,49 @@ const differentiators = [
               <input
                 type="tel"
                 name="phone"
-                placeholder="Phone (optional)"
+                placeholder="Phone *"
+                required
                 class="w-full px-4 py-3 rounded-lg border border-gray-300 text-base focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               />
+
+              <!-- GHL Custom Field: Funding Amount Needed (bjDh1YbEzwnqKsGd1CdK) -->
               <select
-                name="funding_goal"
+                name="bjDh1YbEzwnqKsGd1CdK"
+                required
                 class="w-full px-4 py-3 rounded-lg border border-gray-300 text-base text-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               >
-                <option value="" disabled selected>What best describes your goal? (optional)</option>
-                <option value="business-credit">Build business credit from scratch</option>
-                <option value="access-capital">Access capital for a deal</option>
-                <option value="dscr-loan">Get a DSCR loan</option>
-                <option value="bridge-financing">Bridge financing for a deal</option>
-                <option value="general">General funding inquiry</option>
+                <option value="" disabled selected>Funding Amount Needed *</option>
+                <option value="Under $50K">Under $50K</option>
+                <option value="$50K - $100K">$50K - $100K</option>
+                <option value="$100K - $250K">$100K - $250K</option>
+                <option value="$250K - $500K">$250K - $500K</option>
+                <option value="$500K+">$500K+</option>
+              </select>
+
+              <!-- GHL Custom Field: Business Type (tgQRqiAFGfHw8wY5Lg4m) -->
+              <select
+                name="tgQRqiAFGfHw8wY5Lg4m"
+                required
+                class="w-full px-4 py-3 rounded-lg border border-gray-300 text-base text-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              >
+                <option value="" disabled selected>Business Type *</option>
+                <option value="Real Estate Investment">Real Estate Investment</option>
+                <option value="Small Business">Small Business</option>
+                <option value="E-Commerce">E-Commerce</option>
+                <option value="Construction / Contracting">Construction / Contracting</option>
+                <option value="Other">Other</option>
+              </select>
+
+              <!-- GHL Custom Field: Estimated Credit Score Range (UisGlkFgMAsw2Cq4andT) -->
+              <select
+                name="UisGlkFgMAsw2Cq4andT"
+                class="w-full px-4 py-3 rounded-lg border border-gray-300 text-base text-gray-600 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              >
+                <option value="" disabled selected>Estimated Credit Score Range (optional)</option>
+                <option value="680 - 719">680 - 719</option>
+                <option value="720 - 749">720 - 749</option>
+                <option value="750+">750+</option>
+                <option value="Not Sure">Not Sure</option>
               </select>
               <button
                 type="submit"
@@ -548,7 +593,7 @@ const differentiators = [
 <script>
   /**
    * Investor Funding Page — Client-Side Functionality
-   * - Pre-qualification form handling (Netlify + GHL dual submission)
+   * - Pre-qualification form handling (GHL CRM submission)
    * - Smooth scroll for anchor links
    */
 
@@ -571,18 +616,8 @@ const differentiators = [
         submitBtn.style.opacity = '0.7';
 
         try {
-          // 1) Submit to Netlify Forms
-          await fetch('/', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-            body: new URLSearchParams(formData).toString(),
-          });
-        } catch (err) {
-          console.warn('Netlify form error:', err);
-        }
-
-        try {
-          // 2) Submit to GHL (CRM)
+          // Submit to GHL (CRM) — field names match GHL form builder exactly
+          // Custom field IDs map to GHL dropdowns; standard fields use contact keys
           await fetch('https://crm.advisorhub.io/forms/submit', {
             method: 'POST',
             mode: 'no-cors',
@@ -590,10 +625,13 @@ const differentiators = [
             body: new URLSearchParams({
               formId: 'uftEVszVPv6XT7Woa7MF',
               location_id: 'dJsBnS06sWTWcGSn1Mjp',
-              full_name: formData.get('full_name') || '',
+              first_name: formData.get('first_name') || '',
+              last_name: formData.get('last_name') || '',
               email: formData.get('email') || '',
               phone: formData.get('phone') || '',
-              funding_goal: formData.get('funding_goal') || '',
+              bjDh1YbEzwnqKsGd1CdK: formData.get('bjDh1YbEzwnqKsGd1CdK') || '',
+              tgQRqiAFGfHw8wY5Lg4m: formData.get('tgQRqiAFGfHw8wY5Lg4m') || '',
+              UisGlkFgMAsw2Cq4andT: formData.get('UisGlkFgMAsw2Cq4andT') || '',
               source: 'investor-funding-page',
               tags: 'source:website-organic,track:investor-funding',
             }).toString(),
