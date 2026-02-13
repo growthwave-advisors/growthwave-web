@@ -125,7 +125,7 @@ export const brands: BrandsConfig = {
       domain: 'growthwavecapital.com',
     },
     contact: {
-      email: 'funding@growthwavecapital.com',
+      email: 'info@growthwavecapital.com',
       location: 'Orlando, FL',
     },
     ctaText: 'Apply Now',
