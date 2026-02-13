@@ -138,14 +138,13 @@ const contactInfo = [
     </section>
 
     <!-- ============================================
-         THREE PATHWAY CARDS SECTION
-         - Pre-Qual (purple - FEATURED)
-         - Consultation (ocean blue)
-         - Message (white/gray)
+         TIER 1: QUICK ACTION CARDS
+         - Pre-Qual (purple - FEATURED) + Message (white/gray)
+         - Balanced 2-column layout, natural height match
          ============================================ -->
-    <section class="w-full py-14 lg:py-20 px-4 lg:px-8 bg-white">
-      <div class="max-w-6xl mx-auto">
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <section class="w-full pt-14 lg:pt-20 pb-8 lg:pb-10 px-4 lg:px-8 bg-white">
+      <div class="max-w-4xl mx-auto">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
           <!-- CARD 1: Instant Pre-Qualification (FEATURED - Purple) -->
           <div
             id="prequal-card"
@@ -154,27 +153,27 @@ const contactInfo = [
           >
             <!-- FASTEST Badge -->
             <div
-              class="absolute top-4 right-4 px-3 py-1 rounded-full bg-white/20 text-sm font-bold"
+              class="absolute top-4 right-4 px-2.5 py-0.5 rounded-full bg-white/20 text-xs font-bold"
             >
               ⚡ FASTEST
             </div>
 
             <!-- Icon -->
-            <div class="text-4xl mb-4">⚡</div>
+            <div class="text-3xl mb-3">⚡</div>
 
             <!-- Title -->
-            <h2 class="text-xl font-bold mb-3">Instant Pre-Qualification</h2>
+            <h2 class="text-xl font-bold mb-2">Instant Pre-Qualification</h2>
 
             <!-- Description -->
-            <p class="text-white/80 text-base mb-5 leading-relaxed">
+            <p class="text-white/80 text-sm mb-4 leading-relaxed">
               Know within 3 minutes which products you qualify for, realistic
               amounts, and timelines.
             </p>
 
             <!-- How It Works Box -->
-            <div class="bg-white/10 rounded-lg p-4 mb-5">
-              <p class="font-bold text-base mb-2">How It Works:</p>
-              <p class="text-white/70 text-base">
+            <div class="bg-white/10 rounded-lg p-3 mb-5">
+              <p class="font-bold text-sm mb-1">How It Works:</p>
+              <p class="text-white/70 text-sm">
                 8-10 questions → System analysis → Instant results
               </p>
             </div>
@@ -184,85 +183,36 @@ const contactInfo = [
               href="https://crm.advisorhub.io/widget/form/uftEVszVPv6XT7Woa7MF"
               target="_blank"
               rel="noopener noreferrer"
-              class="block w-full py-3.5 rounded-lg font-bold text-base bg-white text-center transition-transform hover:scale-[1.02]"
+              class="block w-full py-3 rounded-lg font-bold text-sm bg-white text-center transition-transform hover:scale-[1.02]"
               style={`color: ${colors.purple};`}
             >
               START PRE-QUALIFICATION
             </a>
 
             <!-- Response Time -->
-            <p class="text-center text-sm text-white/60 mt-3 italic">
+            <p class="text-center text-xs text-white/60 mt-2 italic">
               Takes 3 minutes
             </p>
           </div>
 
-          <!-- CARD 2: Schedule Consultation (Ocean Blue) -->
-          <div
-            id="consultation-card"
-            class="rounded-2xl p-6 text-white pathway-card"
-            style={`background-color: ${colors.ocean};`}
-          >
-            <!-- Icon -->
-            <div class="text-4xl mb-4">📅</div>
-
-            <!-- Title -->
-            <h2 class="text-xl font-bold mb-3">Schedule Consultation</h2>
-
-            <!-- Description -->
-            <p class="text-white/80 text-base mb-5 leading-relaxed">
-              Pick your time, get instant confirmation. 30-45 minute strategic
-              discussion.
-            </p>
-
-            <!-- GHL Calendar Embed — Business Credit Strategy Call (30 min) -->
-            <div
-              id="calendar-embed"
-              class="bg-white rounded-lg mb-5 overflow-hidden"
-              style="min-height: 320px;"
-            >
-              <iframe
-                src="https://crm.advisorhub.io/widget/booking/aYwui0ZvKfS58TiaQ7z0"
-                style="width: 100%; height: 100%; min-height: 320px; border: none;"
-                scrolling="no"
-                id="ghl-calendar-iframe"
-                title="Schedule Business Credit Strategy Call"></iframe>
-            </div>
-
-            <!-- CTA Button — GHL Calendar Booking (fallback link) -->
-            <a
-              href="https://crm.advisorhub.io/widget/booking/aYwui0ZvKfS58TiaQ7z0"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="block w-full py-3.5 rounded-lg font-bold text-base bg-white text-center transition-transform hover:scale-[1.02]"
-              style={`color: ${colors.ocean};`}
-            >
-              PICK YOUR TIME
-            </a>
-
-            <!-- Response Time -->
-            <p class="text-center text-sm text-white/60 mt-3 italic">
-              Most slots within 48 hours
-            </p>
-          </div>
-
-          <!-- CARD 3: Send a Message (White/Gray) -->
+          <!-- CARD 2: Send a Message (White/Gray) -->
           <div
             id="message-card"
             class="rounded-2xl p-6 bg-gray-100 border border-gray-200 pathway-card"
           >
             <!-- Icon -->
-            <div class="text-4xl mb-4">💬</div>
+            <div class="text-3xl mb-3">💬</div>
 
             <!-- Title -->
             <h2
-              class="text-xl font-bold mb-3"
+              class="text-xl font-bold mb-2"
               style={`color: ${colors.midnight};`}
             >
               Send a Message
             </h2>
 
             <!-- Description -->
-            <p class="text-gray-600 text-base mb-5">
+            <p class="text-gray-600 text-sm mb-4">
               Response within 24 hours (usually much faster).
             </p>
 
@@ -291,7 +241,7 @@ const contactInfo = [
               <select
                 id="product-select"
                 name="single_dropdown_89ki"
-                class="w-full px-4 py-3 rounded-lg border border-gray-300 text-base bg-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                class="w-full px-3 py-2.5 rounded-lg border border-gray-300 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               >
                 {
                   productOptions.map((option) => (
@@ -307,14 +257,14 @@ const contactInfo = [
                   name="first_name"
                   placeholder="First Name *"
                   required
-                  class="w-full px-4 py-3 rounded-lg border border-gray-300 text-base focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  class="w-full px-3 py-2.5 rounded-lg border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 />
                 <input
                   type="text"
                   name="last_name"
                   placeholder="Last Name *"
                   required
-                  class="w-full px-4 py-3 rounded-lg border border-gray-300 text-base focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                  class="w-full px-3 py-2.5 rounded-lg border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 />
               </div>
 
@@ -324,7 +274,7 @@ const contactInfo = [
                 name="email"
                 placeholder="Email *"
                 required
-                class="w-full px-4 py-3 rounded-lg border border-gray-300 text-base focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                class="w-full px-3 py-2.5 rounded-lg border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               />
 
               <!-- Phone -->
@@ -333,22 +283,22 @@ const contactInfo = [
                 name="phone"
                 placeholder="Phone *"
                 required
-                class="w-full px-4 py-3 rounded-lg border border-gray-300 text-base focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                class="w-full px-3 py-2.5 rounded-lg border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               />
 
               <!-- Message (GHL Query Key: multi_line_2fsn) -->
               <textarea
                 name="multi_line_2fsn"
                 placeholder="How can we help?"
-                rows="3"
-                class="w-full px-4 py-3 rounded-lg border border-gray-300 text-base resize-none focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                rows="2"
+                class="w-full px-3 py-2.5 rounded-lg border border-gray-300 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               ></textarea>
 
               <!-- Submit Button -->
               <button
                 type="submit"
                 id="contact-submit-btn"
-                class="w-full py-3.5 rounded-lg font-bold text-base text-white transition-transform hover:scale-[1.02]"
+                class="w-full py-3 rounded-lg font-bold text-sm text-white transition-transform hover:scale-[1.02]"
                 style={`background-color: ${colors.ocean};`}
               >
                 GET MY ANSWERS →
@@ -360,6 +310,86 @@ const contactInfo = [
               id="ghl-submit-frame"
               style="display:none;"
               title="Form submission target"></iframe>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         TIER 2: SCHEDULE A STRATEGY CALL
+         - GHL Calendar in standalone branded wrapper
+         - Centered, compact, Calendly-like proportion
+         ============================================ -->
+    <section
+      id="consultation-card"
+      class="w-full pb-14 lg:pb-20 pt-4 lg:pt-6 px-4 lg:px-8 bg-white"
+    >
+      <div class="max-w-4xl mx-auto">
+        <!-- Section connector -->
+        <div class="text-center mb-6">
+          <p class="text-xs font-semibold tracking-widest uppercase text-gray-400 mb-2">or</p>
+          <h2 class="text-xl lg:text-2xl font-bold" style={`color: ${colors.midnight};`}>
+            Book a Strategy Call
+          </h2>
+          <p class="text-sm text-gray-500 mt-1">
+            30-minute consultation — no pressure, no sales pitch, just clarity.
+          </p>
+        </div>
+
+        <!-- GHL Calendar — Branded Wrapper (matches investor-funding/wowcon pattern) -->
+        <div class="max-w-xl mx-auto rounded-2xl overflow-hidden shadow-lg bg-white border border-gray-200" style={`border-top: 4px solid ${colors.purple};`}>
+          <!-- Calendar Header -->
+          <div class="px-5 py-3 flex items-center justify-between border-b border-gray-100">
+            <div class="flex items-center gap-3">
+              <div
+                class="w-9 h-9 rounded-lg flex items-center justify-center"
+                style={`background-color: ${colors.purpleBgLight};`}
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style={`stroke: ${colors.purple};`}>
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+              </div>
+              <div>
+                <p class="text-sm font-bold" style={`color: ${colors.midnight};`}>Select a Time</p>
+                <p class="text-xs text-gray-500">Business Credit Strategy Call</p>
+              </div>
+            </div>
+            <div
+              class="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold"
+              style={`background-color: ${colors.purpleBgLight}; color: ${colors.purple};`}
+            >
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              30 min &bull; Free
+            </div>
+          </div>
+
+          <!-- Calendar iframe -->
+          <div class="calendar-scroll-container" style="height: 520px; overflow-y: auto; -webkit-overflow-scrolling: touch;">
+            <iframe
+              src="https://crm.advisorhub.io/widget/booking/aYwui0ZvKfS58TiaQ7z0"
+              style="width: 100%; border: none;"
+              scrolling="no"
+              id="ghl-calendar-iframe"
+              title="Schedule Business Credit Strategy Call"></iframe>
+          </div>
+
+          <!-- Footer -->
+          <div class="px-5 py-2.5 border-t border-gray-100 flex items-center justify-between">
+            <p class="text-xs text-gray-400">Powered by GrowthWave Capital</p>
+            <a
+              href="https://crm.advisorhub.io/widget/booking/aYwui0ZvKfS58TiaQ7z0"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-xs text-gray-400 hover:text-gray-600 transition-colors"
+            >
+              Open in new window &rarr;
+            </a>
           </div>
         </div>
       </div>
@@ -460,6 +490,23 @@ const contactInfo = [
 </BaseLayout>
 
 <style>
+  /* Calendar widget — compact scroll container */
+  .calendar-scroll-container {
+    position: relative;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(124, 58, 237, 0.3) transparent;
+  }
+  .calendar-scroll-container::-webkit-scrollbar {
+    width: 4px;
+  }
+  .calendar-scroll-container::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .calendar-scroll-container::-webkit-scrollbar-thumb {
+    background: rgba(124, 58, 237, 0.3);
+    border-radius: 4px;
+  }
+
   /* Glass-morphism icon container - Purple (default) */
   .icon-glass {
     background: linear-gradient(
