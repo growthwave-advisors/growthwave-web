@@ -93,21 +93,24 @@ const flywheelStages = [
     name: 'Credit Sculpt', 
     desc: '3-6 months to 680+', 
     color: colors.creditGreen, 
-    current: false 
+    current: false,
+    href: 'https://creditsculpt.com',
   },
   { 
     num: 2, 
     name: 'GrowthWave Capital', 
     desc: '$50K-$250K+ capital', 
     color: colors.purple, 
-    current: true 
+    current: true,
+    href: '',
   },
   { 
     num: 3, 
     name: 'GrowthWave Properties', 
     desc: 'Multifamily investments', 
     color: colors.propertiesCoral, 
-    current: false 
+    current: false,
+    href: 'https://growthwaveproperties.com',
   },
 ];
 
@@ -421,40 +424,61 @@ const faqItems = [
         
         <!-- Flywheel Stages -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {flywheelStages.map((stage) => (
-            <div 
-              class={`text-center p-6 rounded-xl border-2 relative ${stage.current ? '' : 'bg-white'}`}
-              style={`border-color: ${stage.color}; ${stage.current ? `background-color: ${stage.color}08;` : ''}`}
-            >
-              {/* "YOU ARE HERE" Badge */}
-              {stage.current && (
+          {flywheelStages.map((stage) => {
+            const cardClasses = `text-center p-6 rounded-xl border-2 relative ${stage.current ? '' : 'bg-white'} ${stage.href ? 'transition-shadow hover:shadow-lg' : ''}`;
+            const cardStyles = `border-color: ${stage.color}; ${stage.current ? `background-color: ${stage.color}08;` : ''} text-decoration: none;`;
+            
+            const cardContent = (
+              <>
+                {/* "YOU ARE HERE" Badge */}
+                {stage.current && (
+                  <div 
+                    class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full text-xs font-bold text-white whitespace-nowrap"
+                    style={`background-color: ${stage.color};`}
+                  >
+                    YOU ARE HERE
+                  </div>
+                )}
+                
+                {/* Circular Number Badge */}
                 <div 
-                  class="absolute -top-3 left-1/2 -translate-x-1/2 px-3 py-1 rounded-full text-xs font-bold text-white whitespace-nowrap"
+                  class="w-12 h-12 rounded-full mx-auto mb-3 flex items-center justify-center text-white text-lg font-bold"
                   style={`background-color: ${stage.color};`}
                 >
-                  YOU ARE HERE
+                  {stage.num}
                 </div>
-              )}
-              
-              {/* Circular Number Badge */}
+                
+                <h3 
+                  class="text-lg font-bold mb-1"
+                  style={`color: ${stage.color};`}
+                >
+                  {stage.name}
+                </h3>
+                <p class="text-base text-gray-600">
+                  {stage.desc}
+                </p>
+              </>
+            );
+
+            return stage.href ? (
+              <a 
+                href={stage.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                class={cardClasses}
+                style={cardStyles}
+              >
+                {cardContent}
+              </a>
+            ) : (
               <div 
-                class="w-12 h-12 rounded-full mx-auto mb-3 flex items-center justify-center text-white text-lg font-bold"
-                style={`background-color: ${stage.color};`}
+                class={cardClasses}
+                style={cardStyles}
               >
-                {stage.num}
+                {cardContent}
               </div>
-              
-              <h3 
-                class="text-lg font-bold mb-1"
-                style={`color: ${stage.color};`}
-              >
-                {stage.name}
-              </h3>
-              <p class="text-base text-gray-600">
-                {stage.desc}
-              </p>
-            </div>
-          ))}
+            );
+          })}
         </div>
         
       </div>
