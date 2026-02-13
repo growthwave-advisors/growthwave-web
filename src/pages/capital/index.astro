@@ -2,9 +2,10 @@
 /**
  * GrowthWave Capital - Homepage
  * ==============================
- * Updated: January 2026
+ * Updated: February 2026
  * 
  * REBUILT to match approved wireframe (capital-wireframe-viewer-v2.jsx)
+ * HERO: Dashboard mockup via HeroDashboard.tsx React island (client:visible)
  * 
  * Design System Compliance:
  * - Two-layer "Fixed Island" pattern on all sections
@@ -21,6 +22,7 @@ import BaseLayout from '@layouts/BaseLayout.astro';
 import Header from '@components/Header.astro';
 import Footer from '@components/Footer.astro';
 import Button from '@components/Button.astro';
+import HeroDashboard from '@components/capital/HeroDashboard';
 
 // Brand Colors - Capital uses Royal Purple accent
 const colors = {
@@ -225,17 +227,9 @@ const faqItems = [
             </div>
           </div>
           
-          <!-- Image Column -->
-          <div class="relative hidden lg:block">
-            <div 
-              class="aspect-square rounded-2xl flex items-center justify-center border-2 border-dashed"
-              style={`background-color: rgba(124,58,237,0.1); border-color: ${colors.purple};`}
-            >
-              <div class="text-center p-8">
-                <div class="text-6xl mb-4">💼</div>
-                <p class="text-white/70 text-sm">Hero Image Placeholder</p>
-              </div>
-            </div>
+          <!-- Dashboard Visual Column -->
+          <div class="relative hidden lg:flex items-center justify-center overflow-visible py-4">
+            <HeroDashboard client:visible />
           </div>
           
         </div>
