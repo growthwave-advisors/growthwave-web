@@ -1,8 +1,12 @@
 /**
- * GHL Form Submission — Netlify Serverless Function (V2)
- * ======================================================
+ * GHL Form Submission — Netlify Serverless Function
+ * ==================================================
  * Receives form data from the website, creates/updates a contact
  * in GoHighLevel via the official V2 API, and applies tags.
+ *
+ * FORMAT: Netlify Functions V1 (Lambda-compatible)
+ * This uses the classic exports.handler pattern which Netlify
+ * auto-detects reliably from the netlify/functions/ directory.
  *
  * Environment Variables (set in Netlify Dashboard):
  *   GHL_API_TOKEN   — Private Integration Token
@@ -45,49 +49,66 @@ const FORM_SOURCES = {
 };
 
 // ============================================
-// HANDLER (Netlify Functions V2)
+// HANDLER (V1 Lambda format)
 // ============================================
 
-export default async (req) => {
+exports.handler = async function (event) {
+  // CORS headers for preflight
+  const headers = {
+    "Content-Type": "application/json",
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Access-Control-Allow-Methods": "POST, OPTIONS",
+  };
+
+  // Handle preflight
+  if (event.httpMethod === "OPTIONS") {
+    return { statusCode: 204, headers, body: "" };
+  }
+
   // Only accept POST
-  if (req.method !== "POST") {
-    return new Response(JSON.stringify({ error: "Method not allowed" }), {
-      status: 405,
-      headers: { "Content-Type": "application/json" },
-    });
+  if (event.httpMethod !== "POST") {
+    return {
+      statusCode: 405,
+      headers,
+      body: JSON.stringify({ error: "Method not allowed" }),
+    };
   }
 
   // Parse request body
   let data;
   try {
-    data = await req.json();
-  } catch {
-    return new Response(JSON.stringify({ error: "Invalid JSON body" }), {
-      status: 400,
-      headers: { "Content-Type": "application/json" },
-    });
+    data = JSON.parse(event.body || "{}");
+  } catch (e) {
+    return {
+      statusCode: 400,
+      headers,
+      body: JSON.stringify({ error: "Invalid JSON body" }),
+    };
   }
 
   // Validate required fields
   const { formType, firstName, lastName, email, phone } = data;
 
   if (!formType || !FORM_TAGS[formType]) {
-    return new Response(
-      JSON.stringify({
+    return {
+      statusCode: 400,
+      headers,
+      body: JSON.stringify({
         error:
           "Missing or invalid formType. Expected: contact, prequal, or guide",
       }),
-      { status: 400, headers: { "Content-Type": "application/json" } }
-    );
+    };
   }
 
   if (!email && !phone) {
-    return new Response(
-      JSON.stringify({
+    return {
+      statusCode: 400,
+      headers,
+      body: JSON.stringify({
         error: "At least one of email or phone is required",
       }),
-      { status: 400, headers: { "Content-Type": "application/json" } }
-    );
+    };
   }
 
   // Load env vars
@@ -98,10 +119,11 @@ export default async (req) => {
     console.error(
       "Missing GHL_API_TOKEN or GHL_LOCATION_ID environment variables"
     );
-    return new Response(
-      JSON.stringify({ error: "Server configuration error" }),
-      { status: 500, headers: { "Content-Type": "application/json" } }
-    );
+    return {
+      statusCode: 500,
+      headers,
+      body: JSON.stringify({ error: "Server configuration error" }),
+    };
   }
 
   // ============================================
@@ -175,13 +197,14 @@ export default async (req) => {
         `GHL upsert failed: ${upsertRes.status} ${upsertRes.statusText}`,
         errorBody
       );
-      return new Response(
-        JSON.stringify({
+      return {
+        statusCode: 502,
+        headers,
+        body: JSON.stringify({
           error: "Failed to create contact in CRM",
           detail: upsertRes.status,
         }),
-        { status: 502, headers: { "Content-Type": "application/json" } }
-      );
+      };
     }
 
     const upsertData = await upsertRes.json();
@@ -221,20 +244,17 @@ export default async (req) => {
     //   }
     // }
 
-    return new Response(
-      JSON.stringify({ success: true, contactId, formType }),
-      { status: 200, headers: { "Content-Type": "application/json" } }
-    );
+    return {
+      statusCode: 200,
+      headers,
+      body: JSON.stringify({ success: true, contactId, formType }),
+    };
   } catch (err) {
     console.error("GHL API request failed:", err);
-    return new Response(
-      JSON.stringify({ error: "CRM API request failed" }),
-      { status: 502, headers: { "Content-Type": "application/json" } }
-    );
+    return {
+      statusCode: 502,
+      headers,
+      body: JSON.stringify({ error: "CRM API request failed" }),
+    };
   }
-};
-
-// Netlify Functions V2 config
-export const config = {
-  path: "/.netlify/functions/ghl-submit",
 };
