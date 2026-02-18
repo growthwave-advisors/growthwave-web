@@ -11,7 +11,7 @@
  * Structure: Problem → Solution → Lead Magnet Form → Calendar → Trust
  * 
  * GHL Integration:
- * - Dual submission: Netlify Forms + GHL no-cors POST
+ * - Direct POST to GHL via hidden iframe + PDF auto-download
  * - Source tag: source:outreach (generic, works for any channel)
  * - Tags: engagement:lead-magnet-downloaded
  * - Calendar: GHL branded embed (30-min strategy call)
@@ -256,7 +256,7 @@ const guideContents = [
          LEAD MAGNET DOWNLOAD FORM
          - White background
          - Centered card with form
-         - Dual Netlify + GHL submission
+         - Direct POST to GHL via hidden iframe + PDF auto-download
          ============================================ -->
     <section id="download" class="w-full py-14 lg:py-20 px-4 lg:px-8 bg-white">
       <div class="max-w-xl mx-auto">
@@ -288,19 +288,17 @@ const guideContents = [
             </p>
           </div>
 
-          <!-- Lead Magnet Form -->
+          <!-- Lead Magnet Form — direct POST to GHL via hidden iframe -->
           <form
             id="lead-form"
-            data-netlify="true"
-            name="guide-lead-magnet"
+            action="https://crm.advisorhub.io/forms/submit"
             method="POST"
+            target="ghl-guide-target"
             class="space-y-3"
           >
-            <!-- Honeypot -->
-            <p class="hidden">
-              <label>Leave blank: <input name="bot-field" /></label>
-            </p>
-            <input type="hidden" name="form-name" value="guide-lead-magnet" />
+            <!-- Hidden GHL metadata -->
+            <input type="hidden" name="formId" value="uftEVszVPv6XT7Woa7MF" />
+            <input type="hidden" name="location_id" value="dJsBnS06sWTWcGSn1Mjp" />
 
             <!-- First Name -->
             <div>
@@ -374,6 +372,8 @@ const guideContents = [
               Download PDF Again
             </a>
           </div>
+          <!-- Hidden iframe for GHL cross-origin form POST -->
+          <iframe name="ghl-guide-target" style="display:none;" title="Form submission target"></iframe>
         </div>
       </div>
     </section>
@@ -673,42 +673,10 @@ const guideContents = [
     const leadSuccess = document.getElementById("lead-success");
 
     if (leadForm) {
-      leadForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const formData = new FormData(leadForm);
+      leadForm.addEventListener("submit", () => {
+        // Don't preventDefault — let the native POST go through to hidden iframe
 
-        // 1. Submit to Netlify Forms (backup)
-        try {
-          await fetch("/", {
-            method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: new URLSearchParams(formData).toString(),
-          });
-        } catch (err) {
-          console.warn("Netlify form error:", err);
-        }
-
-        // 2. Submit to GHL (CRM — no-cors)
-        try {
-          await fetch("https://services.leadconnectorhq.com/funnels/submit", {
-            method: "POST",
-            mode: "no-cors",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: new URLSearchParams({
-              formId: "uftEVszVPv6XT7Woa7MF",
-              location_id: "dJsBnS06sWTWcGSn1Mjp",
-              first_name: formData.get("first_name") || "",
-              email: formData.get("email") || "",
-              phone: formData.get("phone") || "",
-              source: "guide-lead-magnet",
-              tags: "source:outreach,engagement:lead-magnet-downloaded,brand:capital",
-            }).toString(),
-          });
-        } catch (err) {
-          console.warn("GHL form error:", err);
-        }
-
-        // 3. Trigger PDF download
+        // Trigger PDF download immediately
         const downloadLink = document.createElement("a");
         downloadLink.href = "/downloads/re-investors-guide-business-credit.pdf";
         downloadLink.download = "RE-Investors-Guide-Business-Credit.pdf";
@@ -716,9 +684,11 @@ const guideContents = [
         downloadLink.click();
         document.body.removeChild(downloadLink);
 
-        // 4. Show success state
-        leadForm.classList.add("hidden");
-        leadSuccess.classList.remove("hidden");
+        // Show success state after brief delay
+        setTimeout(() => {
+          leadForm.classList.add("hidden");
+          leadSuccess.classList.remove("hidden");
+        }, 1500);
       });
     }
 

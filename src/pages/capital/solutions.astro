@@ -11,7 +11,7 @@
  * Flow: Products → Eligibility → Pre-Qualify → Process → Calendar → Trust → CTA
  * 
  * GHL Integration:
- * - Pre-Qual Form: Dual Netlify + GHL submission (formId: uftEVszVPv6XT7Woa7MF)
+ * - Pre-Qual Form: Direct POST to GHL via hidden iframe (formId: uftEVszVPv6XT7Woa7MF)
  * - Calendar: GHL branded embed (30-min strategy call)
  * - Tags: brand:capital, source:website-organic
  * 
@@ -374,7 +374,7 @@ const processSteps = [
          PRE-QUALIFICATION FORM
          - White background
          - Dark card with form (matches guide pattern)
-         - Dual Netlify + GHL submission
+         - Direct POST to GHL via hidden iframe
          ============================================ -->
     <section id="pre-qualify" class="w-full py-14 lg:py-20 px-4 lg:px-8 bg-white">
       <div class="max-w-xl mx-auto">
@@ -410,19 +410,17 @@ const processSteps = [
             </div>
           </div>
 
-          <!-- Pre-Qual Form -->
+          <!-- Pre-Qual Form — direct POST to GHL via hidden iframe -->
           <form
             id="prequal-form"
-            data-netlify="true"
-            name="capital-prequalify"
+            action="https://crm.advisorhub.io/forms/submit"
             method="POST"
+            target="ghl-prequal-target"
             class="space-y-3"
           >
-            <!-- Honeypot -->
-            <p class="hidden">
-              <label>Leave blank: <input name="bot-field" /></label>
-            </p>
-            <input type="hidden" name="form-name" value="capital-prequalify" />
+            <!-- Hidden GHL metadata -->
+            <input type="hidden" name="formId" value="uftEVszVPv6XT7Woa7MF" />
+            <input type="hidden" name="location_id" value="dJsBnS06sWTWcGSn1Mjp" />
 
             <!-- Name Row -->
             <div class="grid grid-cols-2 gap-3">
@@ -522,6 +520,8 @@ const processSteps = [
               Book a Strategy Call &rarr;
             </a>
           </div>
+          <!-- Hidden iframe for GHL cross-origin form POST -->
+          <iframe name="ghl-prequal-target" style="display:none;" title="Form submission target"></iframe>
         </div>
       </div>
     </section>
@@ -848,45 +848,13 @@ const processSteps = [
     const prequalSuccess = document.getElementById("prequal-success");
 
     if (prequalForm) {
-      prequalForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        const formData = new FormData(prequalForm);
-
-        // 1. Submit to Netlify Forms (backup)
-        try {
-          await fetch("/", {
-            method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: new URLSearchParams(formData).toString(),
-          });
-        } catch (err) {
-          console.warn("Netlify form error:", err);
-        }
-
-        // 2. Submit to GHL (CRM — no-cors)
-        try {
-          await fetch("https://services.leadconnectorhq.com/funnels/submit", {
-            method: "POST",
-            mode: "no-cors",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: new URLSearchParams({
-              formId: "uftEVszVPv6XT7Woa7MF",
-              location_id: "dJsBnS06sWTWcGSn1Mjp",
-              first_name: formData.get("first_name") || "",
-              last_name: formData.get("last_name") || "",
-              email: formData.get("email") || "",
-              phone: formData.get("phone") || "",
-              source: "website-solutions",
-              tags: "source:website-organic,brand:capital",
-            }).toString(),
-          });
-        } catch (err) {
-          console.warn("GHL form error:", err);
-        }
-
-        // 3. Show success state
-        prequalForm.classList.add("hidden");
-        prequalSuccess.classList.remove("hidden");
+      prequalForm.addEventListener("submit", () => {
+        // Don't preventDefault — let the native POST go through to hidden iframe
+        // Show success after brief delay
+        setTimeout(() => {
+          prequalForm.classList.add("hidden");
+          prequalSuccess.classList.remove("hidden");
+        }, 1500);
       });
     }
 

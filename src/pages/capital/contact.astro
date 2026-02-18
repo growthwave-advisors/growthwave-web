@@ -212,20 +212,15 @@ const contactInfo = [
               Response within 24 hours (usually much faster).
             </p>
 
-            <!-- Contact Form — Netlify Forms + GHL dual submission -->
+            <!-- Contact Form — direct POST to GHL via hidden iframe -->
             <form
               id="contact-form"
               class="space-y-3"
-              data-netlify="true"
-              name="capital-contact"
+              action="https://crm.advisorhub.io/forms/submit"
               method="POST"
+              target="ghl-submit-target"
             >
-              <!-- Honeypot for spam filtering -->
-              <p class="hidden">
-                <label>Leave blank: <input name="bot-field" /></label>
-              </p>
               <!-- Hidden GHL metadata -->
-              <input type="hidden" name="form-name" value="capital-contact" />
               <input type="hidden" name="formId" value="jkDzfrrRErA8Y1MbId57" />
               <input
                 type="hidden"
@@ -652,58 +647,31 @@ const contactInfo = [
     }
 
     // ============================================
-    // ============================================
     // FORM SUBMISSION HANDLING
-    // GHL CRM submission (contact creation + tagging)
+    // Form POSTs natively to GHL via hidden iframe (action + target)
+    // JS only handles the UI state transition
     // ============================================
     const contactForm = document.getElementById("contact-form");
 
     if (contactForm) {
-      contactForm.addEventListener("submit", async (e) => {
-        e.preventDefault();
-
-        const formData = new FormData(contactForm);
+      contactForm.addEventListener("submit", () => {
+        // Don't preventDefault — let the native POST go through
         const submitButton = document.getElementById("contact-submit-btn");
-        const originalText = submitButton.textContent;
-
         submitButton.textContent = "SENDING...";
         submitButton.disabled = true;
         submitButton.style.opacity = "0.7";
 
-        try {
-          // Submit to GHL (CRM) — Capital Contact form (jkDzfrrRErA8Y1MbId57)
-          // All fields mapped: first_name, last_name, email, phone,
-          // single_dropdown_89ki (Product Interest), multi_line_2fsn (Message)
-          await fetch("https://crm.advisorhub.io/forms/submit", {
-            method: "POST",
-            mode: "no-cors",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: new URLSearchParams({
-              formId: "jkDzfrrRErA8Y1MbId57",
-              location_id: "dJsBnS06sWTWcGSn1Mjp",
-              first_name: formData.get("first_name") || "",
-              last_name: formData.get("last_name") || "",
-              email: formData.get("email") || "",
-              phone: formData.get("phone") || "",
-              single_dropdown_89ki: formData.get("single_dropdown_89ki") || "",
-              multi_line_2fsn: formData.get("multi_line_2fsn") || "",
-              source: "website-contact-form",
-              tags: "source:website-organic",
-            }).toString(),
-          });
-        } catch (ghlErr) {
-          console.warn("GHL form submission error:", ghlErr);
-        }
-
-        // Show success — GHL captures contact + product interest + message
-        contactForm.innerHTML = `
-          <div class="text-center py-8">
-            <div class="text-4xl mb-4">✅</div>
-            <h3 class="text-xl font-bold mb-2" style="color: #022140;">Message Received!</h3>
-            <p class="text-gray-600 mb-4">We'll respond within 24 hours—usually much faster.</p>
-            <p class="text-sm text-gray-500 italic">Smart move. While others are "thinking about it," you're taking action.</p>
-          </div>
-        `;
+        // Show success after brief delay (form is posting to hidden iframe)
+        setTimeout(() => {
+          contactForm.innerHTML = `
+            <div class="text-center py-8">
+              <div class="text-4xl mb-4">✅</div>
+              <h3 class="text-xl font-bold mb-2" style="color: #022140;">Message Received!</h3>
+              <p class="text-gray-600 mb-4">We'll respond within 24 hours—usually much faster.</p>
+              <p class="text-sm text-gray-500 italic">Smart move. While others are "thinking about it," you're taking action.</p>
+            </div>
+          `;
+        }, 1500);
       });
     }
   });
