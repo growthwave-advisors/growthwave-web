@@ -2,166 +2,174 @@
 /**
  * GrowthWave Capital - Contact Page
  * ==================================
- * Updated: February 2026
- * 
+ * Updated: January 2026
+ *
+ * BUILT to match approved wireframe (capital-wireframe-viewer-v2.jsx ContactPage)
+ *
  * Design System Compliance:
- * - Two-layer "Fixed Island" pattern: full-width bg + max-w-7xl content
- * - Typography stops at lg breakpoint (no xl: or 2xl: font sizes)
+ * - Two-layer "Fixed Island" pattern on all sections
+ * - Typography stops at lg breakpoint (no xl: or 2xl:)
  * - Responsive padding: px-4 lg:px-8
  * - Body content: max-w-7xl (1280px)
- * - Royal Purple #7C3AED for CTAs and accents
- * 
- * Special Features:
- * - Inline pre-qualification form (no external GHL links)
- * - Dual submission: Netlify Forms + GHL no-cors POST
- * - Contact message form with product dropdown
- * - GHL calendar embed (30-min strategy call)
- * - FAQ accordion with native <details> element
- * 
- * GHL Integration:
- * - Pre-Qual Form ID: uftEVszVPv6XT7Woa7MF
- * - Contact Form ID: jkDzfrrRErA8Y1MbId57
+ * - Royal Purple #7C3AED accent color
+ *
+ * Key Features:
+ * - Three pathway cards (Pre-Qual, Consultation, Message)
+ * - Live activity indicator in hero
+ * - Credit Sculpt Graduate special pathway
+ * - URL parameter support for pre-selection
+ * - GHL calendar embed (Business Credit Strategy Call — 30 min)
+ * - GHL Pre-Qualification form link (Capital Pre-Qual form)
+ * - GHL CRM submission for contact form (Capital Contact form w/ product + message)
+ *
+ * GHL Integration (AdvisorHub by Impruvu):
+ * - Capital Contact Form ID: jkDzfrrRErA8Y1MbId57 (product interest + message)
+ * - Pre-Qualification Form ID: uftEVszVPv6XT7Woa7MF (linked from pathway card)
+ * - Calendar ID: aYwui0ZvKfS58TiaQ7z0 (Business Credit Strategy Call)
  * - Location ID: dJsBnS06sWTWcGSn1Mjp
- * - Calendar: aYwui0ZvKfS58TiaQ7z0
- * - Tags: brand:capital, source:website-organic
+ *
+ * URL Parameters Supported:
+ * - ?type=prequalify → Highlight Pre-Qualification card
+ * - ?type=consultation → Highlight Consultation card
+ * - ?type=businesscreditcards → Pre-select in product dropdown
+ * - ?type=linesofcredit → Pre-select in product dropdown
+ * - ?type=dscrloans → Pre-select in product dropdown
+ * - ?type=bridgefinancing → Pre-select in product dropdown
+ * - ?type=termloans → Pre-select in product dropdown
+ * - ?type=graduate → Show Credit Sculpt Graduate pathway
+ *
+ * @see capital-wireframe-viewer-v2.jsx (approved wireframe - ContactPage lines 708-810)
+ * @see GrowthWave_Capital_Contact_FINAL.md (copy source)
  */
-import BaseLayout from '@layouts/BaseLayout.astro';
-import Header from '@components/Header.astro';
-import Footer from '@components/Footer.astro';
+import BaseLayout from "@layouts/BaseLayout.astro";
+import Header from "@components/Header.astro";
+import Footer from "@components/Footer.astro";
+import Button from "@components/Button.astro";
 
-// Capital color constants
+// Brand Colors - Capital uses Royal Purple accent
 const colors = {
-  purple: '#7C3AED',
-  purpleLight: '#8B5CF6',
-  purpleBg: 'rgba(124,58,237,0.15)',
-  purpleBgLight: 'rgba(124,58,237,0.08)',
-  ocean: '#265077',
-  oceanLight: '#3A6B94',
-  midnight: '#022140',
-  light: '#f0f9ff',
-  lightAlt: '#f5faff',
-  gray50: '#f9fafb',
-  gray100: '#f3f4f6',
-  gray200: '#e5e7eb',
-  gray300: '#d1d5db',
-  gray400: '#9ca3af',
-  gray500: '#6b7280',
-  gray600: '#4b5563',
-  gray700: '#374151',
-  gray800: '#1f2937',
-  white: '#FFFFFF',
+  purple: "#7C3AED",
+  purpleLight: "#8B5CF6",
+  purpleBg: "rgba(124,58,237,0.15)",
+  purpleBgLight: "rgba(124,58,237,0.08)",
+  ocean: "#265077",
+  midnight: "#022140",
+  gray50: "#f9fafb",
+  gray100: "#f3f4f6",
+  gray200: "#e5e7eb",
+  gray300: "#d1d5db",
+  gray400: "#9ca3af",
+  gray500: "#6b7280",
+  gray600: "#4b5563",
+  gray700: "#374151",
+  gray800: "#1f2937",
+  // Division colors
+  creditGreen: "#10B981",
+  propertiesCoral: "#FF6B4A",
 };
 
-// FAQ Data
-const faqs = [
-  {
-    q: 'How is this different from going to my bank?',
-    a: 'Banks offer their own products. We match you across a network of 5,000+ funding options from hundreds of lenders — finding the best fit for your specific situation instead of forcing you into whatever one bank happens to offer.',
-  },
-  {
-    q: 'Will this hurt my credit score?',
-    a: 'No. Pre-qualification uses a soft pull that has zero impact on your credit score. Hard inquiries only happen after you review and approve a specific funding recommendation.',
-  },
-  {
-    q: 'What does pre-qualification cost?',
-    a: "Nothing. No upfront fees. We're compensated by lenders when your funding closes — similar to how mortgage brokers work. If you don't get funded, you don't pay.",
-  },
-  {
-    q: 'How long does the process take?',
-    a: 'Pre-qualification takes about 3 minutes. From there, a funding strategist reviews your profile and reaches out within one business day with personalized recommendations.',
-  },
+// Product dropdown options
+// Product dropdown values MUST match GHL "Capital Contact" form (jkDzfrrRErA8Y1MbId57)
+// option labels exactly — GHL uses the label text as the submitted value.
+const productOptions = [
+  { value: "", label: "I'm interested in..." },
+  { value: "Business Credit Cards", label: "Business Credit Cards" },
+  { value: "Lines of Credit", label: "Lines of Credit" },
+  { value: "DSCR Loans", label: "DSCR Loans" },
+  { value: "Bridge Financing", label: "Bridge Financing" },
+  { value: "Term Loans", label: "Term Loans" },
+  { value: "General Inquiry / Not Sure Yet", label: "General Inquiry / Not Sure Yet" },
+];
+
+// Direct contact info
+const contactInfo = [
+  { icon: "📧", label: "info@growthwavecapital.com", type: "email" },
+  { icon: "📍", label: "Orlando, Florida", type: "location" },
+  { icon: "⏰", label: "Response within 24 hours", type: "response" },
 ];
 ---
 
 <BaseLayout
   brand="capital"
   title="Contact GrowthWave Capital | Business Financing Pre-Qualification"
-  description="Pre-qualify for business financing in 3 minutes with no credit impact. Or send us a message — we respond within 24 hours. Business credit cards, DSCR loans, bridge financing, and more."
+  description="Pre-qualify for business financing in minutes with no credit impact. Or send us a message — we respond within 24 hours. Business credit cards, DSCR loans, bridge financing, and more."
 >
   <Header brand="capital" activePage="Contact" />
 
   <main>
     <!-- ============================================
          HERO SECTION
-         - Gradient background (midnight → ocean)
-         - Centered content
-         - Response time indicator
+         - Gradient background (full-width)
+         - Centered headline with response time note
          ============================================ -->
     <section
-      class="w-full py-12 lg:py-16 px-4 lg:px-8 text-center"
+      class="w-full"
       style={`background: linear-gradient(135deg, ${colors.midnight} 0%, ${colors.ocean} 100%);`}
     >
-      <div class="max-w-3xl mx-auto">
+      <div class="max-w-5xl mx-auto px-4 lg:px-8 py-12 lg:py-20 text-center">
         <!-- Headline -->
-        <h1 class="text-3xl lg:text-4xl font-bold text-white leading-tight mb-3">
-          Let's Find Your
-          <span style={`color: ${colors.purple};`}> Funding Match</span>
+        <h1
+          class="text-3xl lg:text-4xl font-bold text-white leading-tight mb-5"
+        >
+          Start Building Your Capital Strategy—<span
+            style={`color: ${colors.purple};`}>Right Now</span
+          >
         </h1>
 
         <!-- Subheadline -->
-        <p class="text-base lg:text-lg text-gray-300 leading-relaxed max-w-xl mx-auto mb-6">
-          Two ways to get started — pre-qualify in 3 minutes or send us a message.
+        <p class="text-lg text-gray-300 mb-6">
+          No office hours. Our systems work 24/7 so you can take action when
+          you're ready.
         </p>
 
-        <!-- Response Time Indicator -->
+        <!-- Response Time Note -->
         <div
-          class="inline-flex items-center gap-2 px-4 py-2 rounded-full"
-          style="background: rgba(255,255,255,0.1);"
+          class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20"
         >
-          <span
-            class="w-2 h-2 rounded-full"
-            style="background: #22c55e;"
-          ></span>
-          <span class="text-sm text-gray-300">Typically respond within 24 hours</span>
+          <span class="text-base text-gray-300">
+            Typical response within <strong class="text-white">1 business day</strong>
+          </span>
         </div>
       </div>
     </section>
 
     <!-- ============================================
          TIER 1: QUICK ACTION CARDS
-         - Pre-Qual Form (purple) + Message Form (white)
-         - 2-column layout, balanced height
+         - Pre-Qual (purple - FEATURED) + Message (white/gray)
+         - Balanced 2-column layout, natural height match
          ============================================ -->
     <section class="w-full pt-14 lg:pt-20 pb-8 lg:pb-10 px-4 lg:px-8 bg-white">
       <div class="max-w-4xl mx-auto">
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
-
           <!-- CARD 1: Pre-Qualification Form (FEATURED - Purple) -->
           <div
             id="prequal-card"
-            class="rounded-2xl p-6 text-white relative"
-            style={`background-color: ${colors.purple}; box-shadow: 0 12px 32px rgba(124,58,237,0.35);`}
+            class="rounded-2xl p-6 text-white relative pathway-card"
+            style={`background-color: ${colors.purple};`}
           >
-            <!-- Badge -->
+            <!-- FASTEST Badge -->
             <div
-              class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 px-3 py-1 rounded-full text-xs font-semibold whitespace-nowrap"
-              style={`background: white; color: ${colors.purple}; box-shadow: 0 2px 8px rgba(0,0,0,0.1);`}
+              class="absolute top-4 right-4 px-2.5 py-0.5 rounded-full bg-white/20 text-xs font-bold"
             >
-              ⚡ 3 MINUTES
+              ⚡ FASTEST
             </div>
 
+            <!-- Icon -->
+            <div class="text-3xl mb-3">⚡</div>
+
             <!-- Title -->
-            <h2 class="text-xl font-bold mb-2 mt-2">Pre-Qualify Now</h2>
+            <h2 class="text-xl font-bold mb-2">Pre-Qualify Now</h2>
 
             <!-- Description -->
             <p class="text-white/80 text-sm mb-4 leading-relaxed">
-              Soft pull only — zero credit impact. We'll match you to the right lenders for your profile.
+              See what funding options fit your profile. Soft pull only — zero impact to your credit score.
             </p>
 
-            <!-- Pre-Qual Form -->
+            <!-- Inline Pre-Qual Form -->
             <form
               id="prequal-form"
-              data-netlify="true"
-              name="capital-prequalify"
-              method="POST"
               class="space-y-3"
             >
-              <!-- Honeypot -->
-              <p class="hidden">
-                <label>Leave blank: <input name="bot-field" /></label>
-              </p>
-              <input type="hidden" name="form-name" value="capital-prequalify" />
-
               <!-- Name Row -->
               <div class="grid grid-cols-2 gap-3">
                 <input
@@ -169,14 +177,14 @@ const faqs = [
                   name="first_name"
                   placeholder="First name"
                   required
-                  class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-300 text-sm focus:outline-none"
+                  class="w-full px-3 py-2.5 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-400 text-sm focus:outline-none"
                 />
                 <input
                   type="text"
                   name="last_name"
                   placeholder="Last name"
                   required
-                  class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-300 text-sm focus:outline-none"
+                  class="w-full px-3 py-2.5 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-400 text-sm focus:outline-none"
                 />
               </div>
 
@@ -186,7 +194,7 @@ const faqs = [
                 name="email"
                 placeholder="Email address"
                 required
-                class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-300 text-sm focus:outline-none"
+                class="w-full px-3 py-2.5 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-400 text-sm focus:outline-none"
               />
 
               <!-- Phone -->
@@ -195,14 +203,14 @@ const faqs = [
                 name="phone"
                 placeholder="Phone number"
                 required
-                class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-300 text-sm focus:outline-none"
+                class="w-full px-3 py-2.5 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-400 text-sm focus:outline-none"
               />
 
               <!-- Funding Goal -->
               <select
                 name="funding_goal"
                 required
-                class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-gray-300 text-sm focus:outline-none appearance-none"
+                class="w-full px-3 py-2.5 rounded-lg bg-white/10 border border-white/20 text-gray-400 text-sm focus:outline-none appearance-none"
                 style="background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2212%22%20height%3D%228%22%20viewBox%3D%220%200%2012%208%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M1%201L6%206L11%201%22%20stroke%3D%22%239ca3af%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%2F%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 12px center;"
               >
                 <option value="" disabled selected>How much funding do you need?</option>
@@ -217,7 +225,7 @@ const faqs = [
               <select
                 name="credit_score"
                 required
-                class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-gray-300 text-sm focus:outline-none appearance-none"
+                class="w-full px-3 py-2.5 rounded-lg bg-white/10 border border-white/20 text-gray-400 text-sm focus:outline-none appearance-none"
                 style="background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20width%3D%2212%22%20height%3D%228%22%20viewBox%3D%220%200%2012%208%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cpath%20d%3D%22M1%201L6%206L11%201%22%20stroke%3D%22%239ca3af%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%2F%3E%3C%2Fsvg%3E'); background-repeat: no-repeat; background-position: right 12px center;"
               >
                 <option value="" disabled selected>Estimated credit score</option>
@@ -233,32 +241,30 @@ const faqs = [
               <button
                 type="submit"
                 id="prequal-submit-btn"
-                class="w-full py-3 rounded-lg font-bold text-sm transition-all hover:scale-[1.02] hover:shadow-lg mt-1"
-                style={`background-color: white; color: ${colors.purple};`}
+                class="w-full py-3 rounded-lg font-bold text-sm bg-white text-center transition-transform hover:scale-[1.02]"
+                style={`color: ${colors.purple};`}
               >
-                See My Options &rarr;
+                SEE MY OPTIONS →
               </button>
 
               <!-- Privacy note -->
-              <p class="text-center text-xs text-white/50 mt-1">
+              <p class="text-center text-xs text-white/60 mt-1">
                 Soft pull only. No impact to your credit score. No obligation.
               </p>
             </form>
 
             <!-- Success State -->
-            <div id="prequal-success" class="hidden text-center py-6">
-              <div class="text-3xl mb-3">&#x2705;</div>
-              <h3 class="text-lg font-bold text-white mb-2">Pre-Qualification Submitted</h3>
-              <p class="text-sm text-white/80 mb-4">
-                A funding strategist will review your profile and reach out within one business day
-                with personalized recommendations. Want to speed things up?
+            <div id="prequal-success" class="hidden text-center py-4">
+              <div class="text-3xl mb-3">✅</div>
+              <h3 class="text-lg font-bold text-white mb-2">You're In!</h3>
+              <p class="text-white/80 text-sm mb-3">
+                A funding strategist will review your profile and reach out within one business day with personalized recommendations.
               </p>
               <a
-                href="#calendar"
-                class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg font-semibold text-sm transition-all hover:scale-[1.02]"
-                style={`background-color: white; color: ${colors.purple};`}
+                href="#consultation-card"
+                class="inline-block px-4 py-2 rounded-lg text-sm font-semibold bg-white/20 text-white hover:bg-white/30 transition-colors"
               >
-                Book a Strategy Call &rarr;
+                Or book a call now →
               </a>
             </div>
           </div>
@@ -266,18 +272,10 @@ const faqs = [
           <!-- CARD 2: Send a Message (White/Gray) -->
           <div
             id="message-card"
-            class="rounded-2xl p-6 bg-white"
-            style={`border: 1px solid ${colors.gray200}; box-shadow: 0 4px 16px rgba(0,0,0,0.06);`}
+            class="rounded-2xl p-6 bg-gray-100 border border-gray-200 pathway-card"
           >
             <!-- Icon -->
-            <div
-              class="w-12 h-12 rounded-xl mb-4 flex items-center justify-center"
-              style={`background: linear-gradient(135deg, rgba(38,80,119,0.12) 0%, rgba(38,80,119,0.06) 100%); border: 1px solid rgba(38,80,119,0.25);`}
-            >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#265077" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path>
-              </svg>
-            </div>
+            <div class="text-3xl mb-3">💬</div>
 
             <!-- Title -->
             <h2
@@ -292,37 +290,39 @@ const faqs = [
               Response within 24 hours (usually much faster).
             </p>
 
-            <!-- Contact Form -->
+            <!-- Contact Form — submits to Netlify Function → GHL API -->
             <form
               id="contact-form"
               class="space-y-3"
-              data-netlify="true"
-              name="capital-contact"
-              method="POST"
             >
-              <!-- Honeypot -->
-              <p class="hidden">
-                <label>Leave blank: <input name="bot-field" /></label>
-              </p>
-              <input type="hidden" name="form-name" value="capital-contact" />
+              <!-- Product Dropdown (GHL Query Key: single_dropdown_89ki) -->
+              <select
+                id="product-select"
+                name="single_dropdown_89ki"
+                class="w-full px-3 py-2.5 rounded-lg border border-gray-300 text-sm bg-white focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              >
+                {
+                  productOptions.map((option) => (
+                    <option value={option.value}>{option.label}</option>
+                  ))
+                }
+              </select>
 
-              <!-- Name Row -->
+              <!-- Name Fields (split for GHL: first_name + last_name) -->
               <div class="grid grid-cols-2 gap-3">
                 <input
                   type="text"
                   name="first_name"
                   placeholder="First Name *"
                   required
-                  class="w-full px-3 py-2.5 rounded-lg text-sm focus:outline-none"
-                  style={`border: 1px solid ${colors.gray300}; color: ${colors.midnight};`}
+                  class="w-full px-3 py-2.5 rounded-lg border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 />
                 <input
                   type="text"
                   name="last_name"
                   placeholder="Last Name *"
                   required
-                  class="w-full px-3 py-2.5 rounded-lg text-sm focus:outline-none"
-                  style={`border: 1px solid ${colors.gray300}; color: ${colors.midnight};`}
+                  class="w-full px-3 py-2.5 rounded-lg border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
                 />
               </div>
 
@@ -332,33 +332,24 @@ const faqs = [
                 name="email"
                 placeholder="Email *"
                 required
-                class="w-full px-3 py-2.5 rounded-lg text-sm focus:outline-none"
-                style={`border: 1px solid ${colors.gray300}; color: ${colors.midnight};`}
+                class="w-full px-3 py-2.5 rounded-lg border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               />
 
-              <!-- Product Dropdown -->
-              <select
-                id="product-select"
-                name="product_interest"
-                class="w-full px-3 py-2.5 rounded-lg text-sm focus:outline-none appearance-none bg-no-repeat cursor-pointer"
-                style={`border: 1px solid ${colors.gray300}; color: ${colors.gray600}; background-color: white; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%236b7280' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E"); background-position: right 0.75rem center;`}
-              >
-                <option value="">I'm interested in...</option>
-                <option value="credit-cards">Business Credit Cards</option>
-                <option value="lines-of-credit">Lines of Credit</option>
-                <option value="dscr-loans">DSCR Loans</option>
-                <option value="bridge-financing">Bridge Financing</option>
-                <option value="term-loans">Term Loans</option>
-                <option value="not-sure">Not sure yet</option>
-              </select>
+              <!-- Phone -->
+              <input
+                type="tel"
+                name="phone"
+                placeholder="Phone *"
+                required
+                class="w-full px-3 py-2.5 rounded-lg border border-gray-300 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+              />
 
-              <!-- Message -->
+              <!-- Message (GHL Query Key: multi_line_2fsn) -->
               <textarea
-                name="message"
-                placeholder="Your message..."
-                rows="3"
-                class="w-full px-3 py-2.5 rounded-lg text-sm resize-none focus:outline-none"
-                style={`border: 1px solid ${colors.gray300}; color: ${colors.midnight};`}
+                name="multi_line_2fsn"
+                placeholder="How can we help?"
+                rows="2"
+                class="w-full px-3 py-2.5 rounded-lg border border-gray-300 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
               ></textarea>
 
               <!-- Submit Button -->
@@ -368,349 +359,466 @@ const faqs = [
                 class="w-full py-3 rounded-lg font-bold text-sm text-white transition-transform hover:scale-[1.02]"
                 style={`background-color: ${colors.ocean};`}
               >
-                Send Message &rarr;
+                GET MY ANSWERS →
               </button>
             </form>
-
-            <!-- Contact Success State -->
-            <div id="contact-success" class="hidden text-center py-6">
-              <div class="text-3xl mb-3">&#x2705;</div>
-              <h3
-                class="text-lg font-bold mb-2"
-                style={`color: ${colors.midnight};`}
-              >
-                Message Sent
-              </h3>
-              <p class="text-sm text-gray-600">
-                We'll get back to you within 24 hours — usually much faster.
-              </p>
-            </div>
           </div>
         </div>
       </div>
     </section>
 
     <!-- ============================================
-         TIER 2: BOOK A STRATEGY CALL
-         - Light background with "or" connector
-         - Standalone calendar section
+         TIER 2: SCHEDULE A STRATEGY CALL
+         - GHL Calendar in standalone branded wrapper
+         - Centered, compact, Calendly-like proportion
          ============================================ -->
-    <section id="calendar" class="w-full py-10 lg:py-14 px-4 lg:px-8" style={`background-color: ${colors.light};`}>
-      <div class="max-w-2xl mx-auto">
-        <!-- Section Header -->
-        <div class="text-center mb-8">
-          <p class="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-3">or</p>
-          <h2
-            class="text-xl lg:text-2xl font-bold mb-2"
-            style={`color: ${colors.midnight};`}
-          >
+    <section
+      id="consultation-card"
+      class="w-full pb-14 lg:pb-20 pt-4 lg:pt-6 px-4 lg:px-8 bg-white"
+    >
+      <div class="max-w-4xl mx-auto">
+        <!-- Section connector -->
+        <div class="text-center mb-6">
+          <p class="text-xs font-semibold tracking-widest uppercase text-gray-400 mb-2">or</p>
+          <h2 class="text-xl lg:text-2xl font-bold" style={`color: ${colors.midnight};`}>
             Book a Strategy Call
           </h2>
-          <p class="text-base text-gray-600 max-w-lg mx-auto">
-            Free 30-minute call with a funding strategist. Walk through your situation
-            and get a personalized plan.
+          <p class="text-sm text-gray-500 mt-1">
+            30-minute consultation — no pressure, no sales pitch, just clarity.
           </p>
         </div>
 
-        <!-- GHL Calendar Embed -->
-        <div
-          class="rounded-xl overflow-hidden"
-          style={`border: 2px solid rgba(124,58,237,0.3);`}
-        >
-          <!-- Mini Header -->
-          <div class="bg-white px-4 py-3 flex items-center justify-between border-b border-gray-100">
-            <div class="flex items-center gap-2">
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style={`stroke: ${colors.purple};`}>
-                <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
-                <line x1="16" y1="2" x2="16" y2="6"></line>
-                <line x1="8" y1="2" x2="8" y2="6"></line>
-                <line x1="3" y1="10" x2="21" y2="10"></line>
-              </svg>
-              <p class="text-sm font-semibold" style={`color: ${colors.midnight};`}>Select a Time</p>
+        <!-- GHL Calendar — Branded Wrapper -->
+        <div class="max-w-xl mx-auto rounded-2xl overflow-hidden shadow-lg bg-white border border-gray-200" style={`border-top: 4px solid ${colors.purple};`}>
+          <!-- Calendar Header -->
+          <div class="px-5 py-3 flex items-center justify-between border-b border-gray-100">
+            <div class="flex items-center gap-3">
+              <div
+                class="w-9 h-9 rounded-lg flex items-center justify-center"
+                style={`background-color: ${colors.purpleBgLight};`}
+              >
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style={`stroke: ${colors.purple};`}>
+                  <rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect>
+                  <line x1="16" y1="2" x2="16" y2="6"></line>
+                  <line x1="8" y1="2" x2="8" y2="6"></line>
+                  <line x1="3" y1="10" x2="21" y2="10"></line>
+                </svg>
+              </div>
+              <div>
+                <p class="text-sm font-bold" style={`color: ${colors.midnight};`}>Select a Time</p>
+                <p class="text-xs text-gray-500">Business Credit Strategy Call</p>
+              </div>
             </div>
-            <span
-              class="text-xs font-semibold px-2 py-1 rounded-full"
+            <div
+              class="hidden sm:flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold"
               style={`background-color: ${colors.purpleBgLight}; color: ${colors.purple};`}
             >
-              30 min
-            </span>
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polyline points="12 6 12 12 16 14"></polyline>
+              </svg>
+              30 min &bull; Free
+            </div>
           </div>
 
           <!-- Calendar iframe -->
-          <div class="bg-white calendar-scroll-container" style="height: 420px; overflow-y: auto; -webkit-overflow-scrolling: touch;">
+          <div class="calendar-scroll-container" style="height: 520px; overflow-y: auto; -webkit-overflow-scrolling: touch;">
             <iframe
               src="https://crm.advisorhub.io/widget/booking/aYwui0ZvKfS58TiaQ7z0"
               style="width: 100%; border: none;"
               scrolling="no"
-              id="contact-calendar-iframe"
-              class="ghl-calendar-compact"
-              title="Schedule Business Funding Strategy Call"
-            ></iframe>
+              id="ghl-calendar-iframe"
+              title="Schedule Business Credit Strategy Call"></iframe>
+          </div>
+
+          <!-- Footer -->
+          <div class="px-5 py-2.5 border-t border-gray-100 flex items-center justify-between">
+            <p class="text-xs text-gray-400">Powered by GrowthWave Capital</p>
+            <a
+              href="https://crm.advisorhub.io/widget/booking/aYwui0ZvKfS58TiaQ7z0"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="text-xs text-gray-400 hover:text-gray-600 transition-colors"
+            >
+              Open in new window &rarr;
+            </a>
           </div>
         </div>
-
-        <!-- Email fallback -->
-        <p class="text-center text-sm text-gray-500 mt-4">
-          Prefer email? Reach us at
-          <a href="mailto:info@growthwavecapital.com" class="underline" style={`color: ${colors.purple};`}>
-            info@growthwavecapital.com
-          </a>
-        </p>
       </div>
     </section>
 
     <!-- ============================================
-         FAQ SECTION
-         - White background
-         - Accordion pattern with <details> elements
+         CREDIT SCULPT GRADUATE CTA
+         - Green border callout
+         - Desktop: Icon left, content left-aligned (wireframe match)
+         - Mobile: Stacked, centered
          ============================================ -->
-    <section class="w-full py-12 lg:py-14 px-4 lg:px-8 bg-white">
-      <div class="max-w-2xl mx-auto">
-        <!-- Section Heading -->
-        <h2
-          class="text-xl lg:text-2xl font-bold text-center mb-6"
-          style={`color: ${colors.midnight};`}
+    <section id="graduate-section" class="w-full py-10 px-4 lg:px-8 bg-white">
+      <div class="max-w-4xl mx-auto">
+        <div
+          id="graduate-card"
+          class="p-6 rounded-2xl border-2"
+          style={`border-color: ${colors.creditGreen}; background-color: ${colors.creditGreen}08;`}
         >
-          Common Questions
-        </h2>
+          <!-- Icon -->
+          <div id="graduate-icon" class="text-5xl">🎓</div>
 
-        <!-- FAQ Accordion -->
-        <div class="space-y-3">
-          {faqs.map((faq) => (
-            <details
-              class="bg-white rounded-xl overflow-hidden group"
-              style={`border: 1px solid ${colors.gray200};`}
+          <!-- Content -->
+          <div id="graduate-content" class="flex-1">
+            <h3
+              class="text-lg font-bold mb-2"
+              style={`color: ${colors.midnight};`}
             >
-              <summary
-                class="px-5 py-4 font-semibold cursor-pointer flex justify-between items-center list-none text-sm lg:text-base"
-                style={`color: ${colors.midnight};`}
-              >
-                {faq.q}
-                <svg
-                  width="18"
-                  height="18"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#7C3AED"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  class="flex-shrink-0 ml-2 transform transition-transform group-open:rotate-180"
-                >
-                  <polyline points="6 9 12 15 18 9"></polyline>
-                </svg>
-              </summary>
-              <div class="px-5 pb-4 text-sm text-gray-600 leading-relaxed">
-                {faq.a}
-              </div>
-            </details>
-          ))}
+              Credit Sculpt Graduate?
+            </h3>
+            <p class="text-base text-gray-600 mb-4">
+              Your improved credit is ready to become business capital. Special
+              pathway for Stage 1 completers.
+            </p>
+            <a
+              href="#prequal-card"
+              class="inline-block px-5 py-3 rounded-lg font-semibold text-white text-base transition-transform hover:scale-[1.02]"
+              style={`background-color: ${colors.creditGreen};`}
+            >
+              Graduate Fast-Track →
+            </a>
+          </div>
         </div>
+      </div>
+    </section>
+
+    <!-- ============================================
+         DIRECT CONTACT INFO
+         - Email with response time assurance
+         - Simplified single-element layout
+         ============================================ -->
+    <section
+      class="w-full px-4 lg:px-8"
+      style={`background-color: ${colors.gray50}; padding-top: 4rem; padding-bottom: 2.5rem;`}
+    >
+      <div class="max-w-4xl mx-auto text-center">
+        <h3
+          class="text-lg font-bold"
+          style={`color: ${colors.midnight}; margin-bottom: 0.25rem;`}
+        >
+          Prefer Traditional Contact?
+        </h3>
+
+        <div style="font-size: 1.5rem; margin-bottom: 0.125rem;">📧</div>
+        <a
+          href="mailto:info@growthwavecapital.com"
+          class="text-lg font-medium transition-opacity hover:opacity-80"
+          style={`color: ${colors.purple};`}
+        >
+          info@growthwavecapital.com
+        </a>
+        <p class="text-base text-gray-600" style="margin-top: 0.5rem;">
+          Response within 24 hours—usually much faster.
+        </p>
       </div>
     </section>
 
     <!-- ============================================
          LEGAL DISCLAIMER
          ============================================ -->
-    <section class="w-full py-6 px-4 lg:px-8" style={`background-color: ${colors.light};`}>
+    <section
+      class="w-full py-6 px-4 lg:px-8"
+      style={`background-color: ${colors.gray50};`}
+    >
       <div class="max-w-4xl mx-auto">
-        <p class="text-xs text-gray-400 text-center leading-relaxed">
-          GrowthWave Capital provides business financing consulting and lender placement services.
-          We are not a direct lender. Financing subject to lender approval and qualification.
-          No guarantee of approval, specific amounts, or exact terms.
-          Results vary based on individual credit profile, business history, and lender requirements.
-          Pre-qualification uses a soft credit inquiry with no impact to your credit score.
+        <p class="text-sm text-gray-500 text-center leading-relaxed">
+          GrowthWave Capital provides consulting services and lender placement.
+          We are not a direct lender. Financing subject to lender approval and
+          qualification. No guarantee of approval, specific amounts, or exact
+          terms.
         </p>
       </div>
     </section>
-
   </main>
 
   <Footer brand="capital" />
 </BaseLayout>
 
-<!-- Calendar + Form embed styles -->
 <style>
-  /* Calendar iframe height control */
-  .calendar-scroll-container iframe {
-    min-height: 600px;
+  /* Calendar widget — compact scroll container */
+  .calendar-scroll-container {
+    position: relative;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(124, 58, 237, 0.3) transparent;
+  }
+  .calendar-scroll-container::-webkit-scrollbar {
+    width: 4px;
+  }
+  .calendar-scroll-container::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  .calendar-scroll-container::-webkit-scrollbar-thumb {
+    background: rgba(124, 58, 237, 0.3);
+    border-radius: 4px;
   }
 
-  /* Pre-qual form focus ring */
-  #prequal-form input:focus,
-  #prequal-form select:focus {
-    box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
-    border-color: rgba(255, 255, 255, 0.5);
+  /* Glass-morphism icon container - Purple (default) */
+  .icon-glass {
+    background: linear-gradient(
+      135deg,
+      rgba(124, 58, 237, 0.15) 0%,
+      rgba(124, 58, 237, 0.05) 100%
+    );
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(124, 58, 237, 0.2);
   }
 
-  /* Contact form focus ring */
-  #contact-form input:focus,
-  #contact-form select:focus,
-  #contact-form textarea:focus {
-    box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.4);
-    border-color: #7C3AED;
+  /* Glass-morphism icon container - Light (for dark backgrounds) */
+  .icon-glass-light {
+    background: linear-gradient(
+      135deg,
+      rgba(255, 255, 255, 0.2) 0%,
+      rgba(255, 255, 255, 0.05) 100%
+    );
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
   }
 
-  /* Select option text color fix */
-  #prequal-form select option,
-  #contact-form select option {
-    color: #1f2937;
-    background: white;
+  /* Glass-morphism icon container - Green (for Credit Sculpt) */
+  .icon-glass-green {
+    background: linear-gradient(
+      135deg,
+      rgba(16, 185, 129, 0.2) 0%,
+      rgba(16, 185, 129, 0.05) 100%
+    );
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(16, 185, 129, 0.3);
   }
 
-  /* Placeholder text color */
-  #contact-form input::placeholder,
-  #contact-form textarea::placeholder {
-    color: #9ca3af;
+  /* Pathway card highlight state */
+  .pathway-card.highlighted {
+    transform: scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
   }
 
-  /* Remove default details marker in Safari */
-  details summary::-webkit-details-marker {
-    display: none;
-  }
-  details summary {
-    list-style: none;
+  /* ============================================
+     GRADUATE CARD - Explicit responsive styles
+     Mobile: Stacked, centered
+     Desktop (768px+): Horizontal, left-aligned
+     ============================================ */
+
+  /* Mobile default: stacked, centered */
+  #graduate-card {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 1rem;
   }
 
-  /* Smooth scroll behavior */
-  html {
-    scroll-behavior: smooth;
+  #graduate-icon {
+    margin-bottom: 0;
+  }
+
+  /* Desktop: horizontal, left-aligned */
+  @media (min-width: 768px) {
+    #graduate-card {
+      flex-direction: row;
+      align-items: center;
+      text-align: left;
+      gap: 1.5rem;
+    }
+
+    #graduate-content {
+      text-align: left;
+    }
   }
 </style>
 
-<!-- Form submission handlers -->
-<script is:inline>
+<script>
+  /**
+   * Contact Page Client-Side Functionality
+   * - URL parameter handling for pre-selection
+   * - Form submission handling
+   * - Live activity indicator updates
+   */
+
   document.addEventListener("DOMContentLoaded", () => {
-    // =============================================================
-    // PRE-QUALIFICATION FORM — Dual Netlify + GHL submission
-    // =============================================================
+    // ============================================
+    // URL PARAMETER HANDLING
+    // ============================================
+    const urlParams = new URLSearchParams(window.location.search);
+    const typeParam = urlParams.get("type");
+
+    if (typeParam) {
+      // Map URL params to actions
+      // URL params → GHL dropdown values (must match Capital Contact form options exactly)
+      const productMapping = {
+        businesscreditcards: "Business Credit Cards",
+        linesofcredit: "Lines of Credit",
+        dscrloans: "DSCR Loans",
+        bridgefinancing: "Bridge Financing",
+        termloans: "Term Loans",
+      };
+
+      // Handle pathway highlighting
+      if (typeParam === "prequalify") {
+        highlightCard("prequal-card");
+        scrollToCard("prequal-card");
+      } else if (typeParam === "consultation") {
+        highlightCard("consultation-card");
+        scrollToCard("consultation-card");
+      } else if (typeParam === "graduate") {
+        // Scroll to and highlight graduate section
+        const graduateSection = document.getElementById("graduate-section");
+        if (graduateSection) {
+          graduateSection.scrollIntoView({
+            behavior: "smooth",
+            block: "center",
+          });
+          graduateSection.querySelector("div").style.boxShadow =
+            "0 0 0 3px #10B981";
+        }
+      } else if (productMapping[typeParam]) {
+        // Pre-select product in dropdown
+        const productSelect = document.getElementById("product-select");
+        if (productSelect) {
+          productSelect.value = productMapping[typeParam];
+        }
+        highlightCard("message-card");
+        scrollToCard("message-card");
+      }
+    }
+
+    function highlightCard(cardId) {
+      const card = document.getElementById(cardId);
+      if (card) {
+        card.classList.add("highlighted");
+        // Remove highlight after 3 seconds
+        setTimeout(() => {
+          card.classList.remove("highlighted");
+        }, 3000);
+      }
+    }
+
+    function scrollToCard(cardId) {
+      const card = document.getElementById(cardId);
+      if (card) {
+        setTimeout(() => {
+          card.scrollIntoView({ behavior: "smooth", block: "center" });
+        }, 100);
+      }
+    }
+
+    // ============================================
+    // PRE-QUALIFICATION FORM SUBMISSION
+    // Submits to Netlify Function → GHL API (server-side, no CORS)
+    // ============================================
     const prequalForm = document.getElementById("prequal-form");
     const prequalSuccess = document.getElementById("prequal-success");
-    const prequalBtn = document.getElementById("prequal-submit-btn");
 
     if (prequalForm) {
       prequalForm.addEventListener("submit", async (e) => {
         e.preventDefault();
         const formData = new FormData(prequalForm);
+        const submitBtn = document.getElementById("prequal-submit-btn");
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = "SUBMITTING...";
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = "0.7";
 
-        // Update button state
-        if (prequalBtn) {
-          prequalBtn.textContent = "Submitting...";
-          prequalBtn.disabled = true;
-          prequalBtn.style.opacity = "0.7";
-        }
-
-        // 1. Submit to Netlify Forms (backup)
         try {
-          await fetch("/", {
+          const res = await fetch("/.netlify/functions/ghl-submit", {
             method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: new URLSearchParams(formData).toString(),
-          });
-        } catch (err) {
-          console.warn("Netlify form error:", err);
-        }
-
-        // 2. Submit to GHL (CRM — no-cors)
-        try {
-          await fetch("https://services.leadconnectorhq.com/funnels/submit", {
-            method: "POST",
-            mode: "no-cors",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: new URLSearchParams({
-              formId: "uftEVszVPv6XT7Woa7MF",
-              location_id: "dJsBnS06sWTWcGSn1Mjp",
-              first_name: formData.get("first_name") || "",
-              last_name: formData.get("last_name") || "",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              formType: "prequal",
+              firstName: formData.get("first_name") || "",
+              lastName: formData.get("last_name") || "",
               email: formData.get("email") || "",
               phone: formData.get("phone") || "",
-              source: "website-contact",
-              tags: "source:website-organic,brand:capital,form:capital-prequal,engagement:prequal-submitted",
-            }).toString(),
+              fundingGoal: formData.get("funding_goal") || "",
+              creditScore: formData.get("credit_score") || "",
+            }),
           });
-        } catch (err) {
-          console.warn("GHL form error:", err);
-        }
 
-        // 3. Show success state
-        prequalForm.classList.add("hidden");
-        prequalSuccess.classList.remove("hidden");
+          const result = await res.json();
+
+          if (res.ok && result.success) {
+            prequalForm.classList.add("hidden");
+            prequalSuccess.classList.remove("hidden");
+          } else {
+            console.error("GHL submit error:", result);
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+            submitBtn.style.opacity = "1";
+            alert("Something went wrong. Please try again.");
+          }
+        } catch (err) {
+          console.error("Form submission failed:", err);
+          submitBtn.textContent = originalText;
+          submitBtn.disabled = false;
+          submitBtn.style.opacity = "1";
+          alert("Connection error. Please check your internet and try again.");
+        }
       });
     }
 
-    // =============================================================
-    // CONTACT MESSAGE FORM — Dual Netlify + GHL submission
-    // =============================================================
+    // ============================================
+    // FORM SUBMISSION HANDLING
+    // Submits to Netlify Function → GHL API (server-side, no CORS)
+    // ============================================
     const contactForm = document.getElementById("contact-form");
-    const contactSuccess = document.getElementById("contact-success");
-    const contactBtn = document.getElementById("contact-submit-btn");
 
     if (contactForm) {
       contactForm.addEventListener("submit", async (e) => {
         e.preventDefault();
+
         const formData = new FormData(contactForm);
+        const submitButton = document.getElementById("contact-submit-btn");
+        submitButton.textContent = "SENDING...";
+        submitButton.disabled = true;
+        submitButton.style.opacity = "0.7";
 
-        // Update button state
-        if (contactBtn) {
-          contactBtn.textContent = "Sending...";
-          contactBtn.disabled = true;
-          contactBtn.style.opacity = "0.7";
-        }
-
-        // 1. Submit to Netlify Forms (backup)
         try {
-          await fetch("/", {
+          const res = await fetch("/.netlify/functions/ghl-submit", {
             method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: new URLSearchParams(formData).toString(),
-          });
-        } catch (err) {
-          console.warn("Netlify form error:", err);
-        }
-
-        // 2. Submit to GHL (CRM — no-cors)
-        try {
-          await fetch("https://services.leadconnectorhq.com/funnels/submit", {
-            method: "POST",
-            mode: "no-cors",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: new URLSearchParams({
-              formId: "jkDzfrrRErA8Y1MbId57",
-              location_id: "dJsBnS06sWTWcGSn1Mjp",
-              first_name: formData.get("first_name") || "",
-              last_name: formData.get("last_name") || "",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              formType: "contact",
+              firstName: formData.get("first_name") || "",
+              lastName: formData.get("last_name") || "",
               email: formData.get("email") || "",
-              source: "website-contact",
-              tags: "source:website-organic,brand:capital,form:capital-contact",
-            }).toString(),
+              phone: formData.get("phone") || "",
+              productInterest: formData.get("single_dropdown_89ki") || "",
+              message: formData.get("multi_line_2fsn") || "",
+            }),
           });
-        } catch (err) {
-          console.warn("GHL form error:", err);
-        }
 
-        // 3. Show success state
-        contactForm.classList.add("hidden");
-        contactSuccess.classList.remove("hidden");
+          const result = await res.json();
+
+          if (res.ok && result.success) {
+            contactForm.innerHTML = `
+              <div class="text-center py-8">
+                <div class="text-4xl mb-4">✅</div>
+                <h3 class="text-xl font-bold mb-2" style="color: #022140;">Message Received!</h3>
+                <p class="text-gray-600 mb-4">We'll respond within 24 hours—usually much faster.</p>
+                <p class="text-sm text-gray-500 italic">Smart move. While others are "thinking about it," you're taking action.</p>
+              </div>
+            `;
+          } else {
+            console.error("GHL submit error:", result);
+            submitButton.textContent = "GET MY ANSWERS →";
+            submitButton.disabled = false;
+            submitButton.style.opacity = "1";
+            alert("Something went wrong. Please try again or contact us directly.");
+          }
+        } catch (err) {
+          console.error("Form submission failed:", err);
+          submitButton.textContent = "GET MY ANSWERS →";
+          submitButton.disabled = false;
+          submitButton.style.opacity = "1";
+          alert("Connection error. Please check your internet and try again.");
+        }
       });
     }
-
-    // =============================================================
-    // SMOOTH SCROLL for anchor links
-    // =============================================================
-    document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
-      anchor.addEventListener("click", (e) => {
-        const targetId = anchor.getAttribute("href");
-        if (targetId && targetId !== "#") {
-          const target = document.querySelector(targetId);
-          if (target) {
-            e.preventDefault();
-            target.scrollIntoView({ behavior: "smooth", block: "start" });
-          }
-        }
-      });
-    });
   });
 </script>
 
-<!-- GHL form embed script -->
+<!-- GHL Widget Script — handles calendar/form iframe auto-resize -->
 <script src="https://crm.advisorhub.io/js/form_embed.js" is:inline></script>

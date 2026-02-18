@@ -3,15 +3,15 @@
  * GrowthWave Capital - Guide Landing Page
  * ========================================
  * Created: February 2026
- * Replaces: wowcon.astro (all conference branding removed)
+ * Replaces: previous conference landing page (all event branding removed)
  * 
  * Purpose: Evergreen lead magnet landing page for any channel
  * (LinkedIn, Slack, referrals, email outreach, social media).
  * 
- * Structure: Problem â†’ Solution â†’ Lead Magnet Form â†’ Calendar â†’ Trust
+ * Structure: Problem → Solution → Lead Magnet Form → Calendar → Trust
  * 
  * GHL Integration:
- * - Dual submission: Netlify Forms + GHL no-cors POST
+ * - Direct POST to GHL via hidden iframe + PDF auto-download
  * - Source tag: source:outreach (generic, works for any channel)
  * - Tags: engagement:lead-magnet-downloaded
  * - Calendar: GHL branded embed (30-min strategy call)
@@ -52,7 +52,7 @@ const comparison = [
   },
   {
     before: 'Multiple hard inquiries that tank your score',
-    after: 'Soft pull pre-qualification â€” zero impact to your credit',
+    after: 'Soft pull pre-qualification — zero impact to your credit',
   },
   {
     before: 'Weeks of back-and-forth with bank officers',
@@ -69,12 +69,12 @@ const guideContents = [
   {
     icon: 'M3 4h13M3 8h9m-9 4h6m4 0l4-4m0 0l4 4m-4-4v12',
     title: 'Business Credit vs. Personal Credit',
-    desc: 'Why separating the two is essential for real estate investors â€” and how to start building business credit from scratch.',
+    desc: 'Why separating the two is essential for real estate investors — and how to start building business credit from scratch.',
   },
   {
     icon: 'M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z',
     title: 'The 5 Funding Products You Should Know',
-    desc: 'Business credit cards, DSCR loans, bridge financing, lines of credit, and term loans â€” when to use each one.',
+    desc: 'Business credit cards, DSCR loans, bridge financing, lines of credit, and term loans — when to use each one.',
   },
   {
     icon: 'M13 10V3L4 14h7v7l9-11h-7z',
@@ -150,7 +150,7 @@ const guideContents = [
     </section>
 
     <!-- ============================================
-         PROBLEM / SOLUTION â€” Before vs After
+         PROBLEM / SOLUTION — Before vs After
          - White background
          - Two-column comparison cards
          ============================================ -->
@@ -256,7 +256,7 @@ const guideContents = [
          LEAD MAGNET DOWNLOAD FORM
          - White background
          - Centered card with form
-         - Dual Netlify + GHL submission
+         - Direct POST to GHL via hidden iframe + PDF auto-download
          ============================================ -->
     <section id="download" class="w-full py-14 lg:py-20 px-4 lg:px-8 bg-white">
       <div class="max-w-xl mx-auto">
@@ -283,25 +283,16 @@ const guideContents = [
               Get Your Free Guide
             </h2>
             <p class="text-sm text-gray-400">
-              Enter your info and the guide is yours — we&rsquo;ll send it right over.
+              Enter your info and the guide is yours &mdash; we&rsquo;ll send it right over.
               No spam, no sales pitch &mdash; just the playbook.
             </p>
           </div>
 
-          <!-- Lead Magnet Form -->
+          <!-- Lead Magnet Form — submits to Netlify Function → GHL API -->
           <form
             id="lead-form"
-            data-netlify="true"
-            name="guide-lead-magnet"
-            method="POST"
             class="space-y-3"
           >
-            <!-- Honeypot -->
-            <p class="hidden">
-              <label>Leave blank: <input name="bot-field" /></label>
-            </p>
-            <input type="hidden" name="form-name" value="guide-lead-magnet" />
-
             <!-- First Name -->
             <div>
               <input
@@ -331,7 +322,7 @@ const guideContents = [
               <input
                 type="tel"
                 name="phone"
-                placeholder="Phone (optional â€” for your funding consultation)"
+                placeholder="Phone (optional — for your funding consultation)"
                 class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-400 text-sm focus:outline-none focus:ring-2"
                 style={`focus:ring-color: ${colors.purple};`}
               />
@@ -379,7 +370,7 @@ const guideContents = [
     </section>
 
     <!-- ============================================
-         WHAT HAPPENS NEXT â€” Process Steps
+         WHAT HAPPENS NEXT — Process Steps
          - Off-white background
          - 3-step numbered flow
          ============================================ -->
@@ -442,7 +433,7 @@ const guideContents = [
     </section>
 
     <!-- ============================================
-         CALENDAR EMBED â€” Book a Strategy Call
+         CALENDAR EMBED — Book a Strategy Call
          - White background
          - Branded GHL calendar wrapper
          ============================================ -->
@@ -486,7 +477,7 @@ const guideContents = [
             </span>
           </div>
 
-          <!-- Calendar iframe â€” capped height, scrollable -->
+          <!-- Calendar iframe — capped height, scrollable -->
           <div class="bg-white calendar-scroll-container" style="height: 420px; overflow-y: auto; -webkit-overflow-scrolling: touch;">
             <iframe
               src="https://crm.advisorhub.io/widget/booking/aYwui0ZvKfS58TiaQ7z0"
@@ -510,7 +501,7 @@ const guideContents = [
     </section>
 
     <!-- ============================================
-         WHY GROWTHWAVE â€” Platform Credibility
+         WHY GROWTHWAVE — Platform Credibility
          - Off-white background
          - Stats row + platform description + CTAs
          ============================================ -->
@@ -533,7 +524,7 @@ const guideContents = [
           </p>
         </div>
 
-        <!-- Stats Row â€” 4 cards -->
+        <!-- Stats Row — 4 cards -->
         <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-10">
           <div class="p-4 rounded-xl bg-white border text-center" style={`border-color: ${colors.gray200}; box-shadow: 0 4px 16px rgba(0,0,0,0.04);`}>
             <p class="text-2xl lg:text-3xl font-bold" style={`color: ${colors.purple};`}>$80M+</p>
@@ -583,7 +574,7 @@ const guideContents = [
             Get the Free Guide
           </a>
           <a
-            href="/capital/solutions#pre-qualify"
+            href="/solutions#pre-qualify"
             class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg font-semibold text-sm border-2 transition-all hover:scale-[1.02]"
             style={`color: ${colors.purple}; border-color: ${colors.purple};`}
           >
@@ -594,7 +585,7 @@ const guideContents = [
     </section>
 
     <!-- ============================================
-         FINAL CTA â€” Bottom of page
+         FINAL CTA — Bottom of page
          - Dark gradient background
          ============================================ -->
     <section
@@ -676,49 +667,52 @@ const guideContents = [
       leadForm.addEventListener("submit", async (e) => {
         e.preventDefault();
         const formData = new FormData(leadForm);
+        const submitBtn = leadForm.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = "DOWNLOADING...";
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = "0.7";
 
-        // 1. Submit to Netlify Forms (backup)
         try {
-          await fetch("/", {
+          const res = await fetch("/.netlify/functions/ghl-submit", {
             method: "POST",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: new URLSearchParams(formData).toString(),
-          });
-        } catch (err) {
-          console.warn("Netlify form error:", err);
-        }
-
-        // 2. Submit to GHL (CRM â€” no-cors)
-        try {
-          await fetch("https://services.leadconnectorhq.com/funnels/submit", {
-            method: "POST",
-            mode: "no-cors",
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: new URLSearchParams({
-              formId: "uftEVszVPv6XT7Woa7MF",
-              location_id: "dJsBnS06sWTWcGSn1Mjp",
-              first_name: formData.get("first_name") || "",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              formType: "guide",
+              firstName: formData.get("first_name") || "",
               email: formData.get("email") || "",
               phone: formData.get("phone") || "",
-              source: "guide-lead-magnet",
-              tags: "source:outreach,engagement:lead-magnet-downloaded,brand:capital",
-            }).toString(),
+            }),
           });
+
+          const result = await res.json();
+
+          if (res.ok && result.success) {
+            // Trigger PDF download
+            const downloadLink = document.createElement("a");
+            downloadLink.href = "/downloads/re-investors-guide-business-credit.pdf";
+            downloadLink.download = "RE-Investors-Guide-Business-Credit.pdf";
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+
+            // Show success state
+            leadForm.classList.add("hidden");
+            leadSuccess.classList.remove("hidden");
+          } else {
+            console.error("GHL submit error:", result);
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+            submitBtn.style.opacity = "1";
+            alert("Something went wrong. Please try again.");
+          }
         } catch (err) {
-          console.warn("GHL form error:", err);
+          console.error("Form submission failed:", err);
+          submitBtn.textContent = originalText;
+          submitBtn.disabled = false;
+          submitBtn.style.opacity = "1";
+          alert("Connection error. Please check your internet and try again.");
         }
-
-        // 3. Trigger PDF download
-        const downloadLink = document.createElement("a");
-        downloadLink.href = "/downloads/re-investors-guide-business-credit.pdf";
-        downloadLink.download = "RE-Investors-Guide-Business-Credit.pdf";
-        document.body.appendChild(downloadLink);
-        downloadLink.click();
-        document.body.removeChild(downloadLink);
-
-        // 4. Show success state
-        leadForm.classList.add("hidden");
-        leadSuccess.classList.remove("hidden");
       });
     }
 
