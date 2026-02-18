@@ -20,6 +20,9 @@
 # The router edge function handles all domain-based routing
 # See: netlify/edge-functions/router.ts
 
+[functions]
+  directory = "netlify/functions"
+
 [[edge_functions]]
   path = "/*"
   function = "router"
