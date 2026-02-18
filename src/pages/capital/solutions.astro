@@ -8,10 +8,10 @@
  * Purpose: Product catalog + conversion page. Educates on products,
  * then converts via pre-qualification form or calendar booking.
  * 
- * Flow: Products → Eligibility → Pre-Qualify → Process → Calendar → Trust → CTA
+ * Flow: Products â†’ Eligibility â†’ Pre-Qualify â†’ Process â†’ Calendar â†’ Trust â†’ CTA
  * 
  * GHL Integration:
- * - Pre-Qual Form: Direct POST to GHL via hidden iframe (formId: uftEVszVPv6XT7Woa7MF)
+ * - Pre-Qual Form: Dual Netlify + GHL submission (formId: uftEVszVPv6XT7Woa7MF)
  * - Calendar: GHL branded embed (30-min strategy call)
  * - Tags: brand:capital, source:website-organic
  * 
@@ -50,8 +50,8 @@ const products = [
   {
     icon: 'M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z',
     name: 'Business Credit Cards',
-    range: '$5K–$50K+',
-    timeline: '7–14 days',
+    range: '$5Kâ€“$50K+',
+    timeline: '7â€“14 days',
     bestFor: 'Rehab costs, gap funding, recurring expenses',
     details: 'Access 0% introductory APR cards designed for business use. Stack multiple cards to build significant available credit. No revenue requirements on many products.',
     requirements: '680+ personal credit score, registered business entity (LLC/Corp), EIN',
@@ -60,28 +60,28 @@ const products = [
   {
     icon: 'M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z',
     name: 'Business Lines of Credit',
-    range: '$10K–$250K',
-    timeline: '14–30 days',
+    range: '$10Kâ€“$250K',
+    timeline: '14â€“30 days',
     bestFor: 'Working capital, bridge between deals, operating expenses',
-    details: 'Revolving credit you draw from as needed. Only pay interest on what you use. Reusable as you pay down balances — no need to reapply.',
+    details: 'Revolving credit you draw from as needed. Only pay interest on what you use. Reusable as you pay down balances â€” no need to reapply.',
     requirements: '650+ credit, 6+ months in business, some revenue history preferred',
     featured: false,
   },
   {
     icon: 'M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6',
     name: 'DSCR Loans',
-    range: '$75K–$5M+',
-    timeline: '21–45 days',
+    range: '$75Kâ€“$5M+',
+    timeline: '21â€“45 days',
     bestFor: 'Investment property acquisition, portfolio expansion, refinancing',
-    details: 'Qualify based on the property\'s income — not yours. No tax returns, no W-2s, no personal income verification. The property\'s debt service coverage ratio determines approval.',
-    requirements: '660+ credit, 1.0+ DSCR on subject property, 20–25% down payment',
+    details: 'Qualify based on the property\'s income â€” not yours. No tax returns, no W-2s, no personal income verification. The property\'s debt service coverage ratio determines approval.',
+    requirements: '660+ credit, 1.0+ DSCR on subject property, 20â€“25% down payment',
     featured: true,
   },
   {
     icon: 'M13 10V3L4 14h7v7l9-11h-7z',
     name: 'Bridge Financing',
-    range: '$50K–$2M+',
-    timeline: '7–14 days',
+    range: '$50Kâ€“$2M+',
+    timeline: '7â€“14 days',
     bestFor: 'Time-sensitive acquisitions, auction purchases, quick closes',
     details: 'Short-term financing when speed matters more than rate. Close in days, not months. Designed for investors who need to move fast on opportunities.',
     requirements: '620+ credit, clear exit strategy (refinance or sale), property as collateral',
@@ -90,8 +90,8 @@ const products = [
   {
     icon: 'M9 7h6m0 10v-3m-3 3h.01M9 17h.01M9 14h.01M12 14h.01M15 11h.01M12 11h.01M9 11h.01M7 21h10a2 2 0 002-2V5a2 2 0 00-2-2H7a2 2 0 00-2 2v14a2 2 0 002 2z',
     name: 'Term Loans',
-    range: '$25K–$500K',
-    timeline: '14–30 days',
+    range: '$25Kâ€“$500K',
+    timeline: '14â€“30 days',
     bestFor: 'Equipment, business expansion, large one-time investments',
     details: 'Fixed payments over a set term. Predictable costs for planning. Multiple term lengths and structures available based on use case.',
     requirements: '650+ credit, 12+ months in business, documented revenue',
@@ -103,7 +103,7 @@ const products = [
 const faqItems = [
   {
     q: 'How is this different from going to my bank?',
-    a: 'Banks offer their own products. We match you across a network of 5,000+ funding options from hundreds of lenders — finding the best fit for your specific situation instead of forcing you into whatever one bank happens to offer.',
+    a: 'Banks offer their own products. We match you across a network of 5,000+ funding options from hundreds of lenders â€” finding the best fit for your specific situation instead of forcing you into whatever one bank happens to offer.',
   },
   {
     q: 'Will this hurt my credit score?',
@@ -111,19 +111,19 @@ const faqItems = [
   },
   {
     q: 'How much can I qualify for?',
-    a: 'It depends on your credit profile, business history, and goals. Credit cards typically range $5K–$50K+, lines of credit $10K–$250K, and DSCR loans $75K–$5M+. Pre-qualification gives you realistic numbers before you commit to anything.',
+    a: 'It depends on your credit profile, business history, and goals. Credit cards typically range $5Kâ€“$50K+, lines of credit $10Kâ€“$250K, and DSCR loans $75Kâ€“$5M+. Pre-qualification gives you realistic numbers before you commit to anything.',
   },
   {
     q: 'Do you guarantee approval?',
-    a: 'No. We provide strategic lender matching and consulting — not guarantees. What we do guarantee is that pre-qualification dramatically increases your approval odds by ensuring you only apply where you\'re likely to be approved.',
+    a: 'No. We provide strategic lender matching and consulting â€” not guarantees. What we do is ensure you only apply where you\'re a strong fit, so you\'re not wasting time or hard inquiries on lenders that aren\'t right for your profile.',
   },
   {
     q: 'What does this cost?',
-    a: 'No upfront fees. We\'re compensated by lenders when your funding closes — similar to how mortgage brokers work. If you don\'t get funded, you don\'t pay.',
+    a: 'No upfront fees. We\'re compensated by lenders when your funding closes â€” similar to how mortgage brokers work. If you don\'t get funded, you don\'t pay.',
   },
   {
     q: 'How long does the process take?',
-    a: 'Pre-qualification takes about 3 minutes. From there, timelines depend on the product: business credit cards can fund in 7–14 days, lines of credit in 14–30 days, and DSCR loans in 21–45 days.',
+    a: 'Pre-qualification takes about 3 minutes. From there, timelines depend on the product: business credit cards can fund in 7â€“14 days, lines of credit in 14â€“30 days, and DSCR loans in 21â€“45 days.',
   },
 ];
 
@@ -138,7 +138,7 @@ const processSteps = [
   {
     num: 2,
     title: 'Review Your Options',
-    desc: 'A funding strategist walks you through your personalized results — products, realistic amounts, and timelines.',
+    desc: 'A funding strategist walks you through your personalized results â€” products, realistic amounts, and timelines.',
     time: '30 min call',
   },
   {
@@ -151,7 +151,7 @@ const processSteps = [
     num: 4,
     title: 'Get Funded',
     desc: 'Funds arrive. Deploy your capital into deals, rehab, or operations. Build toward the next round.',
-    time: '7–45 days',
+    time: '7â€“45 days',
   },
 ];
 ---
@@ -347,7 +347,7 @@ const processSteps = [
     </section>
 
     <!-- ============================================
-         DON'T SELF-DISQUALIFY — Callout Section
+         DON'T SELF-DISQUALIFY â€” Callout Section
          - Light background
          - Centered message
          ============================================ -->
@@ -374,7 +374,7 @@ const processSteps = [
          PRE-QUALIFICATION FORM
          - White background
          - Dark card with form (matches guide pattern)
-         - Direct POST to GHL via hidden iframe
+         - Dual Netlify + GHL submission
          ============================================ -->
     <section id="pre-qualify" class="w-full py-14 lg:py-20 px-4 lg:px-8 bg-white">
       <div class="max-w-xl mx-auto">
@@ -384,11 +384,11 @@ const processSteps = [
             class="text-2xl lg:text-[32px] font-bold mb-3"
             style={`color: ${colors.midnight};`}
           >
-            See What You Qualify For
+            See What Funding Options Fit Your Profile
           </h2>
           <p class="text-base text-gray-600 max-w-lg mx-auto">
             Soft pull only &mdash; zero impact to your credit score.
-            Get realistic numbers in minutes, not days.
+            Get matched to the right lenders &mdash; no guesswork, no wasted applications.
           </p>
         </div>
 
@@ -410,11 +410,20 @@ const processSteps = [
             </div>
           </div>
 
-          <!-- Pre-Qual Form — submits to Netlify Function → GHL API -->
+          <!-- Pre-Qual Form -->
           <form
             id="prequal-form"
+            data-netlify="true"
+            name="capital-prequalify"
+            method="POST"
             class="space-y-3"
           >
+            <!-- Honeypot -->
+            <p class="hidden">
+              <label>Leave blank: <input name="bot-field" /></label>
+            </p>
+            <input type="hidden" name="form-name" value="capital-prequalify" />
+
             <!-- Name Row -->
             <div class="grid grid-cols-2 gap-3">
               <input
@@ -460,9 +469,9 @@ const processSteps = [
             >
               <option value="" disabled selected>How much funding do you need?</option>
               <option value="under-50k">Under $50K</option>
-              <option value="50k-100k">$50K – $100K</option>
-              <option value="100k-250k">$100K – $250K</option>
-              <option value="250k-500k">$250K – $500K</option>
+              <option value="50k-100k">$50K â€“ $100K</option>
+              <option value="100k-250k">$100K â€“ $250K</option>
+              <option value="250k-500k">$250K â€“ $500K</option>
               <option value="500k-plus">$500K+</option>
             </select>
 
@@ -475,9 +484,9 @@ const processSteps = [
             >
               <option value="" disabled selected>Estimated credit score</option>
               <option value="720-plus">720+</option>
-              <option value="680-719">680 – 719</option>
-              <option value="650-679">650 – 679</option>
-              <option value="620-649">620 – 649</option>
+              <option value="680-719">680 â€“ 719</option>
+              <option value="650-679">650 â€“ 679</option>
+              <option value="620-649">620 â€“ 649</option>
               <option value="below-620">Below 620</option>
               <option value="not-sure">Not sure</option>
             </select>
@@ -518,7 +527,7 @@ const processSteps = [
     </section>
 
     <!-- ============================================
-         PROCESS — How It Works
+         PROCESS â€” How It Works
          - Light background
          - 4-step horizontal flow
          ============================================ -->
@@ -570,7 +579,7 @@ const processSteps = [
     </section>
 
     <!-- ============================================
-         CALENDAR EMBED — Book a Strategy Call
+         CALENDAR EMBED â€” Book a Strategy Call
          - White background
          - Branded GHL calendar wrapper
          ============================================ -->
@@ -615,7 +624,7 @@ const processSteps = [
           </div>
 
           <!-- Calendar iframe -->
-          <div class="bg-white calendar-scroll-container" style="height: 520px; overflow-y: auto; -webkit-overflow-scrolling: touch;">
+          <div class="bg-white calendar-scroll-container" style="height: 420px; overflow-y: auto; -webkit-overflow-scrolling: touch;">
             <iframe
               src="https://crm.advisorhub.io/widget/booking/aYwui0ZvKfS58TiaQ7z0"
               style="width: 100%; border: none;"
@@ -688,7 +697,7 @@ const processSteps = [
     </section>
 
     <!-- ============================================
-         WHY GROWTHWAVE — Platform Credibility
+         WHY GROWTHWAVE â€” Platform Credibility
          - White background
          - Stats row + platform description
          ============================================ -->
@@ -746,7 +755,7 @@ const processSteps = [
     </section>
 
     <!-- ============================================
-         FINAL CTA — Bottom of page
+         FINAL CTA â€” Bottom of page
          - Dark gradient background
          ============================================ -->
     <section
@@ -755,7 +764,7 @@ const processSteps = [
     >
       <div class="max-w-3xl mx-auto text-center">
         <h2 class="text-2xl lg:text-[28px] font-bold text-white mb-3">
-          Ready to See What You Qualify For?
+          Ready to Find Your Funding Match?
         </h2>
         <p class="text-base text-gray-300 mb-6 max-w-xl mx-auto">
           3 minutes. No credit impact. Real numbers.
@@ -842,46 +851,42 @@ const processSteps = [
       prequalForm.addEventListener("submit", async (e) => {
         e.preventDefault();
         const formData = new FormData(prequalForm);
-        const submitBtn = prequalForm.querySelector('button[type="submit"]');
-        const originalText = submitBtn.textContent;
-        submitBtn.textContent = "SUBMITTING...";
-        submitBtn.disabled = true;
-        submitBtn.style.opacity = "0.7";
 
+        // 1. Submit to Netlify Forms (backup)
         try {
-          const res = await fetch("/.netlify/functions/ghl-submit", {
+          await fetch("/", {
             method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({
-              formType: "prequal",
-              firstName: formData.get("first_name") || "",
-              lastName: formData.get("last_name") || "",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams(formData).toString(),
+          });
+        } catch (err) {
+          console.warn("Netlify form error:", err);
+        }
+
+        // 2. Submit to GHL (CRM â€” no-cors)
+        try {
+          await fetch("https://services.leadconnectorhq.com/funnels/submit", {
+            method: "POST",
+            mode: "no-cors",
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: new URLSearchParams({
+              formId: "uftEVszVPv6XT7Woa7MF",
+              location_id: "dJsBnS06sWTWcGSn1Mjp",
+              first_name: formData.get("first_name") || "",
+              last_name: formData.get("last_name") || "",
               email: formData.get("email") || "",
               phone: formData.get("phone") || "",
-              fundingGoal: formData.get("funding_goal") || "",
-              creditScore: formData.get("credit_score") || "",
-            }),
+              source: "website-solutions",
+              tags: "source:website-organic,brand:capital",
+            }).toString(),
           });
-
-          const result = await res.json();
-
-          if (res.ok && result.success) {
-            prequalForm.classList.add("hidden");
-            prequalSuccess.classList.remove("hidden");
-          } else {
-            console.error("GHL submit error:", result);
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
-            submitBtn.style.opacity = "1";
-            alert("Something went wrong. Please try again.");
-          }
         } catch (err) {
-          console.error("Form submission failed:", err);
-          submitBtn.textContent = originalText;
-          submitBtn.disabled = false;
-          submitBtn.style.opacity = "1";
-          alert("Connection error. Please check your internet and try again.");
+          console.warn("GHL form error:", err);
         }
+
+        // 3. Show success state
+        prequalForm.classList.add("hidden");
+        prequalSuccess.classList.remove("hidden");
       });
     }
 
