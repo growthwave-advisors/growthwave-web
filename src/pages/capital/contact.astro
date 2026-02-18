@@ -212,22 +212,11 @@ const contactInfo = [
               Response within 24 hours (usually much faster).
             </p>
 
-            <!-- Contact Form — direct POST to GHL via hidden iframe -->
+            <!-- Contact Form — submits to Netlify Function → GHL API -->
             <form
               id="contact-form"
               class="space-y-3"
-              action="https://crm.advisorhub.io/forms/submit"
-              method="POST"
-              target="ghl-submit-target"
             >
-              <!-- Hidden GHL metadata -->
-              <input type="hidden" name="formId" value="jkDzfrrRErA8Y1MbId57" />
-              <input
-                type="hidden"
-                name="location_id"
-                value="dJsBnS06sWTWcGSn1Mjp"
-              />
-
               <!-- Product Dropdown (GHL Query Key: single_dropdown_89ki) -->
               <select
                 id="product-select"
@@ -295,12 +284,6 @@ const contactInfo = [
                 GET MY ANSWERS →
               </button>
             </form>
-            <!-- Hidden iframe for GHL cross-origin form POST -->
-            <iframe
-              name="ghl-submit-target"
-              id="ghl-submit-frame"
-              style="display:none;"
-              title="Form submission target"></iframe>
           </div>
         </div>
       </div>
@@ -648,30 +631,60 @@ const contactInfo = [
 
     // ============================================
     // FORM SUBMISSION HANDLING
-    // Form POSTs natively to GHL via hidden iframe (action + target)
-    // JS only handles the UI state transition
+    // Submits to Netlify Function → GHL API (server-side, no CORS)
     // ============================================
     const contactForm = document.getElementById("contact-form");
 
     if (contactForm) {
-      contactForm.addEventListener("submit", () => {
-        // Don't preventDefault — let the native POST go through
+      contactForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(contactForm);
         const submitButton = document.getElementById("contact-submit-btn");
         submitButton.textContent = "SENDING...";
         submitButton.disabled = true;
         submitButton.style.opacity = "0.7";
 
-        // Show success after brief delay (form is posting to hidden iframe)
-        setTimeout(() => {
-          contactForm.innerHTML = `
-            <div class="text-center py-8">
-              <div class="text-4xl mb-4">✅</div>
-              <h3 class="text-xl font-bold mb-2" style="color: #022140;">Message Received!</h3>
-              <p class="text-gray-600 mb-4">We'll respond within 24 hours—usually much faster.</p>
-              <p class="text-sm text-gray-500 italic">Smart move. While others are "thinking about it," you're taking action.</p>
-            </div>
-          `;
-        }, 1500);
+        try {
+          const res = await fetch("/.netlify/functions/ghl-submit", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              formType: "contact",
+              firstName: formData.get("first_name") || "",
+              lastName: formData.get("last_name") || "",
+              email: formData.get("email") || "",
+              phone: formData.get("phone") || "",
+              productInterest: formData.get("single_dropdown_89ki") || "",
+              message: formData.get("multi_line_2fsn") || "",
+            }),
+          });
+
+          const result = await res.json();
+
+          if (res.ok && result.success) {
+            contactForm.innerHTML = `
+              <div class="text-center py-8">
+                <div class="text-4xl mb-4">✅</div>
+                <h3 class="text-xl font-bold mb-2" style="color: #022140;">Message Received!</h3>
+                <p class="text-gray-600 mb-4">We'll respond within 24 hours—usually much faster.</p>
+                <p class="text-sm text-gray-500 italic">Smart move. While others are "thinking about it," you're taking action.</p>
+              </div>
+            `;
+          } else {
+            console.error("GHL submit error:", result);
+            submitButton.textContent = "GET MY ANSWERS →";
+            submitButton.disabled = false;
+            submitButton.style.opacity = "1";
+            alert("Something went wrong. Please try again or contact us directly.");
+          }
+        } catch (err) {
+          console.error("Form submission failed:", err);
+          submitButton.textContent = "GET MY ANSWERS →";
+          submitButton.disabled = false;
+          submitButton.style.opacity = "1";
+          alert("Connection error. Please check your internet and try again.");
+        }
       });
     }
   });

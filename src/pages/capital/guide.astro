@@ -288,18 +288,11 @@ const guideContents = [
             </p>
           </div>
 
-          <!-- Lead Magnet Form — direct POST to GHL via hidden iframe -->
+          <!-- Lead Magnet Form — submits to Netlify Function → GHL API -->
           <form
             id="lead-form"
-            action="https://crm.advisorhub.io/forms/submit"
-            method="POST"
-            target="ghl-guide-target"
             class="space-y-3"
           >
-            <!-- Hidden GHL metadata -->
-            <input type="hidden" name="formId" value="uftEVszVPv6XT7Woa7MF" />
-            <input type="hidden" name="location_id" value="dJsBnS06sWTWcGSn1Mjp" />
-
             <!-- First Name -->
             <div>
               <input
@@ -372,8 +365,6 @@ const guideContents = [
               Download PDF Again
             </a>
           </div>
-          <!-- Hidden iframe for GHL cross-origin form POST -->
-          <iframe name="ghl-guide-target" style="display:none;" title="Form submission target"></iframe>
         </div>
       </div>
     </section>
@@ -673,22 +664,55 @@ const guideContents = [
     const leadSuccess = document.getElementById("lead-success");
 
     if (leadForm) {
-      leadForm.addEventListener("submit", () => {
-        // Don't preventDefault — let the native POST go through to hidden iframe
+      leadForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const formData = new FormData(leadForm);
+        const submitBtn = leadForm.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = "DOWNLOADING...";
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = "0.7";
 
-        // Trigger PDF download immediately
-        const downloadLink = document.createElement("a");
-        downloadLink.href = "/downloads/re-investors-guide-business-credit.pdf";
-        downloadLink.download = "RE-Investors-Guide-Business-Credit.pdf";
-        document.body.appendChild(downloadLink);
-        downloadLink.click();
-        document.body.removeChild(downloadLink);
+        try {
+          const res = await fetch("/.netlify/functions/ghl-submit", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              formType: "guide",
+              firstName: formData.get("first_name") || "",
+              email: formData.get("email") || "",
+              phone: formData.get("phone") || "",
+            }),
+          });
 
-        // Show success state after brief delay
-        setTimeout(() => {
-          leadForm.classList.add("hidden");
-          leadSuccess.classList.remove("hidden");
-        }, 1500);
+          const result = await res.json();
+
+          if (res.ok && result.success) {
+            // Trigger PDF download
+            const downloadLink = document.createElement("a");
+            downloadLink.href = "/downloads/re-investors-guide-business-credit.pdf";
+            downloadLink.download = "RE-Investors-Guide-Business-Credit.pdf";
+            document.body.appendChild(downloadLink);
+            downloadLink.click();
+            document.body.removeChild(downloadLink);
+
+            // Show success state
+            leadForm.classList.add("hidden");
+            leadSuccess.classList.remove("hidden");
+          } else {
+            console.error("GHL submit error:", result);
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+            submitBtn.style.opacity = "1";
+            alert("Something went wrong. Please try again.");
+          }
+        } catch (err) {
+          console.error("Form submission failed:", err);
+          submitBtn.textContent = originalText;
+          submitBtn.disabled = false;
+          submitBtn.style.opacity = "1";
+          alert("Connection error. Please check your internet and try again.");
+        }
       });
     }
 

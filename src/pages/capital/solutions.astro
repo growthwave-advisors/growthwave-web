@@ -410,18 +410,11 @@ const processSteps = [
             </div>
           </div>
 
-          <!-- Pre-Qual Form — direct POST to GHL via hidden iframe -->
+          <!-- Pre-Qual Form — submits to Netlify Function → GHL API -->
           <form
             id="prequal-form"
-            action="https://crm.advisorhub.io/forms/submit"
-            method="POST"
-            target="ghl-prequal-target"
             class="space-y-3"
           >
-            <!-- Hidden GHL metadata -->
-            <input type="hidden" name="formId" value="uftEVszVPv6XT7Woa7MF" />
-            <input type="hidden" name="location_id" value="dJsBnS06sWTWcGSn1Mjp" />
-
             <!-- Name Row -->
             <div class="grid grid-cols-2 gap-3">
               <input
@@ -520,8 +513,6 @@ const processSteps = [
               Book a Strategy Call &rarr;
             </a>
           </div>
-          <!-- Hidden iframe for GHL cross-origin form POST -->
-          <iframe name="ghl-prequal-target" style="display:none;" title="Form submission target"></iframe>
         </div>
       </div>
     </section>
@@ -848,13 +839,49 @@ const processSteps = [
     const prequalSuccess = document.getElementById("prequal-success");
 
     if (prequalForm) {
-      prequalForm.addEventListener("submit", () => {
-        // Don't preventDefault — let the native POST go through to hidden iframe
-        // Show success after brief delay
-        setTimeout(() => {
-          prequalForm.classList.add("hidden");
-          prequalSuccess.classList.remove("hidden");
-        }, 1500);
+      prequalForm.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const formData = new FormData(prequalForm);
+        const submitBtn = prequalForm.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = "SUBMITTING...";
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = "0.7";
+
+        try {
+          const res = await fetch("/.netlify/functions/ghl-submit", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              formType: "prequal",
+              firstName: formData.get("first_name") || "",
+              lastName: formData.get("last_name") || "",
+              email: formData.get("email") || "",
+              phone: formData.get("phone") || "",
+              fundingGoal: formData.get("funding_goal") || "",
+              creditScore: formData.get("credit_score") || "",
+            }),
+          });
+
+          const result = await res.json();
+
+          if (res.ok && result.success) {
+            prequalForm.classList.add("hidden");
+            prequalSuccess.classList.remove("hidden");
+          } else {
+            console.error("GHL submit error:", result);
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+            submitBtn.style.opacity = "1";
+            alert("Something went wrong. Please try again.");
+          }
+        } catch (err) {
+          console.error("Form submission failed:", err);
+          submitBtn.textContent = originalText;
+          submitBtn.disabled = false;
+          submitBtn.style.opacity = "1";
+          alert("Connection error. Please check your internet and try again.");
+        }
       });
     }
 
