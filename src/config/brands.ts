@@ -69,10 +69,10 @@ export const brands: BrandsConfig = {
       textLight: coreColors.white,
     },
     logos: {
-      primary: '/images/logos/properties/logo-primary.svg',
-      primaryTransparent: '/images/logos/properties/logo-primary-transparent.svg',
-      reversed: '/images/logos/properties/logo-reversed.svg',
-      icon: '/images/logos/properties/icon.svg',
+      primary: '/images/logos/properties/growthwave-properties_horizontal_color.svg',
+      primaryTransparent: '/images/logos/properties/growthwave-properties_horizontal_color.svg',
+      reversed: '/images/logos/properties/growthwave-properties_horizontal_reversed.svg',
+      icon: '/images/logos/icons/icon_color.svg',
     },
     navigation: [
       { label: 'Home', href: '/' },
@@ -107,15 +107,16 @@ export const brands: BrandsConfig = {
       textLight: coreColors.white,
     },
     logos: {
-      primary: '/images/logos/capital/logo-primary.svg',
-      primaryTransparent: '/images/logos/capital/logo-primary-transparent.svg',
-      reversed: '/images/logos/capital/logo-reversed.svg',
-      icon: '/images/logos/capital/icon.svg',
+      primary: '/images/logos/capital/growthwave-capital_horizontal_color.svg',
+      primaryTransparent: '/images/logos/capital/growthwave-capital_horizontal_color.svg',
+      reversed: '/images/logos/capital/growthwave-capital_horizontal_reversed.svg',
+      icon: '/images/logos/icons/icon_color.svg',
     },
     navigation: [
       { label: 'Home', href: '/' },
       { label: 'About', href: '/about' },
-      { label: 'Services', href: '/services' },
+      { label: 'Solutions', href: '/solutions' },
+      { label: 'Guide', href: '/guide' },
       { label: 'Contact', href: '/contact' },
     ],
     seo: {
@@ -128,8 +129,8 @@ export const brands: BrandsConfig = {
       email: 'info@growthwavecapital.com',
       location: 'Orlando, FL',
     },
-    ctaText: 'Apply Now',
-    ctaUrl: '/contact',
+    ctaText: 'Get Your Free Guide',
+    ctaUrl: '/guide',
   },
   advisors: {
     id: 'advisors',
@@ -144,10 +145,10 @@ export const brands: BrandsConfig = {
       textLight: coreColors.white,
     },
     logos: {
-      primary: '/images/logos/advisors/logo-primary.svg',
-      primaryTransparent: '/images/logos/advisors/logo-primary-transparent.svg',
-      reversed: '/images/logos/advisors/logo-reversed.svg',
-      icon: '/images/logos/advisors/icon.svg',
+      primary: '/images/logos/advisors/growthwave-advisors_horizontal_color.svg',
+      primaryTransparent: '/images/logos/advisors/growthwave-advisors_horizontal_color.svg',
+      reversed: '/images/logos/advisors/growthwave-advisors_horizontal_reversed.svg',
+      icon: '/images/logos/icons/icon_color.svg',
     },
     navigation: [
       { label: 'Home', href: '/' },

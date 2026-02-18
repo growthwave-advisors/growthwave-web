@@ -100,7 +100,7 @@ const contactInfo = [
     <!-- ============================================
          HERO SECTION
          - Gradient background (full-width)
-         - Centered headline with live activity indicator
+         - Centered headline with response time note
          ============================================ -->
     <section
       class="w-full"
@@ -122,16 +122,12 @@ const contactInfo = [
           you're ready.
         </p>
 
-        <!-- Live Activity Indicator -->
+        <!-- Response Time Note -->
         <div
           class="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20"
         >
-          <div class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
           <span class="text-base text-gray-300">
-            <strong class="text-white" id="consultations-count">3</strong> consultations
-            today • Last booking <strong class="text-white" id="last-booking"
-              >14 min ago</strong
-            >
+            Typical response within <strong class="text-white">1 business day</strong>
           </span>
         </div>
       </div>
@@ -336,7 +332,7 @@ const contactInfo = [
           </p>
         </div>
 
-        <!-- GHL Calendar — Branded Wrapper (matches investor-funding/wowcon pattern) -->
+        <!-- GHL Calendar — Branded Wrapper -->
         <div class="max-w-xl mx-auto rounded-2xl overflow-hidden shadow-lg bg-white border border-gray-200" style={`border-top: 4px solid ${colors.purple};`}>
           <!-- Calendar Header -->
           <div class="px-5 py-3 flex items-center justify-between border-b border-gray-100">
@@ -546,21 +542,6 @@ const contactInfo = [
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
   }
 
-  /* Pulse animation for live indicator */
-  @keyframes pulse {
-    0%,
-    100% {
-      opacity: 1;
-    }
-    50% {
-      opacity: 0.5;
-    }
-  }
-
-  .animate-pulse {
-    animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-  }
-
   /* ============================================
      GRADUATE CARD - Explicit responsive styles
      Mobile: Stacked, centered
@@ -671,29 +652,6 @@ const contactInfo = [
     }
 
     // ============================================
-    // LIVE ACTIVITY INDICATOR
-    // Simulated data - would connect to real API
-    // ============================================
-    function updateActivityIndicator() {
-      // Simulate varying consultation counts (would be real data)
-      const consultationsToday = Math.floor(Math.random() * 5) + 2;
-      const lastBookingMinutes = Math.floor(Math.random() * 30) + 5;
-
-      const countElement = document.getElementById("consultations-count");
-      const lastBookingElement = document.getElementById("last-booking");
-
-      if (countElement) {
-        countElement.textContent = consultationsToday;
-      }
-      if (lastBookingElement) {
-        lastBookingElement.textContent = lastBookingMinutes + " min ago";
-      }
-    }
-
-    // Update every 60 seconds (for demo - production would use real data)
-    // updateActivityIndicator();
-    // setInterval(updateActivityIndicator, 60000);
-
     // ============================================
     // FORM SUBMISSION HANDLING
     // GHL CRM submission (contact creation + tagging)
