@@ -477,18 +477,6 @@ export default function ContactForm() {
         />
       </div>
 
-      {/* SMS Consent */}
-      <label style={{ display: 'flex', alignItems: 'flex-start', gap: '10px', marginTop: '12px', cursor: 'pointer' }}>
-        <input
-          type="checkbox"
-          name="smsConsent"
-          style={{ marginTop: '3px', flexShrink: 0, accentColor: colors.coral }}
-        />
-        <span style={{ fontSize: '13px', color: colors.gray500, lineHeight: '1.5' }}>
-          I agree to receive SMS messages from <strong style={{ color: colors.midnight }}>GrowthWave Properties</strong> including appointment reminders, funding updates, and resource delivery. Message frequency varies. Msg &amp; data rates may apply. Reply <strong style={{ color: colors.midnight }}>STOP</strong> to opt out at any time, <strong style={{ color: colors.midnight }}>HELP</strong> for help. View our <a href="/privacy" style={{ textDecoration: 'underline', color: colors.coral }}>Privacy Policy</a> and <a href="/terms" style={{ textDecoration: 'underline', color: colors.coral }}>Terms of Service</a>.
-        </span>
-      </label>
-
       <div>
         <label 
           className="block text-sm lg:text-base font-medium mb-2"
