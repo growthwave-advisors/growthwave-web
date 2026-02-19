@@ -82,13 +82,6 @@ export const brands: BrandsConfig = {
         "/images/logos/properties/growthwave-properties_horizontal_reversed.svg",
       icon: "/images/logos/icons/icon_color.svg",
     },
-    navigation: [
-      { label: "Home", href: "/" },
-      { label: "About", href: "/about" },
-      { label: "Approach", href: "/approach" },
-      { label: "Portfolio", href: "/portfolio" },
-      { label: "Contact", href: "/contact" },
-    ],
     seo: {
       title: "GrowthWave Properties | Value-Add Multifamily Investment",
       description:
@@ -123,13 +116,6 @@ export const brands: BrandsConfig = {
         "/images/logos/capital/growthwave-capital_horizontal_reversed.svg",
       icon: "/images/logos/icons/icon_color.svg",
     },
-    navigation: [
-      { label: "Home", href: "/" },
-      { label: "About", href: "/about" },
-      { label: "Solutions", href: "/solutions" },
-      { label: "Guide", href: "/guide" },
-      { label: "Contact", href: "/contact" },
-    ],
     seo: {
       title: "GrowthWave Capital | Business Financing for Investors",
       description:
@@ -165,13 +151,6 @@ export const brands: BrandsConfig = {
         "/images/logos/advisors/growthwave-advisors_horizontal_reversed.svg",
       icon: "/images/logos/icons/icon_color.svg",
     },
-    navigation: [
-      { label: "Home", href: "/" },
-      { label: "About", href: "/about" },
-      { label: "Services", href: "/services" },
-      { label: "Resources", href: "/resources" },
-      { label: "Contact", href: "/contact" },
-    ],
     seo: {
       title: "GrowthWave Advisors | The Investor Success Flywheel™",
       description:

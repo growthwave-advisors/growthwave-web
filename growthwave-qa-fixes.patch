@@ -1,0 +1,700 @@
+From fba95324028e0ecc640ba7f0446608760326959b Mon Sep 17 00:00:00 2001
+From: GrowthWave Forge <forge@growthwaveadvisors.com>
+Date: Thu, 19 Feb 2026 01:16:43 +0000
+Subject: [PATCH] =?UTF-8?q?fix:=20Capital=20pre-launch=20QA=20=E2=80=94=20?=
+ =?UTF-8?q?privacy/terms=20pages,=20edge=20function=20PDF=20support,=20dea?=
+ =?UTF-8?q?d=20code=20cleanup?=
+MIME-Version: 1.0
+Content-Type: text/plain; charset=UTF-8
+Content-Transfer-Encoding: 8bit
+
+- Add .pdf and .docx to edge function FILE_EXTENSIONS (PDF download fallback fix)
+- Update Capital header CTA: 'Start Your Journey' → 'Get Your Free Guide' → /guide
+- Remove return targets from FlywheelVisual: '8-12% CoC returns' → 'Cash-flowing investments'
+- Remove RMFIA from Properties ContactForm: replace with 'Professional Community'
+- Remove dead navigation arrays from brands.ts (Option A cleanup)
+- Delete unused src/components/shared/Button.astro
+- Create privacy/terms pages for all three brands (Capital, Properties, Advisors)
+
+Resolves: all 7 QA items from Feb 18 Opus audit
+---
+ netlify/edge-functions/router.ts          |  3 +-
+ src/components/FlywheelVisual.astro       |  4 +-
+ src/components/Header.astro               |  4 +-
+ src/components/properties/ContactForm.tsx |  2 +-
+ src/components/shared/Button.astro        | 88 -----------------------
+ src/config/brands.ts                      | 21 ------
+ src/pages/advisors/privacy.astro          | 69 ++++++++++++++++++
+ src/pages/advisors/terms.astro            | 69 ++++++++++++++++++
+ src/pages/capital/privacy.astro           | 70 ++++++++++++++++++
+ src/pages/capital/terms.astro             | 70 ++++++++++++++++++
+ src/pages/properties/privacy.astro        | 69 ++++++++++++++++++
+ src/pages/properties/terms.astro          | 69 ++++++++++++++++++
+ 12 files changed, 423 insertions(+), 115 deletions(-)
+ delete mode 100644 src/components/shared/Button.astro
+ create mode 100644 src/pages/advisors/privacy.astro
+ create mode 100644 src/pages/advisors/terms.astro
+ create mode 100644 src/pages/capital/privacy.astro
+ create mode 100644 src/pages/capital/terms.astro
+ create mode 100644 src/pages/properties/privacy.astro
+ create mode 100644 src/pages/properties/terms.astro
+
+diff --git a/netlify/edge-functions/router.ts b/netlify/edge-functions/router.ts
+index e884e66..daa19b8 100644
+--- a/netlify/edge-functions/router.ts
++++ b/netlify/edge-functions/router.ts
+@@ -43,7 +43,8 @@ const PASSTHROUGH_PATHS = [
+ 
+ // File extensions that should NOT get trailing slash treatment
+ const FILE_EXTENSIONS = [
+-  ".html", ".css", ".js", ".json", ".xml", ".txt", ".svg", ".png", 
++  ".html", ".css", ".js", ".json", ".xml", ".txt", ".svg", ".png",
++  ".pdf", ".docx",
+   ".jpg", ".jpeg", ".gif", ".webp", ".ico", ".woff", ".woff2", ".ttf"
+ ];
+ 
+diff --git a/src/components/FlywheelVisual.astro b/src/components/FlywheelVisual.astro
+index 16f719e..bca90a6 100644
+--- a/src/components/FlywheelVisual.astro
++++ b/src/components/FlywheelVisual.astro
+@@ -175,7 +175,7 @@ const colors = {
+         </svg>
+       </div>
+       <div class="stage-name stage-name-coral">Properties</div>
+-      <div class="stage-desc">8-12% CoC returns</div>
++      <div class="stage-desc">Cash-flowing investments</div>
+       <div class="stage-benefit stage-benefit-coral">
+         <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#FF6B4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+           <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+@@ -277,7 +277,7 @@ const colors = {
+     </div>
+     <div class="mobile-stage-content">
+       <div class="mobile-stage-name mobile-name-coral">Properties</div>
+-      <div class="mobile-stage-desc">8-12% CoC returns</div>
++      <div class="mobile-stage-desc">Cash-flowing investments</div>
+     </div>
+   </div>
+   
+diff --git a/src/components/Header.astro b/src/components/Header.astro
+index c362bee..d48adf0 100644
+--- a/src/components/Header.astro
++++ b/src/components/Header.astro
+@@ -41,8 +41,8 @@ const brandConfig = {
+     accent: '#7C3AED',
+     accentHover: '#6D28D9',
+     pages: ['Home', 'About', 'Financing Solutions', 'Contact'],
+-    ctaText: 'Start Your Journey',
+-    ctaHref: '/contact',
++    ctaText: 'Get Your Free Guide',
++    ctaHref: '/guide',
+     logoHorizontalColor: '/images/logos/capital/growthwave-capital_horizontal_color.svg',
+     logoHorizontalReversed: '/images/logos/capital/growthwave-capital_horizontal_reversed.svg',
+     logoStackedColor: '/images/logos/capital/growthwave-capital_stacked_color.svg',
+diff --git a/src/components/properties/ContactForm.tsx b/src/components/properties/ContactForm.tsx
+index 3de9508..183c6b2 100644
+--- a/src/components/properties/ContactForm.tsx
++++ b/src/components/properties/ContactForm.tsx
+@@ -492,7 +492,7 @@ export default function ContactForm() {
+           <option value="">Select...</option>
+           <option value="Google">Google Search</option>
+           <option value="LinkedIn">LinkedIn</option>
+-          <option value="RMFIA">RMFIA</option>
++          <option value="Professional Community">Professional Community</option>
+           <option value="2nd Mountain Climbers">2nd Mountain Climbers</option>
+           <option value="Referral">Referral</option>
+           <option value="Other">Other</option>
+diff --git a/src/components/shared/Button.astro b/src/components/shared/Button.astro
+deleted file mode 100644
+index 5a5ee4e..0000000
+--- a/src/components/shared/Button.astro
++++ /dev/null
+@@ -1,88 +0,0 @@
+----
+-// Button.astro - Reusable button component with brand-specific styling
+-interface Props {
+-  href?: string;
+-  brand: 'properties' | 'capital' | 'advisors';
+-  variant?: 'primary' | 'secondary';
+-  size?: 'sm' | 'md' | 'lg';
+-  class?: string;
+-  type?: 'button' | 'submit';
+-}
+-
+-const {
+-  href,
+-  brand,
+-  variant = 'primary',
+-  size = 'md',
+-  class: className = '',
+-  type = 'button',
+-} = Astro.props;
+-
+-// Brand colors
+-const brandColors = {
+-  properties: '#FF6B4A',
+-  capital: '#7C3AED',
+-  advisors: '#265077',
+-};
+-
+-const accentColor = brandColors[brand];
+-
+-// Size configurations
+-const sizeStyles = {
+-  sm: 'padding: 0.5rem 1rem; font-size: 0.875rem;',
+-  md: 'padding: 0.75rem 1.5rem; font-size: 1rem;',
+-  lg: 'padding: 1rem 2rem; font-size: 1.125rem;',
+-};
+-
+-// Variant styles
+-const getVariantStyle = () => {
+-  if (variant === 'primary') {
+-    return `background-color: ${accentColor}; color: #ffffff; border: 2px solid ${accentColor};`;
+-  } else {
+-    return `background-color: #ffffff; color: ${accentColor}; border: 2px solid ${accentColor};`;
+-  }
+-};
+-
+-const baseStyle = `
+-  display: inline-block;
+-  font-weight: 600;
+-  border-radius: 0.5rem;
+-  transition: all 200ms ease;
+-  text-align: center;
+-  text-decoration: none;
+-  cursor: pointer;
+-  font-family: 'Outfit', sans-serif;
+-  ${sizeStyles[size]}
+-  ${getVariantStyle()}
+-`;
+-
+-const hoverBehavior = variant === 'primary'
+-  ? `this.style.opacity='0.9'; this.style.transform='translateY(-1px)'; this.style.boxShadow='0 10px 15px -3px rgba(0, 0, 0, 0.1)'`
+-  : `this.style.backgroundColor='${accentColor}'; this.style.color='#ffffff'`;
+-
+-const resetBehavior = variant === 'primary'
+-  ? `this.style.opacity='1'; this.style.transform='translateY(0)'; this.style.boxShadow='none'`
+-  : `this.style.backgroundColor='#ffffff'; this.style.color='${accentColor}'`;
+----
+-
+-{href ? (
+-  <a
+-    href={href}
+-    style={baseStyle}
+-    class={className}
+-    onmouseover={hoverBehavior}
+-    onmouseout={resetBehavior}
+-  >
+-    <slot />
+-  </a>
+-) : (
+-  <button
+-    type={type}
+-    style={baseStyle}
+-    class={className}
+-    onmouseover={hoverBehavior}
+-    onmouseout={resetBehavior}
+-  >
+-    <slot />
+-  </button>
+-)}
+diff --git a/src/config/brands.ts b/src/config/brands.ts
+index 4c82376..76d9f05 100644
+--- a/src/config/brands.ts
++++ b/src/config/brands.ts
+@@ -82,13 +82,6 @@ export const brands: BrandsConfig = {
+         "/images/logos/properties/growthwave-properties_horizontal_reversed.svg",
+       icon: "/images/logos/icons/icon_color.svg",
+     },
+-    navigation: [
+-      { label: "Home", href: "/" },
+-      { label: "About", href: "/about" },
+-      { label: "Approach", href: "/approach" },
+-      { label: "Portfolio", href: "/portfolio" },
+-      { label: "Contact", href: "/contact" },
+-    ],
+     seo: {
+       title: "GrowthWave Properties | Value-Add Multifamily Investment",
+       description:
+@@ -123,13 +116,6 @@ export const brands: BrandsConfig = {
+         "/images/logos/capital/growthwave-capital_horizontal_reversed.svg",
+       icon: "/images/logos/icons/icon_color.svg",
+     },
+-    navigation: [
+-      { label: "Home", href: "/" },
+-      { label: "About", href: "/about" },
+-      { label: "Solutions", href: "/solutions" },
+-      { label: "Guide", href: "/guide" },
+-      { label: "Contact", href: "/contact" },
+-    ],
+     seo: {
+       title: "GrowthWave Capital | Business Financing for Investors",
+       description:
+@@ -165,13 +151,6 @@ export const brands: BrandsConfig = {
+         "/images/logos/advisors/growthwave-advisors_horizontal_reversed.svg",
+       icon: "/images/logos/icons/icon_color.svg",
+     },
+-    navigation: [
+-      { label: "Home", href: "/" },
+-      { label: "About", href: "/about" },
+-      { label: "Services", href: "/services" },
+-      { label: "Resources", href: "/resources" },
+-      { label: "Contact", href: "/contact" },
+-    ],
+     seo: {
+       title: "GrowthWave Advisors | The Investor Success Flywheel™",
+       description:
+diff --git a/src/pages/advisors/privacy.astro b/src/pages/advisors/privacy.astro
+new file mode 100644
+index 0000000..3a8f4db
+--- /dev/null
++++ b/src/pages/advisors/privacy.astro
+@@ -0,0 +1,69 @@
++---
++/**
++ * GrowthWave Advisors - Privacy Policy
++ * ======================================
++ * Created: February 2026
++ */
++import BaseLayout from "@layouts/BaseLayout.astro";
++import Header from "@components/Header.astro";
++import Footer from "@components/Footer.astro";
++---
++
++<BaseLayout brand="advisors" title="Privacy Policy | GrowthWave Advisors" description="GrowthWave Advisors privacy policy — how we collect, use, and protect your information.">
++  <Header brand="advisors" />
++
++  <!-- Hero -->
++  <section class="w-full" style="background: linear-gradient(135deg, #022140 0%, #265077 100%);">
++    <div class="max-w-7xl mx-auto px-4 lg:px-8 py-16 lg:py-20">
++      <p class="text-sm font-semibold uppercase tracking-widest mb-3" style="color: #51A7F8;">Legal</p>
++      <h1 class="text-3xl lg:text-4xl font-bold text-white mb-4">Privacy Policy</h1>
++      <p class="text-white/80 text-lg">Last updated: February 2026</p>
++    </div>
++  </section>
++
++  <!-- Content -->
++  <section class="w-full bg-white">
++    <div class="max-w-7xl mx-auto px-4 lg:px-8 py-16 lg:py-20">
++      <div class="max-w-3xl" style="color: #595959;">
++
++        <p class="text-lg mb-8">
++          GrowthWave Advisors LLC ("GrowthWave Advisors," "we," "us," or "our") respects your privacy and is committed to protecting your personal information. This policy explains how we collect, use, and safeguard the data you share with us.
++        </p>
++
++        <h2 class="text-xl font-bold mb-3" style="color: #265077;">Information We Collect</h2>
++        <p class="mb-6">
++          When you submit a form, request resources, or contact us through our website, we may collect your name, email address, and phone number. We collect only what is necessary to respond to your inquiry or provide the services you have requested.
++        </p>
++
++        <h2 class="text-xl font-bold mb-3" style="color: #265077;">How We Use Your Information</h2>
++        <p class="mb-6">
++          We use the information you provide to respond to your inquiries, connect you with the appropriate GrowthWave division, and send you resources you have requested. We do not use your information for unrelated marketing without your consent.
++        </p>
++
++        <h2 class="text-xl font-bold mb-3" style="color: #265077;">We Do Not Sell Your Information</h2>
++        <p class="mb-6">
++          We do not sell, rent, or trade your personal information to third parties. Your data is used solely to serve you as a GrowthWave Advisors client or prospect.
++        </p>
++
++        <h2 class="text-xl font-bold mb-3" style="color: #265077;">Data Security</h2>
++        <p class="mb-6">
++          We take reasonable technical and organizational measures to protect your information from unauthorized access, disclosure, or misuse.
++        </p>
++
++        <h2 class="text-xl font-bold mb-3" style="color: #265077;">Contact Us</h2>
++        <p class="mb-4">
++          For privacy-related questions or to request removal of your information, contact us at <a href="mailto:hello@growthwaveadvisors.com" class="font-semibold underline" style="color: #51A7F8;">hello@growthwaveadvisors.com</a>.
++        </p>
++
++        <div class="mt-10 p-5 rounded-lg border" style="background: #f9fafb; border-color: #e5e7eb;">
++          <p class="text-sm" style="color: #718EA7;">
++            <strong style="color: #595959;">Note:</strong> This policy is being expanded into a comprehensive privacy framework. For any questions in the meantime, please contact us directly.
++          </p>
++        </div>
++
++      </div>
++    </div>
++  </section>
++
++  <Footer brand="advisors" />
++</BaseLayout>
+diff --git a/src/pages/advisors/terms.astro b/src/pages/advisors/terms.astro
+new file mode 100644
+index 0000000..1af4d6e
+--- /dev/null
++++ b/src/pages/advisors/terms.astro
+@@ -0,0 +1,69 @@
++---
++/**
++ * GrowthWave Advisors - Terms of Service
++ * ========================================
++ * Created: February 2026
++ */
++import BaseLayout from "@layouts/BaseLayout.astro";
++import Header from "@components/Header.astro";
++import Footer from "@components/Footer.astro";
++---
++
++<BaseLayout brand="advisors" title="Terms of Service | GrowthWave Advisors" description="GrowthWave Advisors terms of service — what you need to know before working with us.">
++  <Header brand="advisors" />
++
++  <!-- Hero -->
++  <section class="w-full" style="background: linear-gradient(135deg, #022140 0%, #265077 100%);">
++    <div class="max-w-7xl mx-auto px-4 lg:px-8 py-16 lg:py-20">
++      <p class="text-sm font-semibold uppercase tracking-widest mb-3" style="color: #51A7F8;">Legal</p>
++      <h1 class="text-3xl lg:text-4xl font-bold text-white mb-4">Terms of Service</h1>
++      <p class="text-white/80 text-lg">Last updated: February 2026</p>
++    </div>
++  </section>
++
++  <!-- Content -->
++  <section class="w-full bg-white">
++    <div class="max-w-7xl mx-auto px-4 lg:px-8 py-16 lg:py-20">
++      <div class="max-w-3xl" style="color: #595959;">
++
++        <p class="text-lg mb-8">
++          GrowthWave Advisors LLC is the parent entity of the GrowthWave family of brands, including GrowthWave Capital and GrowthWave Properties. By using this website or engaging our services, you agree to the following terms.
++        </p>
++
++        <h2 class="text-xl font-bold mb-3" style="color: #265077;">Nature of Our Services</h2>
++        <p class="mb-6">
++          GrowthWave Advisors provides strategic consulting, business financing advisory, and real estate investment services through its divisions. Services vary by division — refer to each division's terms for specific limitations and disclosures.
++        </p>
++
++        <h2 class="text-xl font-bold mb-3" style="color: #265077;">Informational Content</h2>
++        <p class="mb-6">
++          All content on this website — including guides, blog posts, educational materials, and web pages — is provided for informational purposes only. Nothing on this site constitutes financial, legal, tax, or investment advice. Consult qualified professionals before making financial or investment decisions.
++        </p>
++
++        <h2 class="text-xl font-bold mb-3" style="color: #265077;">No Guarantee of Outcomes</h2>
++        <p class="mb-6">
++          Engaging with GrowthWave Advisors or any of its divisions does not guarantee specific financial outcomes, investment returns, or financing approvals. All results depend on individual circumstances, market conditions, and applicable regulations.
++        </p>
++
++        <h2 class="text-xl font-bold mb-3" style="color: #265077;">Intellectual Property</h2>
++        <p class="mb-6">
++          All content, branding, methodologies, and materials on this site are the property of GrowthWave Advisors LLC. You may not reproduce, distribute, or create derivative works without our written permission.
++        </p>
++
++        <h2 class="text-xl font-bold mb-3" style="color: #265077;">Contact Us</h2>
++        <p class="mb-4">
++          Questions about these terms? Reach us at <a href="mailto:hello@growthwaveadvisors.com" class="font-semibold underline" style="color: #51A7F8;">hello@growthwaveadvisors.com</a>.
++        </p>
++
++        <div class="mt-10 p-5 rounded-lg border" style="background: #f9fafb; border-color: #e5e7eb;">
++          <p class="text-sm" style="color: #718EA7;">
++            <strong style="color: #595959;">Note:</strong> These terms are being expanded into a full legal agreement. For any questions in the meantime, please contact us directly.
++          </p>
++        </div>
++
++      </div>
++    </div>
++  </section>
++
++  <Footer brand="advisors" />
++</BaseLayout>
+diff --git a/src/pages/capital/privacy.astro b/src/pages/capital/privacy.astro
+new file mode 100644
+index 0000000..42f541f
+--- /dev/null
++++ b/src/pages/capital/privacy.astro
+@@ -0,0 +1,70 @@
++---
++/**
++ * GrowthWave Capital - Privacy Policy
++ * =====================================
++ * Created: February 2026
++ * Placeholder policy page — links from footer.
++ */
++import BaseLayout from "@layouts/BaseLayout.astro";
++import Header from "@components/Header.astro";
++import Footer from "@components/Footer.astro";
++---
++
++<BaseLayout brand="capital" title="Privacy Policy | GrowthWave Capital" description="GrowthWave Capital privacy policy — how we collect, use, and protect your information.">
++  <Header brand="capital" />
++
++  <!-- Hero -->
++  <section class="w-full" style="background: linear-gradient(135deg, #022140 0%, #265077 100%);">
++    <div class="max-w-7xl mx-auto px-4 lg:px-8 py-16 lg:py-20">
++      <p class="text-sm font-semibold uppercase tracking-widest mb-3" style="color: #7C3AED;">Legal</p>
++      <h1 class="text-3xl lg:text-4xl font-bold text-white mb-4">Privacy Policy</h1>
++      <p class="text-white/80 text-lg">Last updated: February 2026</p>
++    </div>
++  </section>
++
++  <!-- Content -->
++  <section class="w-full bg-white">
++    <div class="max-w-7xl mx-auto px-4 lg:px-8 py-16 lg:py-20">
++      <div class="max-w-3xl" style="color: #595959;">
++
++        <p class="text-lg mb-8">
++          GrowthWave Advisors LLC ("GrowthWave Capital," "we," "us," or "our") respects your privacy and is committed to protecting your personal information. This policy explains how we collect, use, and safeguard the data you share with us.
++        </p>
++
++        <h2 class="text-xl font-bold mb-3" style="color: #265077;">Information We Collect</h2>
++        <p class="mb-6">
++          When you submit a form, request a guide, or contact us through our website, we may collect your name, email address, and phone number. We collect only what is necessary to respond to your inquiry or provide the services you have requested.
++        </p>
++
++        <h2 class="text-xl font-bold mb-3" style="color: #265077;">How We Use Your Information</h2>
++        <p class="mb-6">
++          We use the information you provide to respond to your inquiries, send you the resource or guide you requested, and follow up on financing consultations you have initiated. We do not use your information for unrelated marketing without your consent.
++        </p>
++
++        <h2 class="text-xl font-bold mb-3" style="color: #265077;">We Do Not Sell Your Information</h2>
++        <p class="mb-6">
++          We do not sell, rent, or trade your personal information to third parties. Your data is used solely to serve you as a GrowthWave Capital client or prospect.
++        </p>
++
++        <h2 class="text-xl font-bold mb-3" style="color: #265077;">Data Security</h2>
++        <p class="mb-6">
++          We take reasonable technical and organizational measures to protect your information from unauthorized access, disclosure, or misuse.
++        </p>
++
++        <h2 class="text-xl font-bold mb-3" style="color: #265077;">Contact Us</h2>
++        <p class="mb-4">
++          For privacy-related questions or to request removal of your information, contact us at <a href="mailto:info@growthwavecapital.com" class="font-semibold underline" style="color: #7C3AED;">info@growthwavecapital.com</a>.
++        </p>
++
++        <div class="mt-10 p-5 rounded-lg border" style="background: #f9fafb; border-color: #e5e7eb;">
++          <p class="text-sm" style="color: #718EA7;">
++            <strong style="color: #595959;">Note:</strong> This policy is being expanded into a comprehensive privacy framework. For any questions in the meantime, please contact us directly.
++          </p>
++        </div>
++
++      </div>
++    </div>
++  </section>
++
++  <Footer brand="capital" />
++</BaseLayout>
+diff --git a/src/pages/capital/terms.astro b/src/pages/capital/terms.astro
+new file mode 100644
+index 0000000..37f9aef
+--- /dev/null
++++ b/src/pages/capital/terms.astro
+@@ -0,0 +1,70 @@
++---
++/**
++ * GrowthWave Capital - Terms of Service
++ * =======================================
++ * Created: February 2026
++ * Placeholder terms page — links from footer.
++ */
++import BaseLayout from "@layouts/BaseLayout.astro";
++import Header from "@components/Header.astro";
++import Footer from "@components/Footer.astro";
++---
++
++<BaseLayout brand="capital" title="Terms of Service | GrowthWave Capital" description="GrowthWave Capital terms of service — what you need to know before working with us.">
++  <Header brand="capital" />
++
++  <!-- Hero -->
++  <section class="w-full" style="background: linear-gradient(135deg, #022140 0%, #265077 100%);">
++    <div class="max-w-7xl mx-auto px-4 lg:px-8 py-16 lg:py-20">
++      <p class="text-sm font-semibold uppercase tracking-widest mb-3" style="color: #7C3AED;">Legal</p>
++      <h1 class="text-3xl lg:text-4xl font-bold text-white mb-4">Terms of Service</h1>
++      <p class="text-white/80 text-lg">Last updated: February 2026</p>
++    </div>
++  </section>
++
++  <!-- Content -->
++  <section class="w-full bg-white">
++    <div class="max-w-7xl mx-auto px-4 lg:px-8 py-16 lg:py-20">
++      <div class="max-w-3xl" style="color: #595959;">
++
++        <p class="text-lg mb-8">
++          GrowthWave Capital is a division of GrowthWave Advisors LLC. By using this website or engaging our services, you agree to the following terms.
++        </p>
++
++        <h2 class="text-xl font-bold mb-3" style="color: #265077;">Nature of Our Services</h2>
++        <p class="mb-6">
++          GrowthWave Capital provides financing consulting services and lender placement for real estate investors and business owners. We connect qualified clients with our network of lending partners. <strong>We are not a direct lender.</strong> All financing is subject to lender approval and individual qualification.
++        </p>
++
++        <h2 class="text-xl font-bold mb-3" style="color: #265077;">No Guarantee of Approval</h2>
++        <p class="mb-6">
++          Engaging with GrowthWave Capital does not guarantee approval for any specific financing amount, interest rate, loan type, or terms. Outcomes depend on your individual creditworthiness, business profile, and lender underwriting criteria.
++        </p>
++
++        <h2 class="text-xl font-bold mb-3" style="color: #265077;">Informational Content</h2>
++        <p class="mb-6">
++          All content on this website — including blog posts, guides, downloadable resources, and web pages — is provided for informational purposes only. Nothing on this site constitutes financial, legal, or tax advice. Consult qualified professionals before making financial decisions.
++        </p>
++
++        <h2 class="text-xl font-bold mb-3" style="color: #265077;">Intellectual Property</h2>
++        <p class="mb-6">
++          All content, branding, and materials on this site are the property of GrowthWave Advisors LLC. You may not reproduce, distribute, or create derivative works without our written permission.
++        </p>
++
++        <h2 class="text-xl font-bold mb-3" style="color: #265077;">Contact Us</h2>
++        <p class="mb-4">
++          Questions about these terms? Reach us at <a href="mailto:info@growthwavecapital.com" class="font-semibold underline" style="color: #7C3AED;">info@growthwavecapital.com</a>.
++        </p>
++
++        <div class="mt-10 p-5 rounded-lg border" style="background: #f9fafb; border-color: #e5e7eb;">
++          <p class="text-sm" style="color: #718EA7;">
++            <strong style="color: #595959;">Note:</strong> These terms are being expanded into a full legal agreement. For any questions in the meantime, please contact us directly.
++          </p>
++        </div>
++
++      </div>
++    </div>
++  </section>
++
++  <Footer brand="capital" />
++</BaseLayout>
+diff --git a/src/pages/properties/privacy.astro b/src/pages/properties/privacy.astro
+new file mode 100644
+index 0000000..099ca28
+--- /dev/null
++++ b/src/pages/properties/privacy.astro
+@@ -0,0 +1,69 @@
++---
++/**
++ * GrowthWave Properties - Privacy Policy
++ * ========================================
++ * Created: February 2026
++ */
++import BaseLayout from "@layouts/BaseLayout.astro";
++import Header from "@components/Header.astro";
++import Footer from "@components/Footer.astro";
++---
++
++<BaseLayout brand="properties" title="Privacy Policy | GrowthWave Properties" description="GrowthWave Properties privacy policy — how we collect, use, and protect your information.">
++  <Header brand="properties" />
++
++  <!-- Hero -->
++  <section class="w-full" style="background: linear-gradient(135deg, #022140 0%, #265077 100%);">
++    <div class="max-w-7xl mx-auto px-4 lg:px-8 py-16 lg:py-20">
++      <p class="text-sm font-semibold uppercase tracking-widest mb-3" style="color: #FF6B4A;">Legal</p>
++      <h1 class="text-3xl lg:text-4xl font-bold text-white mb-4">Privacy Policy</h1>
++      <p class="text-white/80 text-lg">Last updated: February 2026</p>
++    </div>
++  </section>
++
++  <!-- Content -->
++  <section class="w-full bg-white">
++    <div class="max-w-7xl mx-auto px-4 lg:px-8 py-16 lg:py-20">
++      <div class="max-w-3xl" style="color: #595959;">
++
++        <p class="text-lg mb-8">
++          GrowthWave Advisors LLC ("GrowthWave Properties," "we," "us," or "our") respects your privacy and is committed to protecting your personal information. This policy explains how we collect, use, and safeguard the data you share with us.
++        </p>
++
++        <h2 class="text-xl font-bold mb-3" style="color: #265077;">Information We Collect</h2>
++        <p class="mb-6">
++          When you submit a form, download a resource, or contact us through our website, we may collect your name, email address, and phone number. We collect only what is necessary to respond to your inquiry or provide the services you have requested.
++        </p>
++
++        <h2 class="text-xl font-bold mb-3" style="color: #265077;">How We Use Your Information</h2>
++        <p class="mb-6">
++          We use the information you provide to respond to your inquiries, send you the resources you requested, and follow up on investment opportunities you have expressed interest in. We do not use your information for unrelated marketing without your consent.
++        </p>
++
++        <h2 class="text-xl font-bold mb-3" style="color: #265077;">We Do Not Sell Your Information</h2>
++        <p class="mb-6">
++          We do not sell, rent, or trade your personal information to third parties. Your data is used solely to serve you as a GrowthWave Properties investor or prospect.
++        </p>
++
++        <h2 class="text-xl font-bold mb-3" style="color: #265077;">Data Security</h2>
++        <p class="mb-6">
++          We take reasonable technical and organizational measures to protect your information from unauthorized access, disclosure, or misuse.
++        </p>
++
++        <h2 class="text-xl font-bold mb-3" style="color: #265077;">Contact Us</h2>
++        <p class="mb-4">
++          For privacy-related questions or to request removal of your information, contact us at <a href="mailto:info@growthwaveproperties.com" class="font-semibold underline" style="color: #FF6B4A;">info@growthwaveproperties.com</a>.
++        </p>
++
++        <div class="mt-10 p-5 rounded-lg border" style="background: #f9fafb; border-color: #e5e7eb;">
++          <p class="text-sm" style="color: #718EA7;">
++            <strong style="color: #595959;">Note:</strong> This policy is being expanded into a comprehensive privacy framework. For any questions in the meantime, please contact us directly.
++          </p>
++        </div>
++
++      </div>
++    </div>
++  </section>
++
++  <Footer brand="properties" />
++</BaseLayout>
+diff --git a/src/pages/properties/terms.astro b/src/pages/properties/terms.astro
+new file mode 100644
+index 0000000..9eabd29
+--- /dev/null
++++ b/src/pages/properties/terms.astro
+@@ -0,0 +1,69 @@
++---
++/**
++ * GrowthWave Properties - Terms of Service
++ * ==========================================
++ * Created: February 2026
++ */
++import BaseLayout from "@layouts/BaseLayout.astro";
++import Header from "@components/Header.astro";
++import Footer from "@components/Footer.astro";
++---
++
++<BaseLayout brand="properties" title="Terms of Service | GrowthWave Properties" description="GrowthWave Properties terms of service — what you need to know before working with us.">
++  <Header brand="properties" />
++
++  <!-- Hero -->
++  <section class="w-full" style="background: linear-gradient(135deg, #022140 0%, #265077 100%);">
++    <div class="max-w-7xl mx-auto px-4 lg:px-8 py-16 lg:py-20">
++      <p class="text-sm font-semibold uppercase tracking-widest mb-3" style="color: #FF6B4A;">Legal</p>
++      <h1 class="text-3xl lg:text-4xl font-bold text-white mb-4">Terms of Service</h1>
++      <p class="text-white/80 text-lg">Last updated: February 2026</p>
++    </div>
++  </section>
++
++  <!-- Content -->
++  <section class="w-full bg-white">
++    <div class="max-w-7xl mx-auto px-4 lg:px-8 py-16 lg:py-20">
++      <div class="max-w-3xl" style="color: #595959;">
++
++        <p class="text-lg mb-8">
++          GrowthWave Properties is a division of GrowthWave Advisors LLC. By using this website or engaging with our investment opportunities, you agree to the following terms.
++        </p>
++
++        <h2 class="text-xl font-bold mb-3" style="color: #265077;">Nature of Our Activities</h2>
++        <p class="mb-6">
++          GrowthWave Properties acquires, repositions, and manages value-add multifamily real estate. We work with accredited investors and retirement account holders on co-investment opportunities. Nothing on this website constitutes a public offering of securities.
++        </p>
++
++        <h2 class="text-xl font-bold mb-3" style="color: #265077;">No Guarantee of Returns</h2>
++        <p class="mb-6">
++          All real estate investment involves risk. Past performance does not guarantee future results. Projected returns discussed in any educational materials are illustrative only and not a promise of specific outcomes.
++        </p>
++
++        <h2 class="text-xl font-bold mb-3" style="color: #265077;">Informational Content</h2>
++        <p class="mb-6">
++          All content on this website — including guides, blog posts, and educational resources — is provided for informational purposes only. Nothing on this site constitutes financial, legal, tax, or investment advice. Consult qualified professionals before making investment decisions.
++        </p>
++
++        <h2 class="text-xl font-bold mb-3" style="color: #265077;">Intellectual Property</h2>
++        <p class="mb-6">
++          All content, branding, and materials on this site are the property of GrowthWave Advisors LLC. You may not reproduce, distribute, or create derivative works without our written permission.
++        </p>
++
++        <h2 class="text-xl font-bold mb-3" style="color: #265077;">Contact Us</h2>
++        <p class="mb-4">
++          Questions about these terms? Reach us at <a href="mailto:info@growthwaveproperties.com" class="font-semibold underline" style="color: #FF6B4A;">info@growthwaveproperties.com</a>.
++        </p>
++
++        <div class="mt-10 p-5 rounded-lg border" style="background: #f9fafb; border-color: #e5e7eb;">
++          <p class="text-sm" style="color: #718EA7;">
++            <strong style="color: #595959;">Note:</strong> These terms are being expanded into a full legal agreement. For any questions in the meantime, please contact us directly.
++          </p>
++        </div>
++
++      </div>
++    </div>
++  </section>
++
++  <Footer brand="properties" />
++</BaseLayout>
+-- 
+2.43.0
+

@@ -43,7 +43,8 @@ const PASSTHROUGH_PATHS = [
 
 // File extensions that should NOT get trailing slash treatment
 const FILE_EXTENSIONS = [
-  ".html", ".css", ".js", ".json", ".xml", ".txt", ".svg", ".png", 
+  ".html", ".css", ".js", ".json", ".xml", ".txt", ".svg", ".png",
+  ".pdf", ".docx",
   ".jpg", ".jpeg", ".gif", ".webp", ".ico", ".woff", ".woff2", ".ttf"
 ];
 
