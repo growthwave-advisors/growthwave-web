@@ -293,6 +293,14 @@ const resources = [
             
             <!-- Interactive Contact Form -->
             <ContactForm client:load />
+
+            <!-- SMS Consent — static server-rendered HTML, no JS required -->
+            <label style="display:flex; align-items:flex-start; gap:10px; margin-top:16px; cursor:pointer;">
+              <input type="checkbox" name="smsConsent" style="margin-top:3px; flex-shrink:0; accent-color:#FF6B4A;" />
+              <span style="font-size:13px; color:#6b7280; line-height:1.5;">
+                I agree to receive SMS messages from <strong style="color:#022140;">GrowthWave Properties</strong> including appointment reminders, investment opportunity updates, and resource delivery. Message frequency varies. Msg &amp; data rates may apply. Reply <strong style="color:#022140;">STOP</strong> to opt out at any time, <strong style="color:#022140;">HELP</strong> for help. View our <a href="/privacy" style="text-decoration:underline; color:#FF6B4A;">Privacy Policy</a> and <a href="/terms" style="text-decoration:underline; color:#FF6B4A;">Terms of Service</a>.
+              </span>
+            </label>
           </div>
         </div>
         
