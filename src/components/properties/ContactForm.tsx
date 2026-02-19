@@ -460,7 +460,7 @@ export default function ContactForm() {
       </div>
       
       <div>
-        <label 
+        <label
           className="block text-sm lg:text-base font-medium mb-2"
           style={{ color: colors.midnight }}
         >
@@ -469,14 +469,14 @@ export default function ContactForm() {
             (optional but recommended)
           </span>
         </label>
-        <input 
+        <input
           type="tel"
           name="phone"
           className="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm lg:text-base focus:outline-none focus:ring-2"
           style={{ '--tw-ring-color': colors.coral } as React.CSSProperties}
         />
       </div>
-      
+
       <div>
         <label 
           className="block text-sm lg:text-base font-medium mb-2"

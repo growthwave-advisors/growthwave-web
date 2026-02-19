@@ -547,15 +547,24 @@ const faqs = [
             <option value="general">General Question</option>
           </select>
           
+          <!-- Phone Field -->
+          <input
+            type="tel"
+            name="phone"
+            placeholder="Phone Number"
+            class="w-full px-4 py-3.5 rounded-lg text-base outline-none transition-colors focus:border-[#51A7F8] focus:ring-1 focus:ring-[#51A7F8]"
+            style={`border: 1px solid ${colors.gray300}; color: ${colors.midnight};`}
+          />
+
           <!-- Message Textarea -->
-          <textarea 
+          <textarea
             name="message"
             placeholder="Your message..."
             rows="4"
             class="w-full px-4 py-3.5 rounded-lg text-base outline-none transition-colors resize-y focus:border-[#51A7F8] focus:ring-1 focus:ring-[#51A7F8]"
             style={`border: 1px solid ${colors.gray300}; color: ${colors.midnight};`}
           ></textarea>
-          
+
           <!-- Non-Marketing SMS Consent -->
           <label class="flex items-start gap-3 cursor-pointer">
             <input
@@ -581,7 +590,7 @@ const faqs = [
           </label>
 
           <!-- Submit Button -->
-          <button
+          <button 
             type="submit"
             class="w-full py-4 rounded-lg font-semibold text-base text-white flex items-center justify-center gap-2 transition-opacity hover:opacity-90"
             style={`background-color: ${colors.cyan}; box-shadow: 0 4px 12px rgba(81,167,248,0.3);`}
