@@ -515,16 +515,29 @@ export default function ContactForm() {
         />
       </div>
       
-      {/* Marketing Opt-in */}
+      {/* Non-Marketing SMS Consent */}
       <label className="flex items-start gap-3 cursor-pointer">
-        <input 
+        <input
           type="checkbox"
-          name="marketingOptIn"
-          className="w-4 h-4 mt-0.5 rounded" 
-          style={{ accentColor: colors.coral }} 
+          name="smsConsent"
+          className="w-4 h-4 mt-0.5 rounded"
+          style={{ accentColor: colors.coral }}
         />
         <span className="text-sm lg:text-base" style={{ color: colors.gray600 }}>
-          Yes, I'd like to receive updates about investment opportunities and market insights from GrowthWave Properties.
+          By checking this box, you agree to receive text messages from GrowthWave Advisors LLC. Message frequency varies. Message and data rates may apply. Text STOP to opt out or HELP for help.
+        </span>
+      </label>
+
+      {/* Marketing Opt-in */}
+      <label className="flex items-start gap-3 cursor-pointer">
+        <input
+          type="checkbox"
+          name="marketingOptIn"
+          className="w-4 h-4 mt-0.5 rounded"
+          style={{ accentColor: colors.coral }}
+        />
+        <span className="text-sm lg:text-base" style={{ color: colors.gray600 }}>
+          I consent to receive marketing text messages from GrowthWave Advisors LLC at the phone number provided. Message frequency varies. Message &amp; data rates may apply. Text HELP for assistance, reply STOP to opt out.
         </span>
       </label>
       
