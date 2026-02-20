@@ -44,3 +44,4 @@ _local/
 .cursorignore
 .cursorignore
 ai-skills/
+.claude/
