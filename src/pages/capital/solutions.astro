@@ -490,6 +490,32 @@ const processSteps = [
               <option value="not-sure">Not sure</option>
             </select>
 
+            <!-- Non-Marketing SMS Consent -->
+            <label class="flex items-start gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                name="smsConsent"
+                class="w-4 h-4 mt-0.5 rounded flex-shrink-0"
+                style="accent-color: white;"
+              />
+              <span class="text-xs text-white/80 leading-relaxed">
+                By checking this box, you agree to receive text messages from GrowthWave Advisors LLC. Message frequency varies. Message and data rates may apply. Text STOP to opt out or HELP for help.
+              </span>
+            </label>
+
+            <!-- Marketing SMS Consent -->
+            <label class="flex items-start gap-2 cursor-pointer">
+              <input
+                type="checkbox"
+                name="marketingOptIn"
+                class="w-4 h-4 mt-0.5 rounded flex-shrink-0"
+                style="accent-color: white;"
+              />
+              <span class="text-xs text-white/80 leading-relaxed">
+                I consent to receive marketing text messages from GrowthWave Advisors LLC at the phone number provided. Message frequency varies. Message &amp; data rates may apply. Text HELP for assistance, reply STOP to opt out.
+              </span>
+            </label>
+
             <!-- Submit Button -->
             <button
               type="submit"
