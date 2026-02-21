@@ -15,6 +15,14 @@
  * Endpoint: /.netlify/functions/ghl-submit
  * Method:   POST
  * Body:     JSON with form fields + formType
+ *
+ * CHANGELOG:
+ *   2026-02-21 — Fixed custom field keys for pre-qual form:
+ *                  funding_goal → funding_amount_needed
+ *                  credit_score → estimated_credit_score_range
+ *              — Activated workflow enrollment for prequal form type
+ *                  Workflow: Capital — Unified Lead Nurture (All Entry Ramps)
+ *                  ID: 52c79b90-0897-4bed-8dbd-4dc94ce2735a
  */
 
 // ============================================
@@ -46,6 +54,15 @@ const FORM_SOURCES = {
   contact: "Website — Capital Contact",
   prequal: "Website — Capital Pre-Qualification",
   guide: "Website — Capital Guide Download",
+};
+
+// Workflow enrollment per form type.
+// Only prequal is wired — contact and guide feed separate downstream paths.
+// Add workflow IDs for those form types when those sequences are built.
+const FORM_WORKFLOWS = {
+  contact: null,
+  prequal: "52c79b90-0897-4bed-8dbd-4dc94ce2735a", // Capital — Unified Lead Nurture (All Entry Ramps)
+  guide: null,
 };
 
 // ============================================
@@ -149,18 +166,20 @@ exports.handler = async function (event) {
     });
   }
 
-  // Pre-qual form: funding goal
+  // Pre-qual form: funding amount needed
+  // GHL field key: funding_amount_needed (merge tag: {{ contact.funding_amount_needed }})
   if (data.fundingGoal) {
     customFields.push({
-      id: "funding_goal",
+      id: "funding_amount_needed",
       field_value: data.fundingGoal,
     });
   }
 
-  // Pre-qual form: credit score range
+  // Pre-qual form: estimated credit score range
+  // GHL field key: estimated_credit_score_range (merge tag: {{ contact.estimated_credit_score_range }})
   if (data.creditScore) {
     customFields.push({
-      id: "credit_score",
+      id: "estimated_credit_score_range",
       field_value: data.creditScore,
     });
   }
@@ -215,34 +234,47 @@ exports.handler = async function (event) {
     );
 
     // ============================================
-    // STEP 2: Enroll in Workflow (future)
+    // STEP 2: Enroll in Workflow
     // ============================================
-    // Uncomment and populate workflow IDs when ready:
-    //
-    // const FORM_WORKFLOWS = {
-    //   contact: "workflow-id-for-contact",
-    //   prequal: "workflow-id-for-prequal",
-    //   guide: "workflow-id-for-guide-nurture",
-    // };
-    //
-    // const workflowId = FORM_WORKFLOWS[formType];
-    // if (contactId && workflowId) {
-    //   try {
-    //     await fetch(
-    //       `${GHL_API_BASE}/contacts/${contactId}/workflow/${workflowId}`,
-    //       {
-    //         method: "POST",
-    //         headers: {
-    //           Authorization: `Bearer ${apiToken}`,
-    //           Version: GHL_API_VERSION,
-    //         },
-    //       }
-    //     );
-    //     console.log(`Enrolled ${contactId} in workflow ${workflowId}`);
-    //   } catch (wfErr) {
-    //     console.warn("Workflow enrollment failed (non-blocking):", wfErr);
-    //   }
-    // }
+    // Enrolls the contact in the appropriate GHL workflow by form type.
+    // Workflow enrollment is non-blocking — a failure here does not
+    // prevent the contact from being created or the 200 response from
+    // being returned to the front-end.
+
+    const workflowId = FORM_WORKFLOWS[formType];
+
+    if (contactId && workflowId) {
+      try {
+        const wfRes = await fetch(
+          `${GHL_API_BASE}/contacts/${contactId}/workflow/${workflowId}`,
+          {
+            method: "POST",
+            headers: {
+              Authorization: `Bearer ${apiToken}`,
+              Version: GHL_API_VERSION,
+            },
+          }
+        );
+
+        if (wfRes.ok) {
+          console.log(
+            `Enrolled ${contactId} in workflow ${workflowId} (${formType})`
+          );
+        } else {
+          const wfError = await wfRes.text();
+          console.warn(
+            `Workflow enrollment returned ${wfRes.status} for ${contactId}:`,
+            wfError
+          );
+        }
+      } catch (wfErr) {
+        // Non-blocking — contact was already created successfully
+        console.warn(
+          `Workflow enrollment request failed for ${contactId}:`,
+          wfErr
+        );
+      }
+    }
 
     return {
       statusCode: 200,
