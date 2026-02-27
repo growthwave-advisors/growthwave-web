@@ -96,11 +96,14 @@ function getPageHref(page: string): string {
 function isActivePage(page: string): boolean {
   const currentPage = activePage.toLowerCase();
   const checkPage = page.toLowerCase();
-  
-  if (checkPage === 'opportunities' && currentPage === 'contact') {
-    return true;
+
+  // 'Opportunities' routes to /contact?type=investment — it is NOT a standalone
+  // page, so it should never show a persistent active underline. Contact owns
+  // the underline whenever the user is on any /contact URL.
+  if (checkPage === 'opportunities') {
+    return false;
   }
-  
+
   return currentPage === checkPage;
 }
 ---
