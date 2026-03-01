@@ -170,6 +170,16 @@ const contactInfo = [
               id="prequal-form"
               class="space-y-3"
             >
+              <!-- Honeypot — hidden from humans, bots fill it automatically.
+                   Server rejects any submission where this field is non-empty. -->
+              <input
+                type="text"
+                name="website"
+                tabindex="-1"
+                autocomplete="off"
+                aria-hidden="true"
+                style="display:none; position:absolute; left:-9999px;"
+              />
               <!-- Name Row -->
               <div class="grid grid-cols-2 gap-3">
                 <input
@@ -329,6 +339,16 @@ const contactInfo = [
               id="contact-form"
               class="space-y-3"
             >
+              <!-- Honeypot — hidden from humans, bots fill it automatically.
+                   Server rejects any submission where this field is non-empty. -->
+              <input
+                type="text"
+                name="website"
+                tabindex="-1"
+                autocomplete="off"
+                aria-hidden="true"
+                style="display:none; position:absolute; left:-9999px;"
+              />
               <!-- Product Dropdown (GHL Query Key: single_dropdown_89ki) -->
               <select
                 id="product-select"
@@ -788,15 +808,39 @@ const contactInfo = [
         submitBtn.disabled = true;
         submitBtn.style.opacity = "0.7";
 
+        // ── Client-side guards ──────────────────────────────────────────
+        // 1. Honeypot: if filled, bot detected — fake success, no GHL call
+        // 2. Required fields: first name + email must be non-empty
+        const honeypot = formData.get("website") || "";
+        const firstNameVal = (formData.get("first_name") || "").trim();
+        const emailVal = (formData.get("email") || "").trim();
+
+        if (honeypot.trim() !== "") {
+          console.warn("Bot detected via honeypot — suppressing submission.");
+          prequalForm.classList.add("hidden");
+          prequalSuccess.classList.remove("hidden");
+          return;
+        }
+
+        if (!firstNameVal || !emailVal) {
+          submitBtn.textContent = originalText;
+          submitBtn.disabled = false;
+          submitBtn.style.opacity = "1";
+          alert("Please enter your first name and email address.");
+          return;
+        }
+        // ────────────────────────────────────────────────────────────────
+
         try {
           const res = await fetch("/.netlify/functions/ghl-submit", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               formType: "prequal",
-              firstName: formData.get("first_name") || "",
+              website: honeypot,
+              firstName: firstNameVal,
               lastName: formData.get("last_name") || "",
-              email: formData.get("email") || "",
+              email: emailVal,
               phone: formData.get("phone") || "",
               fundingGoal: formData.get("funding_goal") || "",
               creditScore: formData.get("credit_score") || "",
@@ -841,15 +885,43 @@ const contactInfo = [
         submitButton.disabled = true;
         submitButton.style.opacity = "0.7";
 
+        // ── Client-side guards ────────────────────────────────────────
+        // 1. Honeypot: if filled, bot detected — fake success, no GHL call
+        // 2. Required fields: first name + email must be non-empty
+        const honeypot = formData.get("website") || "";
+        const firstNameVal = (formData.get("first_name") || "").trim();
+        const emailVal = (formData.get("email") || "").trim();
+
+        if (honeypot.trim() !== "") {
+          console.warn("Bot detected via honeypot — suppressing submission.");
+          contactForm.innerHTML = `
+            <div class="text-center py-8">
+              <div class="text-4xl mb-4">✅</div>
+              <h3 class="text-xl font-bold mb-2" style="color: #022140;">Message Received!</h3>
+              <p class="text-gray-600">We'll be in touch shortly.</p>
+            </div>`;
+          return;
+        }
+
+        if (!firstNameVal || !emailVal) {
+          submitButton.textContent = "Send Message";
+          submitButton.disabled = false;
+          submitButton.style.opacity = "1";
+          alert("Please enter your first name and email address.");
+          return;
+        }
+        // ──────────────────────────────────────────────────────────────
+
         try {
           const res = await fetch("/.netlify/functions/ghl-submit", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               formType: "contact",
-              firstName: formData.get("first_name") || "",
+              website: honeypot,
+              firstName: firstNameVal,
               lastName: formData.get("last_name") || "",
-              email: formData.get("email") || "",
+              email: emailVal,
               phone: formData.get("phone") || "",
               productInterest: formData.get("single_dropdown_89ki") || "",
               message: formData.get("multi_line_2fsn") || "",
