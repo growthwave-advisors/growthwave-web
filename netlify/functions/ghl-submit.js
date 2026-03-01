@@ -47,6 +47,25 @@ const FORM_TAGS = {
     "form:capital-guide",
     "engagement:lead-magnet-downloaded",
   ],
+  "properties-investor-assessment": [
+    "source:website-organic",
+    "brand:properties",
+    "form:properties-investor-assessment",
+    "track:investor-pipeline",
+    "engagement:assessment-submitted",
+  ],
+  "properties-guide": [
+    "source:website-organic",
+    "brand:properties",
+    "form:properties-guide",
+    "engagement:lead-magnet-downloaded",
+    "track:retirement-education",
+  ],
+  "properties-contact": [
+    "source:website-organic",
+    "brand:properties",
+    "form:properties-contact",
+  ],
 };
 
 // Source label per form type (shows in GHL contact record)
@@ -54,6 +73,9 @@ const FORM_SOURCES = {
   contact: "Website — Capital Contact",
   prequal: "Website — Capital Pre-Qualification",
   guide: "Website — Capital Guide Download",
+  "properties-investor-assessment": "Website — Properties Investor Assessment",
+  "properties-guide": "Website — Properties Guide Download",
+  "properties-contact": "Website — Properties Contact",
 };
 
 // Workflow enrollment per form type.
@@ -63,6 +85,9 @@ const FORM_WORKFLOWS = {
   contact: null,
   prequal: "52c79b90-0897-4bed-8dbd-4dc94ce2735a", // Capital — Unified Lead Nurture (All Entry Ramps)
   guide: null,
+  "properties-investor-assessment": null, // TODO: Add Properties Track 2 workflow ID after GHL setup
+  "properties-guide": null,              // TODO: Add same Properties Track 2 workflow ID
+  "properties-contact": null,
 };
 
 // ============================================
@@ -130,7 +155,7 @@ exports.handler = async function (event) {
       headers,
       body: JSON.stringify({
         error:
-          "Missing or invalid formType. Expected: contact, prequal, or guide",
+          "Missing or invalid formType. Expected: contact, prequal, guide, properties-investor-assessment, properties-guide, or properties-contact",
       }),
     };
   }
@@ -322,6 +347,29 @@ exports.handler = async function (event) {
     customFields.push({
       id: "estimated_credit_score_range",
       field_value: data.creditScore,
+    });
+  }
+
+  // Properties investor assessment fields
+  // NOTE: Cowork must create these custom fields in GHL first
+  if (data.investorType) {
+    customFields.push({
+      id: "investor_type",
+      field_value: data.investorType,
+    });
+  }
+
+  if (data.capitalType) {
+    customFields.push({
+      id: "capital_type",
+      field_value: data.capitalType,
+    });
+  }
+
+  if (data.investmentAmount) {
+    customFields.push({
+      id: "investment_amount_range",
+      field_value: data.investmentAmount,
     });
   }
 

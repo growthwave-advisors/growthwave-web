@@ -1,0 +1,433 @@
+---
+/**
+ * GrowthWave Properties - Investor Assessment Page
+ * =================================================
+ * Created: March 2026
+ *
+ * Purpose: Track 2 lead capture page and gateway to the Properties
+ * investor pipeline. Focused conversion page (no full nav) for both
+ * passive retirement account investors (SDIRA) and active JV partners.
+ *
+ * GHL Integration:
+ * - formType: "properties-investor-assessment"
+ * - Direct POST to /.netlify/functions/ghl-submit
+ * - Honeypot + Turnstile bot protection
+ *
+ * Design System Compliance:
+ * - Fixed Island pattern (max-w-7xl content, full-width backgrounds)
+ * - Typography stops at lg breakpoint (no xl: or 2xl:)
+ * - Coral #FF6B4A accent
+ * - Responsive padding: px-4 lg:px-8
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Footer from '@components/Footer.astro';
+
+// Properties color constants
+const colors = {
+  coral: '#FF6B4A',
+  coralBg: 'rgba(255,107,74,0.15)',
+  ocean: '#265077',
+  midnight: '#022140',
+  gray500: '#595959',
+  labelGray: '#718EA7',
+  light: '#f0f9ff',
+  coralWarm: '#fff5f2',
+};
+
+// Turnstile site key — public-facing key, read from env at build time.
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
+---
+
+<BaseLayout
+  brand="properties"
+  title="Investor Assessment | GrowthWave Properties"
+  description="Find out how you can invest in real estate — starting with what you already have. Take the 2-minute investor assessment."
+>
+  <!-- Minimal header — logo only, no nav -->
+  <header class="w-full bg-white border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 lg:px-8 py-4">
+      <a href="/" class="inline-block">
+        <img
+          src="/images/logos/properties/growthwave-properties_horizontal_color.svg"
+          alt="GrowthWave Properties"
+          class="h-8 lg:h-10"
+        />
+      </a>
+    </div>
+  </header>
+
+  <main>
+    <!-- ============================================
+         HERO SECTION
+         - Dark Navy background
+         - Eyebrow + H1 + Subtext
+         ============================================ -->
+    <section
+      class="w-full"
+      style={`background-color: ${colors.midnight};`}
+    >
+      <div class="max-w-3xl mx-auto px-4 lg:px-8 py-14 lg:py-20 text-center">
+        <!-- Eyebrow -->
+        <div
+          class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-xs lg:text-sm font-semibold mb-5"
+          style={`background-color: ${colors.coralBg}; color: ${colors.coral};`}
+        >
+          GrowthWave Investor Assessment
+        </div>
+
+        <!-- H1 -->
+        <h1 class="text-3xl lg:text-4xl font-bold text-white leading-tight mb-5">
+          Find Out How You Can Invest in Real Estate &mdash;
+          <span style={`color: ${colors.coral};`}>Starting With What You Already Have</span>
+        </h1>
+
+        <!-- Subtext -->
+        <p class="text-base lg:text-lg text-gray-300 leading-relaxed max-w-2xl mx-auto">
+          Tell us where you&rsquo;re starting from. We&rsquo;ll show you the clearest path to your
+          first (or next) real estate investment &mdash; whether that&rsquo;s active capital,
+          retirement accounts, or both.
+        </p>
+      </div>
+    </section>
+
+    <!-- ============================================
+         FORM SECTION
+         - White background
+         - Centered max-w-2xl form
+         ============================================ -->
+    <section class="w-full py-14 lg:py-20 px-4 lg:px-8 bg-white">
+      <div class="max-w-2xl mx-auto">
+        <!-- Form Title -->
+        <div class="text-center mb-8">
+          <h2
+            class="text-xl lg:text-2xl font-bold mb-2"
+            style={`color: ${colors.midnight};`}
+          >
+            Your Investor Profile &mdash; 2 Minutes
+          </h2>
+        </div>
+
+        <!-- Assessment Form -->
+        <form id="assessment-form" class="space-y-5">
+          <!-- Honeypot — hidden from humans, bots fill it automatically -->
+          <input
+            type="text"
+            name="website"
+            tabindex="-1"
+            autocomplete="off"
+            aria-hidden="true"
+            style="display:none; position:absolute; left:-9999px;"
+          />
+          <!-- Cloudflare Turnstile — invisible challenge widget -->
+          {turnstileSiteKey && (
+            <div
+              class="cf-turnstile"
+              data-sitekey={turnstileSiteKey}
+              data-theme="light"
+              data-size="invisible"
+            />
+          )}
+
+          <!-- First Name -->
+          <div>
+            <label class="block text-sm font-medium mb-1.5" style={`color: ${colors.labelGray};`}>
+              First Name <span style={`color: ${colors.coral};`}>*</span>
+            </label>
+            <input
+              type="text"
+              name="first_name"
+              required
+              class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:border-transparent"
+              style="focus:ring-color: #FF6B4A;"
+              placeholder="First name"
+            />
+          </div>
+
+          <!-- Last Name -->
+          <div>
+            <label class="block text-sm font-medium mb-1.5" style={`color: ${colors.labelGray};`}>
+              Last Name <span style={`color: ${colors.coral};`}>*</span>
+            </label>
+            <input
+              type="text"
+              name="last_name"
+              required
+              class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:border-transparent"
+              placeholder="Last name"
+            />
+          </div>
+
+          <!-- Email -->
+          <div>
+            <label class="block text-sm font-medium mb-1.5" style={`color: ${colors.labelGray};`}>
+              Email <span style={`color: ${colors.coral};`}>*</span>
+            </label>
+            <input
+              type="email"
+              name="email"
+              required
+              class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:border-transparent"
+              placeholder="you@example.com"
+            />
+          </div>
+
+          <!-- Phone -->
+          <div>
+            <label class="block text-sm font-medium mb-1.5" style={`color: ${colors.labelGray};`}>
+              Phone
+            </label>
+            <input
+              type="tel"
+              name="phone"
+              class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:border-transparent"
+              placeholder="(optional)"
+            />
+          </div>
+
+          <!-- Investor Type (single select) -->
+          <div>
+            <label class="block text-sm font-medium mb-1.5" style={`color: ${colors.labelGray};`}>
+              What best describes you? <span style={`color: ${colors.coral};`}>*</span>
+            </label>
+            <select
+              name="investor_type"
+              required
+              class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:border-transparent bg-white"
+            >
+              <option value="" disabled selected>Select one&hellip;</option>
+              <option value="Active investor - JV/GP track">I'm actively investing in real estate (JV partner / GP track)</option>
+              <option value="Rental owner - wants to scale">I own rental properties and want to scale</option>
+              <option value="Passive investor - capital to deploy">I want to invest passively — I have capital to deploy</option>
+              <option value="Retirement accounts - SDIRA/Solo 401k">I have retirement accounts I want to put to work in real estate</option>
+              <option value="Getting started - curious">I'm just getting started — curious about real estate investing</option>
+              <option value="Other / Not sure">Other / Not sure yet</option>
+            </select>
+          </div>
+
+          <!-- Capital Type (multi-select checkboxes) -->
+          <div>
+            <label class="block text-sm font-medium mb-2" style={`color: ${colors.labelGray};`}>
+              What type of capital are you working with? <span style={`color: ${colors.coral};`}>*</span>
+            </label>
+            <div class="space-y-2.5">
+              <label class="flex items-start gap-3 cursor-pointer">
+                <input type="checkbox" name="capital_type" value="Personal/business cash savings" class="mt-0.5 rounded" />
+                <span class="text-sm" style={`color: ${colors.gray500};`}>Personal/business cash savings</span>
+              </label>
+              <label class="flex items-start gap-3 cursor-pointer">
+                <input type="checkbox" name="capital_type" value="Self-directed IRA or Solo 401(k)" class="mt-0.5 rounded" />
+                <span class="text-sm" style={`color: ${colors.gray500};`}>Self-directed IRA or Solo 401(k)</span>
+              </label>
+              <label class="flex items-start gap-3 cursor-pointer">
+                <input type="checkbox" name="capital_type" value="Equity in existing properties" class="mt-0.5 rounded" />
+                <span class="text-sm" style={`color: ${colors.gray500};`}>Equity in existing properties</span>
+              </label>
+              <label class="flex items-start gap-3 cursor-pointer">
+                <input type="checkbox" name="capital_type" value="Investor partners or family capital" class="mt-0.5 rounded" />
+                <span class="text-sm" style={`color: ${colors.gray500};`}>Access to investor partners or family capital</span>
+              </label>
+              <label class="flex items-start gap-3 cursor-pointer">
+                <input type="checkbox" name="capital_type" value="Still building capital base" class="mt-0.5 rounded" />
+                <span class="text-sm" style={`color: ${colors.gray500};`}>I&rsquo;m still building my capital base</span>
+              </label>
+            </div>
+          </div>
+
+          <!-- Investment Amount (dropdown) -->
+          <div>
+            <label class="block text-sm font-medium mb-1.5" style={`color: ${colors.labelGray};`}>
+              Approximate investable amount you&rsquo;re considering <span style={`color: ${colors.coral};`}>*</span>
+            </label>
+            <select
+              name="investment_amount"
+              required
+              class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:border-transparent bg-white"
+            >
+              <option value="" disabled selected>Select a range&hellip;</option>
+              <option value="Under $25,000">Under $25,000</option>
+              <option value="$25,000 - $50,000">$25,000 &ndash; $50,000</option>
+              <option value="$50,000 - $100,000">$50,000 &ndash; $100,000</option>
+              <option value="$100,000 - $250,000">$100,000 &ndash; $250,000</option>
+              <option value="$250,000 - $500,000">$250,000 &ndash; $500,000</option>
+              <option value="$500,000+">$500,000+</option>
+              <option value="Not sure yet">Not sure yet</option>
+            </select>
+          </div>
+
+          <!-- Biggest Question (textarea, optional) -->
+          <div>
+            <label class="block text-sm font-medium mb-1.5" style={`color: ${colors.labelGray};`}>
+              What&rsquo;s your biggest question about real estate investing right now?
+            </label>
+            <textarea
+              name="biggest_question"
+              rows="3"
+              class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:border-transparent resize-y"
+              placeholder="E.g. How do I get started with my IRA? How do I find my first deal? What markets should I be in?"
+            ></textarea>
+          </div>
+
+          <!-- How Did You Hear (dropdown, optional) -->
+          <div>
+            <label class="block text-sm font-medium mb-1.5" style={`color: ${colors.labelGray};`}>
+              How did you hear about GrowthWave?
+            </label>
+            <select
+              name="referral_source"
+              class="w-full px-4 py-3 rounded-lg border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:border-transparent bg-white"
+            >
+              <option value="" disabled selected>Select one&hellip;</option>
+              <option value="LinkedIn">LinkedIn</option>
+              <option value="Referral">Referral from someone I know</option>
+              <option value="RE community/network">Real estate community / network</option>
+              <option value="Google/web search">Google / web search</option>
+              <option value="Other">Other</option>
+            </select>
+          </div>
+
+          <!-- SMS Consent -->
+          <label class="flex items-start gap-3 cursor-pointer mt-2">
+            <input type="checkbox" name="smsConsent" class="mt-0.5 rounded flex-shrink-0" />
+            <span class="text-xs leading-relaxed" style={`color: ${colors.labelGray};`}>
+              I agree to receive SMS messages from <strong style={`color: ${colors.midnight};`}>GrowthWave Properties</strong> including appointment reminders and investment updates. Message frequency varies. Msg &amp; data rates may apply. Reply <strong style={`color: ${colors.midnight};`}>STOP</strong> to opt out, <strong style={`color: ${colors.midnight};`}>HELP</strong> for help. View our <a href="/privacy" class="underline" style={`color: ${colors.ocean};`}>Privacy Policy</a> and <a href="/terms" class="underline" style={`color: ${colors.ocean};`}>Terms of Service</a>.
+            </span>
+          </label>
+
+          <!-- Submit Button -->
+          <button
+            type="submit"
+            class="w-full py-3.5 rounded-lg font-bold text-sm text-white transition-all hover:scale-[1.02] hover:shadow-lg mt-2"
+            style={`background-color: ${colors.coral};`}
+          >
+            Get My Investor Roadmap &rarr;
+          </button>
+
+          <!-- Below button -->
+          <p class="text-center text-xs mt-2" style={`color: ${colors.labelGray};`}>
+            No spam. No pressure. We review every submission personally.
+          </p>
+        </form>
+
+        <!-- Success State (hidden by default) -->
+        <div id="assessment-success" class="hidden text-center py-8">
+          <div class="text-4xl mb-4">&#x2705;</div>
+          <h3
+            class="text-xl lg:text-2xl font-bold mb-3"
+            style={`color: ${colors.midnight};`}
+          >
+            You&rsquo;re In.
+          </h3>
+          <p class="text-base leading-relaxed max-w-lg mx-auto" style={`color: ${colors.gray500};`}>
+            Wilfred reviews every investor assessment personally and will reach out within
+            24 hours to discuss your specific situation.
+          </p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <Footer brand="properties" />
+</BaseLayout>
+
+<!-- Form focus styles -->
+<style>
+  #assessment-form input:focus,
+  #assessment-form select:focus,
+  #assessment-form textarea:focus {
+    box-shadow: 0 0 0 2px rgba(255, 107, 74, 0.4);
+    border-color: #FF6B4A;
+  }
+</style>
+
+<!-- Form submission handler -->
+<script is:inline>
+  document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("assessment-form");
+    const successEl = document.getElementById("assessment-success");
+
+    if (form) {
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        const formData = new FormData(form);
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalText = submitBtn.textContent;
+        submitBtn.textContent = "SUBMITTING...";
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = "0.7";
+
+        // ── Client-side guards ──────────────────────────────────────────
+        const honeypot = formData.get("website") || "";
+        const firstNameVal = (formData.get("first_name") || "").trim();
+        const lastNameVal = (formData.get("last_name") || "").trim();
+        const emailVal = (formData.get("email") || "").trim();
+        const turnstileToken = formData.get("cf-turnstile-response") || "";
+
+        if (honeypot.trim() !== "") {
+          console.warn("Bot detected via honeypot — suppressing submission.");
+          form.classList.add("hidden");
+          successEl.classList.remove("hidden");
+          return;
+        }
+
+        if (!firstNameVal || !lastNameVal || !emailVal) {
+          submitBtn.textContent = originalText;
+          submitBtn.disabled = false;
+          submitBtn.style.opacity = "1";
+          alert("Please fill in your first name, last name, and email.");
+          return;
+        }
+
+        // Validate at least one capital type checkbox is selected
+        const capitalTypes = formData.getAll("capital_type");
+        if (capitalTypes.length === 0) {
+          submitBtn.textContent = originalText;
+          submitBtn.disabled = false;
+          submitBtn.style.opacity = "1";
+          alert("Please select at least one capital type.");
+          return;
+        }
+        // ────────────────────────────────────────────────────────────────
+
+        try {
+          const res = await fetch("/.netlify/functions/ghl-submit", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              formType: "properties-investor-assessment",
+              website: honeypot,
+              turnstileToken,
+              firstName: firstNameVal,
+              lastName: lastNameVal,
+              email: emailVal,
+              phone: formData.get("phone") || "",
+              investorType: formData.get("investor_type") || "",
+              capitalType: capitalTypes.join(", "),
+              investmentAmount: formData.get("investment_amount") || "",
+              biggestQuestion: formData.get("biggest_question") || "",
+              referralSource: formData.get("referral_source") || "",
+            }),
+          });
+
+          const result = await res.json();
+
+          if (res.ok && result.success) {
+            form.classList.add("hidden");
+            successEl.classList.remove("hidden");
+          } else {
+            console.error("GHL submit error:", result);
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+            submitBtn.style.opacity = "1";
+            alert("Something went wrong. Please try again.");
+          }
+        } catch (err) {
+          console.error("Form submission failed:", err);
+          submitBtn.textContent = originalText;
+          submitBtn.disabled = false;
+          submitBtn.style.opacity = "1";
+          alert("Connection error. Please check your internet and try again.");
+        }
+      });
+    }
+  });
+</script>
