@@ -293,6 +293,16 @@ const guideContents = [
             id="lead-form"
             class="space-y-3"
           >
+            <!-- Honeypot — hidden from humans, bots fill it automatically.
+                 Server rejects any submission where this field is non-empty. -->
+            <input
+              type="text"
+              name="website"
+              tabindex="-1"
+              autocomplete="off"
+              aria-hidden="true"
+              style="display:none; position:absolute; left:-9999px;"
+            />
             <!-- First Name -->
             <div>
               <input
@@ -681,14 +691,38 @@ const guideContents = [
         submitBtn.disabled = true;
         submitBtn.style.opacity = "0.7";
 
+        // ── Client-side guards ──────────────────────────────────────────
+        // 1. Honeypot: if filled, bot detected — fake success, no GHL call
+        // 2. Required fields: first name + email must be non-empty
+        const honeypot = formData.get("website") || "";
+        const firstNameVal = (formData.get("first_name") || "").trim();
+        const emailVal = (formData.get("email") || "").trim();
+
+        if (honeypot.trim() !== "") {
+          console.warn("Bot detected via honeypot — suppressing submission.");
+          leadForm.classList.add("hidden");
+          leadSuccess.classList.remove("hidden");
+          return;
+        }
+
+        if (!firstNameVal || !emailVal) {
+          submitBtn.textContent = originalText;
+          submitBtn.disabled = false;
+          submitBtn.style.opacity = "1";
+          alert("Please enter your first name and email address.");
+          return;
+        }
+        // ────────────────────────────────────────────────────────────────
+
         try {
           const res = await fetch("/.netlify/functions/ghl-submit", {
             method: "POST",
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               formType: "guide",
-              firstName: formData.get("first_name") || "",
-              email: formData.get("email") || "",
+              website: honeypot,
+              firstName: firstNameVal,
+              email: emailVal,
               phone: formData.get("phone") || "",
             }),
           });
