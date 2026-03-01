@@ -109,8 +109,10 @@ exports.handler = async function (event) {
   // Legitimate users never see or fill it. Bots auto-populate every field.
   // If "website" has any value → silent fake-success, skip GHL entirely.
   // Returns 200 so bots don't retry or flag the endpoint.
-  if (data.website && data.website.trim() !== '') {
-    console.warn(`Bot submission blocked — honeypot triggered. formType: ${data.formType || 'unknown'}, email: ${data.email || 'none'}`);
+  if (data.website && data.website.trim() !== "") {
+    console.warn(
+      `Bot submission blocked — honeypot triggered. formType: ${data.formType || "unknown"}, email: ${data.email || "none"}`
+    );
     return {
       statusCode: 200,
       headers,
@@ -142,6 +144,73 @@ exports.handler = async function (event) {
       }),
     };
   }
+
+  // ── Server-Side Bot Validation ────────────────────────────────────────────
+  // Catches bots that POST directly to the endpoint (bypassing HTML/JS guards)
+  // with a valid-looking but empty or malformed payload.
+  // All rejections return fake 200 — bots don't retry on success responses.
+
+  const emailStr = (email || "").trim();
+  const firstNameStr = (firstName || "").trim();
+  const phoneStr = (phone || "").replace(/\D/g, ""); // digits only
+
+  // 1. firstName required — blank name = bot
+  //    Both recent bot submissions had empty firstName fields.
+  if (!firstNameStr || firstNameStr.length < 2) {
+    console.warn(
+      `Bot submission blocked — blank/short firstName. email: ${emailStr}, formType: ${formType}`
+    );
+    return {
+      statusCode: 200,
+      headers,
+      body: JSON.stringify({ success: true, contactId: null, formType }),
+    };
+  }
+
+  // 2. Dotted Gmail spam pattern rejection
+  //    Bots use addresses like: gu.j.i.ri.w.e.pe3.9@gmail.com
+  //    Pattern: gmail address where the local part has more than 3 dots
+  //    (real Gmail users rarely have more than 1-2 dots in their address)
+  if (emailStr.toLowerCase().endsWith("@gmail.com")) {
+    const localPart = emailStr.split("@")[0];
+    const dotCount = (localPart.match(/\./g) || []).length;
+    if (dotCount > 3) {
+      console.warn(
+        `Bot submission blocked — dotted Gmail spam pattern. email: ${emailStr}, dots: ${dotCount}, formType: ${formType}`
+      );
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({ success: true, contactId: null, formType }),
+      };
+    }
+  }
+
+  // 3. Phone NANP validation
+  //    North American Numbering Plan: area codes never start with 0 or 1.
+  //    Recent bot used +1 685-xxx-xxxx — 685 is a Samoa country code,
+  //    not a valid US area code. Strip country code if present then check.
+  if (phoneStr.length > 0) {
+    // Normalize: strip leading country code 1 if 11 digits
+    const normalized = phoneStr.length === 11 && phoneStr.startsWith("1")
+      ? phoneStr.slice(1)
+      : phoneStr;
+    // Check 10-digit US number: area code (first 3 digits) can't start with 0 or 1
+    if (normalized.length === 10) {
+      const areaCode = normalized.slice(0, 3);
+      if (areaCode.startsWith("0") || areaCode.startsWith("1")) {
+        console.warn(
+          `Bot submission blocked — invalid NANP area code: ${areaCode}. email: ${emailStr}, formType: ${formType}`
+        );
+        return {
+          statusCode: 200,
+          headers,
+          body: JSON.stringify({ success: true, contactId: null, formType }),
+        };
+      }
+    }
+  }
+  // ─────────────────────────────────────────────────────────────────────────
 
   // Load env vars
   const apiToken = process.env.GHL_API_TOKEN;
@@ -200,9 +269,9 @@ exports.handler = async function (event) {
   }
 
   const upsertPayload = {
-    firstName: firstName || "",
-    lastName: lastName || "",
-    email: email || "",
+    firstName: firstNameStr,
+    lastName: (lastName || "").trim(),
+    email: emailStr,
     phone: phone || "",
     locationId,
     tags: FORM_TAGS[formType],
