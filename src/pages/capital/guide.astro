@@ -87,6 +87,10 @@ const guideContents = [
     desc: 'How experienced investors combine multiple funding products to maximize available capital and minimize cost.',
   },
 ];
+
+// Turnstile site key — public-facing key, read from env at build time.
+// Secret key lives server-side in TURNSTILE_SECRET_KEY (never here).
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 ---
 
 <BaseLayout
@@ -293,8 +297,7 @@ const guideContents = [
             id="lead-form"
             class="space-y-3"
           >
-            <!-- Honeypot — hidden from humans, bots fill it automatically.
-                 Server rejects any submission where this field is non-empty. -->
+            <!-- Honeypot — hidden from humans, bots fill it automatically -->
             <input
               type="text"
               name="website"
@@ -303,6 +306,15 @@ const guideContents = [
               aria-hidden="true"
               style="display:none; position:absolute; left:-9999px;"
             />
+            <!-- Cloudflare Turnstile — invisible challenge widget -->
+            {turnstileSiteKey && (
+              <div
+                class="cf-turnstile"
+                data-sitekey={turnstileSiteKey}
+                data-theme="dark"
+                data-size="invisible"
+              />
+            )}
             <!-- First Name -->
             <div>
               <input
@@ -692,11 +704,10 @@ const guideContents = [
         submitBtn.style.opacity = "0.7";
 
         // ── Client-side guards ──────────────────────────────────────────
-        // 1. Honeypot: if filled, bot detected — fake success, no GHL call
-        // 2. Required fields: first name + email must be non-empty
         const honeypot = formData.get("website") || "";
         const firstNameVal = (formData.get("first_name") || "").trim();
         const emailVal = (formData.get("email") || "").trim();
+        const turnstileToken = formData.get("cf-turnstile-response") || "";
 
         if (honeypot.trim() !== "") {
           console.warn("Bot detected via honeypot — suppressing submission.");
@@ -721,6 +732,7 @@ const guideContents = [
             body: JSON.stringify({
               formType: "guide",
               website: honeypot,
+              turnstileToken,
               firstName: firstNameVal,
               email: emailVal,
               phone: formData.get("phone") || "",

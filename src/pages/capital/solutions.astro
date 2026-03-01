@@ -154,6 +154,10 @@ const processSteps = [
     time: '7–45 days',
   },
 ];
+
+// Turnstile site key — public-facing key, read from env at build time.
+// Secret key lives server-side in TURNSTILE_SECRET_KEY (never here).
+const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
 ---
 
 <BaseLayout
@@ -161,7 +165,7 @@ const processSteps = [
   title="Financing Solutions | GrowthWave Capital"
   description="Business credit cards, DSCR loans, bridge financing, lines of credit, and term loans. Pre-qualify in 3 minutes with no credit impact."
 >
-  <Header brand="capital" activePage="Financing Solutions" />
+  <Header brand="capital" activePage="Solutions" />
 
   <main>
     <!-- ============================================
@@ -415,8 +419,7 @@ const processSteps = [
             id="prequal-form"
             class="space-y-3"
           >
-            <!-- Honeypot — hidden from humans, bots fill it automatically.
-                 Server rejects any submission where this field is non-empty. -->
+            <!-- Honeypot — hidden from humans, bots fill it automatically -->
             <input
               type="text"
               name="website"
@@ -425,6 +428,17 @@ const processSteps = [
               aria-hidden="true"
               style="display:none; position:absolute; left:-9999px;"
             />
+            <!-- Cloudflare Turnstile — invisible challenge widget.
+                 Renders only in production (script loaded via BaseLayout).
+                 Token submitted as cf-turnstile-response via FormData. -->
+            {turnstileSiteKey && (
+              <div
+                class="cf-turnstile"
+                data-sitekey={turnstileSiteKey}
+                data-theme="dark"
+                data-size="invisible"
+              />
+            )}
             <!-- Name Row -->
             <div class="grid grid-cols-2 gap-3">
               <input
@@ -895,9 +909,11 @@ const processSteps = [
         // ── Client-side guards ──────────────────────────────────────────
         // 1. Honeypot: if filled, bot detected — fake success, no GHL call
         // 2. Required fields: first name + email must be non-empty
+        // 3. Turnstile token: extracted from widget, verified server-side
         const honeypot = formData.get("website") || "";
         const firstNameVal = (formData.get("first_name") || "").trim();
         const emailVal = (formData.get("email") || "").trim();
+        const turnstileToken = formData.get("cf-turnstile-response") || "";
 
         if (honeypot.trim() !== "") {
           console.warn("Bot detected via honeypot — suppressing submission.");
@@ -922,6 +938,7 @@ const processSteps = [
             body: JSON.stringify({
               formType: "prequal",
               website: honeypot,
+              turnstileToken,
               firstName: firstNameVal,
               lastName: formData.get("last_name") || "",
               email: emailVal,

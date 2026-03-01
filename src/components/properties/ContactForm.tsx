@@ -97,20 +97,14 @@ export default function ContactForm() {
     const formData = new FormData(e.currentTarget);
 
     // ── Client-side guards ────────────────────────────────────────────────
-    // 1. Honeypot: hidden field bots fill — fake success, no GHL call
-    // 2. Required: firstName + email must be non-empty strings
+    // 1. Honeypot: if filled, bot detected — fake success, no GHL call
+    // 2. Turnstile token: passed server-side for Cloudflare verification
     const honeypot = (formData.get('website') as string) || '';
-    const firstNameVal = ((formData.get('firstName') as string) || '').trim();
-    const emailVal = ((formData.get('email') as string) || '').trim();
+    const turnstileToken = (formData.get('cf-turnstile-response') as string) || '';
 
     if (honeypot.trim() !== '') {
       console.warn('Bot detected via honeypot — suppressing submission.');
-      setFormSubmitted(true); // Show success UI silently — no GHL call
-      return;
-    }
-
-    if (!firstNameVal || !emailVal) {
-      alert('Please enter your first name and email address.');
+      setFormSubmitted(true);
       return;
     }
     // ─────────────────────────────────────────────────────────────────────
@@ -122,9 +116,9 @@ export default function ContactForm() {
     const payload: Record<string, string> = {
       formId: GHL_FORM_ID,
       location_id: GHL_LOCATION_ID,
-      first_name: firstNameVal,
+      first_name: (formData.get('firstName') as string) || '',
       last_name: (formData.get('lastName') as string) || '',
-      email: emailVal,
+      email: (formData.get('email') as string) || '',
       phone: (formData.get('phone') as string) || '',
     };
 
@@ -140,9 +134,11 @@ export default function ContactForm() {
       }
     }
 
-    // Add source tag for tracking
+    // Add source tag + bot protection fields for server-side verification
     payload['source'] = 'website-properties-contact';
     payload['tags'] = 'source:website-organic';
+    payload['website'] = honeypot;
+    payload['turnstileToken'] = turnstileToken;
 
     try {
       // Submit to GHL CRM — Properties Contact form
@@ -195,9 +191,7 @@ export default function ContactForm() {
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
 
-      {/* Honeypot — hidden from humans, bots fill it automatically.
-          Uses inline style (not className) for reliable React hydration.
-          Handler rejects silently if this field is non-empty. */}
+      {/* Honeypot — hidden from humans, bots fill it automatically */}
       <input
         type="text"
         name="website"
@@ -206,6 +200,18 @@ export default function ContactForm() {
         aria-hidden="true"
         style={{ display: 'none', position: 'absolute', left: '-9999px' }}
       />
+
+      {/* Cloudflare Turnstile — invisible challenge widget.
+          Rendered only when PUBLIC_TURNSTILE_SITE_KEY is set (production).
+          Token auto-populates cf-turnstile-response in FormData. */}
+      {import.meta.env.PUBLIC_TURNSTILE_SITE_KEY && (
+        <div
+          className="cf-turnstile"
+          data-sitekey={import.meta.env.PUBLIC_TURNSTILE_SITE_KEY}
+          data-theme="light"
+          data-size="invisible"
+        />
+      )}
 
       {/* Inquiry Type - Primary Selector */}
       <div>

@@ -212,6 +212,63 @@ exports.handler = async function (event) {
   }
   // ─────────────────────────────────────────────────────────────────────────
 
+  // ── Cloudflare Turnstile Verification ────────────────────────────────────
+  // Verifies the cf-turnstile-response token against Cloudflare's siteverify
+  // API using the secret key (server-only env var, never exposed to client).
+  //
+  // Token is optional in dev/preview (script not loaded without site key).
+  // In production: missing or invalid token = bot, silent fake-success.
+  // Non-blocking on network failure — logs warning but allows submission
+  // to avoid blocking legitimate users if Cloudflare has an outage.
+  const turnstileSecret = process.env.TURNSTILE_SECRET_KEY;
+  const turnstileToken = data.turnstileToken || '';
+
+  if (turnstileSecret && turnstileToken) {
+    try {
+      const verifyRes = await fetch(
+        'https://challenges.cloudflare.com/turnstile/v0/siteverify',
+        {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams({
+            secret: turnstileSecret,
+            response: turnstileToken,
+            remoteip: event.headers?.['x-forwarded-for'] || '',
+          }).toString(),
+        }
+      );
+
+      const verifyData = await verifyRes.json();
+
+      if (!verifyData.success) {
+        console.warn(
+          `Turnstile verification failed. Codes: ${JSON.stringify(verifyData['error-codes'])}. email: ${emailStr}, formType: ${formType}`
+        );
+        return {
+          statusCode: 200,
+          headers,
+          body: JSON.stringify({ success: true, contactId: null, formType }),
+        };
+      }
+
+      console.log(`Turnstile verified OK for ${emailStr} (${formType})`);
+    } catch (verifyErr) {
+      // Non-blocking: Cloudflare outage should not prevent real submissions
+      console.warn('Turnstile verification request failed (non-blocking):', verifyErr);
+    }
+  } else if (turnstileSecret && !turnstileToken) {
+    // Secret configured but no token = direct API hit (bot bypassing browser)
+    console.warn(
+      `Turnstile token missing — direct API submission blocked. email: ${emailStr}, formType: ${formType}`
+    );
+    return {
+      statusCode: 200,
+      headers,
+      body: JSON.stringify({ success: true, contactId: null, formType }),
+    };
+  }
+  // ─────────────────────────────────────────────────────────────────────────
+
   // Load env vars
   const apiToken = process.env.GHL_API_TOKEN;
   const locationId = process.env.GHL_LOCATION_ID;

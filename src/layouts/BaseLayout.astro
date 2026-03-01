@@ -159,6 +159,20 @@ const jsonLd = {
       </script>
     )}
 
+    <!-- ── Cloudflare Turnstile ───────────────────────────────────────────
+         Production only. Invisible CAPTCHA — real users see nothing.
+         Renders on any page containing a .cf-turnstile div.
+         Site key is read from PUBLIC_TURNSTILE_SITE_KEY env var at build time.
+         Secret key lives in TURNSTILE_SECRET_KEY (server-only, never here).
+    ─────────────────────────────────────────────────────────────────────── -->
+    {isProd && (
+      <script
+        src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+        async
+        defer
+      />
+    )}
+
   </head>
   <body class="min-h-screen flex flex-col antialiased">
     <slot />
