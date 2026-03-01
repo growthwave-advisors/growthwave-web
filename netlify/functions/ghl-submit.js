@@ -104,6 +104,21 @@ exports.handler = async function (event) {
     };
   }
 
+  // ── Honeypot Bot Check ────────────────────────────────────────────────────
+  // All forms include a hidden "website" field (display:none, tabindex=-1).
+  // Legitimate users never see or fill it. Bots auto-populate every field.
+  // If "website" has any value → silent fake-success, skip GHL entirely.
+  // Returns 200 so bots don't retry or flag the endpoint.
+  if (data.website && data.website.trim() !== '') {
+    console.warn(`Bot submission blocked — honeypot triggered. formType: ${data.formType || 'unknown'}, email: ${data.email || 'none'}`);
+    return {
+      statusCode: 200,
+      headers,
+      body: JSON.stringify({ success: true, contactId: null, formType: data.formType }),
+    };
+  }
+  // ─────────────────────────────────────────────────────────────────────────
+
   // Validate required fields
   const { formType, firstName, lastName, email, phone } = data;
 
