@@ -93,18 +93,38 @@ export default function ContactForm() {
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    setIsSubmitting(true);
 
     const formData = new FormData(e.currentTarget);
+
+    // ── Client-side guards ────────────────────────────────────────────────
+    // 1. Honeypot: hidden field bots fill — fake success, no GHL call
+    // 2. Required: firstName + email must be non-empty strings
+    const honeypot = (formData.get('website') as string) || '';
+    const firstNameVal = ((formData.get('firstName') as string) || '').trim();
+    const emailVal = ((formData.get('email') as string) || '').trim();
+
+    if (honeypot.trim() !== '') {
+      console.warn('Bot detected via honeypot — suppressing submission.');
+      setFormSubmitted(true); // Show success UI silently — no GHL call
+      return;
+    }
+
+    if (!firstNameVal || !emailVal) {
+      alert('Please enter your first name and email address.');
+      return;
+    }
+    // ─────────────────────────────────────────────────────────────────────
+
+    setIsSubmitting(true);
 
     // Build GHL submission payload
     // Standard GHL contact fields
     const payload: Record<string, string> = {
       formId: GHL_FORM_ID,
       location_id: GHL_LOCATION_ID,
-      first_name: (formData.get('firstName') as string) || '',
+      first_name: firstNameVal,
       last_name: (formData.get('lastName') as string) || '',
-      email: (formData.get('email') as string) || '',
+      email: emailVal,
       phone: (formData.get('phone') as string) || '',
     };
 
@@ -174,6 +194,18 @@ export default function ContactForm() {
 
   return (
     <form onSubmit={handleSubmit} className="space-y-4">
+
+      {/* Honeypot — hidden from humans, bots fill it automatically.
+          Uses inline style (not className) for reliable React hydration.
+          Handler rejects silently if this field is non-empty. */}
+      <input
+        type="text"
+        name="website"
+        tabIndex={-1}
+        autoComplete="off"
+        aria-hidden="true"
+        style={{ display: 'none', position: 'absolute', left: '-9999px' }}
+      />
 
       {/* Inquiry Type - Primary Selector */}
       <div>
