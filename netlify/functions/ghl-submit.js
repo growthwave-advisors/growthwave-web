@@ -23,6 +23,10 @@
  *              — Activated workflow enrollment for prequal form type
  *                  Workflow: Capital — Unified Lead Nurture (All Entry Ramps)
  *                  ID: 52c79b90-0897-4bed-8dbd-4dc94ce2735a
+ *   2026-03-01 — Activated workflow enrollment for properties form types:
+ *                  properties-investor-assessment + properties-guide
+ *                  Workflow: Properties — Investor Lead Nurture
+ *                  ID: 2b4c1dac-a8d1-42c3-bec8-5c290bafd748
  */
 
 // ============================================
@@ -85,8 +89,8 @@ const FORM_WORKFLOWS = {
   contact: null,
   prequal: "52c79b90-0897-4bed-8dbd-4dc94ce2735a", // Capital — Unified Lead Nurture (All Entry Ramps)
   guide: null,
-  "properties-investor-assessment": null, // TODO: Add Properties Track 2 workflow ID after GHL setup
-  "properties-guide": null,              // TODO: Add same Properties Track 2 workflow ID
+  "properties-investor-assessment": "2b4c1dac-a8d1-42c3-bec8-5c290bafd748", // Properties — Investor Lead Nurture
+  "properties-guide": "2b4c1dac-a8d1-42c3-bec8-5c290bafd748",              // Properties — Investor Lead Nurture
   "properties-contact": null,
 };
 
