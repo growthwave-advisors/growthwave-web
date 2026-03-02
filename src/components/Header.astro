@@ -2,62 +2,74 @@
 /**
  * Header.astro - UPDATED FOR EDGE FUNCTION ROUTING
  * =================================================
- * 
+ *
  * URL STRATEGY: All internal links use RELATIVE paths (no brand prefix)
  * - href="/" → stays as "/" (edge function handles mapping to /advisors/)
  * - href="/about" → stays as "/about" (edge function maps to /advisors/about)
- * 
+ *
  * This works because:
  * 1. Edge function rewrites /about → /advisors/about internally
  * 2. Browser URL stays as growthwaveadvisors.com/about (clean!)
  * 3. User clicks /about → browser requests /about → edge function serves /advisors/about
- * 
+ *
  * LOGO USAGE:
  * - Desktop: horizontal_color (wide format, full brand colors on white bg)
  * - Mobile menu: stacked_color (square format for compact spaces)
  */
 
 interface Props {
-  brand?: 'properties' | 'capital' | 'advisors';
+  brand?: "properties" | "capital" | "advisors";
   activePage?: string;
 }
 
-const { brand = 'properties', activePage = '' } = Astro.props;
+const { brand = "properties", activePage = "" } = Astro.props;
 
 // Brand configuration with standardized logo naming
 const brandConfig = {
   properties: {
-    accent: '#FF6B4A',
-    accentHover: '#E5603F',
-    pages: ['Home', 'About', 'Approach', 'Opportunities', 'Contact'],
-    ctaText: 'Partner With Us',
-    ctaHref: '/contact?type=partnership',
-    logoHorizontalColor: '/images/logos/properties/growthwave-properties_horizontal_color.svg',
-    logoHorizontalReversed: '/images/logos/properties/growthwave-properties_horizontal_reversed.svg',
-    logoStackedColor: '/images/logos/properties/growthwave-properties_stacked_color.svg',
-    logoStackedReversed: '/images/logos/properties/growthwave-properties_stacked_reversed.svg',
+    accent: "#FF6B4A",
+    accentHover: "#E5603F",
+    pages: ["Home", "About", "Approach", "Opportunities", "Contact"],
+    ctaText: "Join the Investor List",
+    ctaHref: "/contact?type=investment",
+    logoHorizontalColor:
+      "/images/logos/properties/growthwave-properties_horizontal_color.svg",
+    logoHorizontalReversed:
+      "/images/logos/properties/growthwave-properties_horizontal_reversed.svg",
+    logoStackedColor:
+      "/images/logos/properties/growthwave-properties_stacked_color.svg",
+    logoStackedReversed:
+      "/images/logos/properties/growthwave-properties_stacked_reversed.svg",
   },
   capital: {
-    accent: '#7C3AED',
-    accentHover: '#6D28D9',
-    pages: ['Home', 'About', 'Financing Solutions', 'Contact'],
-    ctaText: 'Get Your Free Guide',
-    ctaHref: '/guide',
-    logoHorizontalColor: '/images/logos/capital/growthwave-capital_horizontal_color.svg',
-    logoHorizontalReversed: '/images/logos/capital/growthwave-capital_horizontal_reversed.svg',
-    logoStackedColor: '/images/logos/capital/growthwave-capital_stacked_color.svg',
-    logoStackedReversed: '/images/logos/capital/growthwave-capital_stacked_reversed.svg',
+    accent: "#7C3AED",
+    accentHover: "#6D28D9",
+    pages: ["Home", "About", "Financing Solutions", "Contact"],
+    ctaText: "Get Your Free Guide",
+    ctaHref: "/guide",
+    logoHorizontalColor:
+      "/images/logos/capital/growthwave-capital_horizontal_color.svg",
+    logoHorizontalReversed:
+      "/images/logos/capital/growthwave-capital_horizontal_reversed.svg",
+    logoStackedColor:
+      "/images/logos/capital/growthwave-capital_stacked_color.svg",
+    logoStackedReversed:
+      "/images/logos/capital/growthwave-capital_stacked_reversed.svg",
   },
   advisors: {
-    accent: '#265077',
-    accentHover: '#1E3F5C',
-    pages: ['Home', 'About', 'Services', 'Contact'],  // Removed 'Divisions' - Services covers this
-    ctaText: 'Get Started',
-    ctaHref: '/contact',
-    logoHorizontalColor: '/images/logos/advisors/growthwave-advisors_horizontal_color.svg',
-    logoHorizontalReversed: '/images/logos/advisors/growthwave-advisors_horizontal_reversed.svg',
-    logoStackedColor: '/images/logos/advisors/growthwave-advisors_stacked_color.svg',
-    logoStackedReversed: '/images/logos/advisors/growthwave-advisors_stacked_reversed.svg',
+    accent: "#265077",
+    accentHover: "#1E3F5C",
+    pages: ["Home", "About", "Services", "Contact"], // Removed 'Divisions' - Services covers this
+    ctaText: "Get Started",
+    ctaHref: "/contact",
+    logoHorizontalColor:
+      "/images/logos/advisors/growthwave-advisors_horizontal_color.svg",
+    logoHorizontalReversed:
+      "/images/logos/advisors/growthwave-advisors_horizontal_reversed.svg",
+    logoStackedColor:
+      "/images/logos/advisors/growthwave-advisors_stacked_color.svg",
+    logoStackedReversed:
+      "/images/logos/advisors/growthwave-advisors_stacked_reversed.svg",
   },
 };
 
@@ -69,24 +81,24 @@ const config = brandConfig[brand];
  */
 function getPageHref(page: string): string {
   // Special routing for Properties brand
-  if (brand === 'properties') {
-    if (page === 'Opportunities') {
-      return '/contact?type=investment';
+  if (brand === "properties") {
+    if (page === "Opportunities") {
+      return "/contact?type=investment";
     }
   }
-  
+
   // Special routing for Capital brand
-  if (brand === 'capital') {
-    if (page === 'Financing Solutions') {
-      return '/solutions';
+  if (brand === "capital") {
+    if (page === "Financing Solutions") {
+      return "/solutions";
     }
   }
-  
+
   // Default routing - RELATIVE paths (no brand prefix!)
-  if (page === 'Home') {
-    return '/';
+  if (page === "Home") {
+    return "/";
   }
-  
+
   return `/${page.toLowerCase()}`;
 }
 
@@ -100,7 +112,7 @@ function isActivePage(page: string): boolean {
   // 'Opportunities' routes to /contact?type=investment — it is NOT a standalone
   // page, so it should never show a persistent active underline. Contact owns
   // the underline whenever the user is on any /contact URL.
-  if (checkPage === 'opportunities') {
+  if (checkPage === "opportunities") {
     return false;
   }
 
@@ -112,69 +124,81 @@ function isActivePage(page: string): boolean {
 <header class="w-full bg-white sticky top-0 z-50 border-b border-gray-200">
   <div class="max-w-7xl mx-auto px-4 lg:px-8">
     <div class="flex items-center justify-between py-1">
-      
       <!-- Logo: Links to / (edge function serves brand homepage) -->
       <a href="/" class="flex-shrink-0">
-        <img 
+        <img
           src={config.logoHorizontalColor}
           alt={`GrowthWave ${brand.charAt(0).toUpperCase() + brand.slice(1)}`}
           class="w-44 lg:w-52 h-auto"
         />
       </a>
-      
+
       <!-- Desktop Navigation -->
       <nav class="hidden lg:flex items-center gap-6">
-        {config.pages.map((page) => (
-          <a 
-            href={getPageHref(page)}
-            class="nav-link-item group relative"
-            data-active={isActivePage(page) ? 'true' : 'false'}
-          >
-            <span class="text-base lg:text-lg font-medium text-gray-600 group-hover:text-gray-900 transition-colors">
-              {page}
-            </span>
-            <span class="nav-underline"></span>
-          </a>
-        ))}
+        {
+          config.pages.map((page) => (
+            <a
+              href={getPageHref(page)}
+              class="nav-link-item group relative"
+              data-active={isActivePage(page) ? "true" : "false"}
+            >
+              <span class="text-base lg:text-lg font-medium text-gray-600 group-hover:text-gray-900 transition-colors">
+                {page}
+              </span>
+              <span class="nav-underline" />
+            </a>
+          ))
+        }
       </nav>
-      
+
       <!-- CTA Button -->
-      <a 
+      <a
         href={config.ctaHref}
         class="hidden lg:inline-flex items-center px-5 py-2.5 rounded-lg text-base lg:text-lg font-semibold text-white transition-all hover:opacity-90"
         style={`background-color: ${config.accent};`}
       >
         {config.ctaText}
       </a>
-      
+
       <!-- Mobile Menu Button -->
-      <button 
+      <button
         type="button"
         class="lg:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100"
         aria-label="Open menu"
         id="mobile-menu-button"
       >
-        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
+        <svg
+          class="w-6 h-6"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            stroke-width="2"
+            d="M4 6h16M4 12h16M4 18h16"></path>
         </svg>
       </button>
     </div>
   </div>
-  
+
   <!-- Mobile Navigation Drawer -->
   <div id="mobile-menu" class="lg:hidden hidden">
     <div class="max-w-7xl mx-auto px-4 py-4 border-t border-gray-100 bg-white">
       <nav class="flex flex-col gap-2">
-        {config.pages.map((page) => (
-          <a 
-            href={getPageHref(page)}
-            class="px-4 py-3 rounded-lg text-base font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"
-            data-active={isActivePage(page) ? 'true' : 'false'}
-          >
-            {page}
-          </a>
-        ))}
-        <a 
+        {
+          config.pages.map((page) => (
+            <a
+              href={getPageHref(page)}
+              class="px-4 py-3 rounded-lg text-base font-medium text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-colors"
+              data-active={isActivePage(page) ? "true" : "false"}
+            >
+              {page}
+            </a>
+          ))
+        }
+        <a
           href={config.ctaHref}
           class="mt-2 px-4 py-3 rounded-lg text-base font-semibold text-white text-center transition-all hover:opacity-90"
           style={`background-color: ${config.accent};`}
@@ -192,7 +216,7 @@ function isActivePage(page: string): boolean {
     padding-top: 0.5rem;
     padding-bottom: 0.5rem;
   }
-  
+
   .nav-underline {
     position: absolute;
     bottom: 0;
@@ -203,15 +227,15 @@ function isActivePage(page: string): boolean {
     background-color: var(--accent);
     transition: width 0.3s ease;
   }
-  
+
   .nav-link-item:hover .nav-underline {
     width: 100%;
   }
-  
+
   .nav-link-item[data-active="true"] .nav-underline {
     width: 100%;
   }
-  
+
   .nav-link-item[data-active="true"] span:first-child {
     color: #111827;
     font-weight: 600;
@@ -219,10 +243,10 @@ function isActivePage(page: string): boolean {
 </style>
 
 <script>
-  const menuButton = document.getElementById('mobile-menu-button');
-  const mobileMenu = document.getElementById('mobile-menu');
-  
-  menuButton?.addEventListener('click', () => {
-    mobileMenu?.classList.toggle('hidden');
+  const menuButton = document.getElementById("mobile-menu-button");
+  const mobileMenu = document.getElementById("mobile-menu");
+
+  menuButton?.addEventListener("click", () => {
+    mobileMenu?.classList.toggle("hidden");
   });
 </script>
