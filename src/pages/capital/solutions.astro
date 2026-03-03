@@ -475,14 +475,6 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
               class="w-full px-4 py-3 rounded-lg bg-white/10 border border-white/20 text-white placeholder-gray-400 text-sm focus:outline-none"
             />
 
-            <!-- SMS Consent -->
-            <label style="display:flex; align-items:flex-start; gap:10px; margin-top:12px; cursor:pointer;">
-              <input type="checkbox" name="smsConsent" style="margin-top:3px; flex-shrink:0;" />
-              <span style="font-size:13px; color:rgba(255,255,255,0.7); line-height:1.5;">
-                I agree to receive SMS messages from <strong style="color:white;">GrowthWave Capital</strong> including appointment reminders, funding updates, and resource delivery. Message frequency varies. Msg &amp; data rates may apply. Reply <strong style="color:white;">STOP</strong> to opt out at any time, <strong style="color:white;">HELP</strong> for help. View our <a href="/privacy" style="text-decoration:underline; color:white;">Privacy Policy</a> and <a href="/terms" style="text-decoration:underline; color:white;">Terms of Service</a>.
-              </span>
-            </label>
-
             <!-- Funding Goal -->
             <select
               name="funding_goal"
@@ -514,29 +506,17 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
               <option value="not-sure">Not sure</option>
             </select>
 
-            <!-- Non-Marketing SMS Consent -->
+            <!-- SMS Consent -->
             <label class="flex items-start gap-2 cursor-pointer">
               <input
                 type="checkbox"
                 name="smsConsent"
+                required
                 class="w-4 h-4 mt-0.5 rounded flex-shrink-0"
                 style="accent-color: white;"
               />
               <span class="text-xs text-white/80 leading-relaxed">
-                By checking this box, you agree to receive text messages from GrowthWave Advisors LLC. Message frequency varies. Message and data rates may apply. Text STOP to opt out or HELP for help.
-              </span>
-            </label>
-
-            <!-- Marketing SMS Consent -->
-            <label class="flex items-start gap-2 cursor-pointer">
-              <input
-                type="checkbox"
-                name="marketingOptIn"
-                class="w-4 h-4 mt-0.5 rounded flex-shrink-0"
-                style="accent-color: white;"
-              />
-              <span class="text-xs text-white/80 leading-relaxed">
-                I consent to receive marketing text messages from GrowthWave Advisors LLC at the phone number provided. Message frequency varies. Message &amp; data rates may apply. Text HELP for assistance, reply STOP to opt out.
+                By checking this box, you agree to receive SMS messages from <strong class="text-white">GrowthWave Advisors LLC</strong> including appointment reminders, funding updates, and follow-up communications. Message frequency varies. Message &amp; data rates may apply. Reply <strong class="text-white">STOP</strong> to opt out. Reply <strong class="text-white">HELP</strong> for help. View our <a href="/privacy" class="underline text-white">Privacy Policy</a> and <a href="/terms" class="underline text-white">Terms of Service</a>.
               </span>
             </label>
 
