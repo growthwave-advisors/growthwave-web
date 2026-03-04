@@ -485,11 +485,94 @@ const faqItems = [
     </section>
 
     <!-- ============================================
+         RESOURCES SECTION
+         - 3 guide cards (Vol 1 green, Vol 2+3 purple)
+         - Inserted above final CTA strip
+         ============================================ -->
+    <section class="w-full py-16 lg:py-20 px-4 lg:px-8" style={`background-color: ${colors.gray50};`}>
+      <div class="max-w-7xl mx-auto">
+
+        <!-- Section Header -->
+        <h2 class="text-2xl lg:text-3xl font-bold text-[#022140] mb-3">
+          Resources Built for RE Investors
+        </h2>
+        <p class="text-base lg:text-lg text-gray-600 mt-0 mb-10">
+          Three guides covering credit, strategy, and execution — built specifically for investors, not W-2 borrowers.
+        </p>
+
+        <!-- Cards Grid -->
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+
+          <!-- Vol. 1 — Green accent -->
+          <div class="bg-white rounded-xl overflow-hidden border border-gray-200 hover:shadow-lg transition-shadow" style="border-top: 4px solid #10B981;">
+            <div class="p-6">
+              <span class="inline-block px-2 py-0.5 rounded text-xs font-bold mb-3" style="background-color: rgba(16,185,129,0.12); color: #10B981;">FREE</span>
+              <h3 class="text-lg font-bold text-[#022140] mb-2">RE Investor Credit Blueprint</h3>
+              <p class="text-base text-gray-600 leading-relaxed mb-5">
+                What lenders actually see when an investor applies — and the profile that gets the best terms.
+              </p>
+              <a
+                href="/capital/guide"
+                class="text-base font-semibold hover:underline"
+                style={`color: ${colors.creditGreen};`}
+              >
+                Download Free →
+              </a>
+            </div>
+          </div>
+
+          <!-- Vol. 2 — Purple accent -->
+          <div class="bg-white rounded-xl overflow-hidden border border-gray-200 hover:shadow-lg transition-shadow" style={`border-top: 4px solid ${colors.purple};`}>
+            <div class="p-6">
+              <span class="inline-block px-2 py-0.5 rounded text-xs font-bold mb-3" style={`background-color: rgba(124,58,237,0.1); color: ${colors.purple};`}>SERIES</span>
+              <h3 class="text-lg font-bold text-[#022140] mb-2">The FCFM Framework</h3>
+              <p class="text-base text-gray-600 leading-relaxed mb-5">
+                Fix·Consolidate·Fund·Move: the 4-step sequence from credit cleanup to $50K–$250K funded.
+              </p>
+              <a
+                href="/capital/guide"
+                class="text-base font-semibold hover:underline"
+                style={`color: ${colors.purple};`}
+              >
+                Get the Series →
+              </a>
+            </div>
+          </div>
+
+          <!-- Vol. 3 — Purple accent -->
+          <div class="bg-white rounded-xl overflow-hidden border border-gray-200 hover:shadow-lg transition-shadow" style={`border-top: 4px solid ${colors.purple};`}>
+            <div class="p-6">
+              <span class="inline-block px-2 py-0.5 rounded text-xs font-bold mb-3" style={`background-color: rgba(124,58,237,0.1); color: ${colors.purple};`}>SERIES</span>
+              <h3 class="text-lg font-bold text-[#022140] mb-2">Zero Percent Playbook</h3>
+              <p class="text-base text-gray-600 leading-relaxed mb-5">
+                How to move $50K–$250K at 0% APR — the window, the sequencing, and the exact strategy.
+              </p>
+              <a
+                href="/capital/guide"
+                class="text-base font-semibold hover:underline"
+                style={`color: ${colors.purple};`}
+              >
+                Get the Series →
+              </a>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Below Cards Note -->
+        <p class="text-sm text-gray-500 text-center mt-8">
+          View the full series at growthwavecapital.com/capital/guide
+        </p>
+
+      </div>
+    </section>
+
+    <!-- ============================================
          CTA SECTION
          - Purple → Dark Navy gradient (ends dark)
          - 3 pathway cards
          ============================================ -->
-    <section 
+    <section
       class="w-full py-14 lg:py-20 px-4 lg:px-8"
       style={`background: linear-gradient(135deg, ${colors.purple} 0%, ${colors.midnight} 100%);`}
     >
