@@ -123,7 +123,7 @@ const colors = {
     </div>
     
     <!-- Stage 1: Credit Sculpt (Top Center) -->
-    <div class="stage-card stage-1">
+    <a href="https://creditsculpt.com" target="_blank" rel="noopener noreferrer" class="stage-card stage-1">
       <div class="stage-badge stage-badge-green">1</div>
       <div class="stage-icon stage-icon-green">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -140,10 +140,10 @@ const colors = {
         </svg>
         <span>Build credit foundation</span>
       </div>
-    </div>
-    
+    </a>
+
     <!-- Stage 2: Capital (Bottom Left) -->
-    <div class="stage-card stage-2">
+    <a href="https://growthwavecapital.com" target="_blank" rel="noopener noreferrer" class="stage-card stage-2">
       <div class="stage-badge stage-badge-purple">2</div>
       <div class="stage-icon stage-icon-purple">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -161,10 +161,10 @@ const colors = {
         </svg>
         <span>Access business capital</span>
       </div>
-    </div>
-    
+    </a>
+
     <!-- Stage 3: Properties (Bottom Right) -->
-    <div class="stage-card stage-3">
+    <a href="https://growthwaveproperties.com" target="_blank" rel="noopener noreferrer" class="stage-card stage-3">
       <div class="stage-badge stage-badge-coral">3</div>
       <div class="stage-icon stage-icon-coral">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FF6B4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -183,8 +183,8 @@ const colors = {
         </svg>
         <span>Invest in real estate</span>
       </div>
-    </div>
-    
+    </a>
+
   </div>
   
   <!-- Tagline -->
@@ -211,7 +211,7 @@ const colors = {
   </div>
   
   <!-- Stage 1: Credit Sculpt -->
-  <div class="mobile-stage-card mobile-stage-1">
+  <a href="https://creditsculpt.com" target="_blank" rel="noopener noreferrer" class="mobile-stage-card mobile-stage-1">
     <div class="mobile-stage-icon-wrapper">
       <div class="mobile-stage-icon mobile-icon-green">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#10B981" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -225,8 +225,8 @@ const colors = {
       <div class="mobile-stage-name mobile-name-green">Credit Sculpt</div>
       <div class="mobile-stage-desc">Credit profile optimization*</div>
     </div>
-  </div>
-  
+  </a>
+
   <!-- Arrow 1→2 -->
   <div class="mobile-arrow">
     <div class="arrow-line arrow-line-green-purple"></div>
@@ -235,9 +235,9 @@ const colors = {
       <polyline points="19 12 12 19 5 12"></polyline>
     </svg>
   </div>
-  
+
   <!-- Stage 2: Capital -->
-  <div class="mobile-stage-card mobile-stage-2">
+  <a href="https://growthwavecapital.com" target="_blank" rel="noopener noreferrer" class="mobile-stage-card mobile-stage-2">
     <div class="mobile-stage-icon-wrapper">
       <div class="mobile-stage-icon mobile-icon-purple">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#7C3AED" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -252,8 +252,8 @@ const colors = {
       <div class="mobile-stage-name mobile-name-purple">Capital</div>
       <div class="mobile-stage-desc">$50K-$250K+ funding</div>
     </div>
-  </div>
-  
+  </a>
+
   <!-- Arrow 2→3 -->
   <div class="mobile-arrow">
     <div class="arrow-line arrow-line-purple-coral"></div>
@@ -262,9 +262,9 @@ const colors = {
       <polyline points="19 12 12 19 5 12"></polyline>
     </svg>
   </div>
-  
+
   <!-- Stage 3: Properties -->
-  <div class="mobile-stage-card mobile-stage-3">
+  <a href="https://growthwaveproperties.com" target="_blank" rel="noopener noreferrer" class="mobile-stage-card mobile-stage-3">
     <div class="mobile-stage-icon-wrapper">
       <div class="mobile-stage-icon mobile-icon-coral">
         <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#FF6B4A" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -279,8 +279,8 @@ const colors = {
       <div class="mobile-stage-name mobile-name-coral">Properties</div>
       <div class="mobile-stage-desc">Cash-flowing investments</div>
     </div>
-  </div>
-  
+  </a>
+
   <!-- Cycle Indicator -->
   <div class="mobile-cycle">
     <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#51A7F8" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -407,6 +407,14 @@ const colors = {
     color: #51A7F8;
   }
   
+  /* Strip anchor styling from stage cards */
+  a.stage-card,
+  a.mobile-stage-card {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+  }
+
   /* Stage Cards - FIXED: 240px width */
   .stage-card {
     position: absolute;
