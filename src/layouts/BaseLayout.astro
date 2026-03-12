@@ -26,9 +26,10 @@ type Props = {
   brand: BrandId;
   title?: string;
   description?: string;
+  extraJsonLd?: Record<string, any>[];
 };
 
-const { brand, title, description } = Astro.props as Props;
+const { brand, title, description, extraJsonLd = [] } = Astro.props as Props;
 const brandConfig = getBrand(brand);
 
 const pageTitle = title ?? brandConfig.seo.title;
@@ -67,6 +68,18 @@ const jsonLd = {
     addressLocality: 'Orlando',
     addressRegion: 'FL',
     addressCountry: 'US',
+  },
+};
+
+const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: brandConfig.name,
+  url: `https://${brandConfig.seo.domain}`,
+  description: brandConfig.seo.description,
+  publisher: {
+    '@type': 'Organization',
+    name: brandConfig.name,
   },
 };
 ---
@@ -117,6 +130,10 @@ const jsonLd = {
     
     <!-- JSON-LD Structured Data -->
     <script is:inline type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(websiteSchema)} />
+    {extraJsonLd.map((schema) => (
+      <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    ))}
 
     <!-- ── Google Analytics 4 ─────────────────────────────────────────────
          Production only. Per-brand Measurement ID resolved from GA4_IDS map.

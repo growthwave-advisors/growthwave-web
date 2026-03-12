@@ -158,12 +158,26 @@ const faqItems = [
     a: "No upfront fees. We're compensated by lenders when funding closes—similar to mortgage brokers.",
   },
 ];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqItems.map(item => ({
+    "@type": "Question",
+    "name": item.q,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": item.a,
+    }
+  }))
+};
 ---
 
 <BaseLayout
   brand="capital"
   title="GrowthWave Capital | Business Financing for Economic Pioneers"
   description="Access business capital built for investors and entrepreneurs who generate wealth on their terms. Technology-enabled financing without W-2 requirements—available 24/7."
+  extraJsonLd={[faqSchema]}
 >
   <Header brand="capital" activePage="Home" />
 

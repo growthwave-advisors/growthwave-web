@@ -97,12 +97,36 @@ const solutions = [
   'Monthly reporting',
   'Strategic exits via 1031',
 ];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is value-add multifamily investing?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Value-add multifamily investing involves acquiring apartment properties that are underperforming, then increasing their value through strategic renovations, operational improvements, and revenue optimization. GrowthWave Properties focuses on 5-20 unit B/C class workforce housing across the Midwest and South with 2-5 year hold periods."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does a joint venture real estate partnership work?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "In a JV partnership with GrowthWave Properties, you provide the capital while we handle everything: deal sourcing, underwriting, acquisition, renovation, and management. You receive monthly reporting with full financial transparency, and strategic exits are planned via 1031 exchanges to compound wealth tax-efficiently."
+      }
+    }
+  ]
+};
 ---
 
 <BaseLayout
   brand="properties"
   title="GrowthWave Properties | Multifamily Investment Partnerships"
   description="Partner with experienced operators on value-add multifamily properties across the Midwest and South. Professional management, transparent reporting, proven results."
+  extraJsonLd={[faqSchema]}
 >
   <Header brand="properties" activePage="Home" />
 

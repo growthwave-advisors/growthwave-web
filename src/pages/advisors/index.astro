@@ -150,12 +150,36 @@ const personas = [
   { title: 'Experienced Investors', desc: 'Seeking JV partnerships and deal flow? Explore Properties.' },
   { title: 'High-Income Professionals', desc: 'Transitioning from W-2? We understand your unique situation.' },
 ];
+
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "What is the Investor Success Flywheel?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The Investor Success Flywheel is GrowthWave Advisors' integrated platform that takes investors from credit optimization (Credit Sculpt, 3-6 months to 680+) through business financing (GrowthWave Capital, $50K-$250K+) to multifamily real estate investment (GrowthWave Properties, 8-12% CoC returns). One relationship, complete journey."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How is GrowthWave different from traditional financial services?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Traditional financial services weren't built for entrepreneurs who generate wealth differently. GrowthWave provides 24/7 platform access, technology-enabled efficiency, and three integrated services that build on each other — credit optimization, business financing without W-2 requirements, and multifamily real estate partnerships. 15+ years of banking expertise combined with enterprise-grade technology."
+      }
+    }
+  ]
+};
 ---
 
 <BaseLayout
   brand="advisors"
   title="GrowthWave Advisors | The Investor Success Flywheel&trade;"
   description="The only integrated platform that takes you from credit optimization through business financing to multifamily real estate. One relationship, complete journey."
+  extraJsonLd={[faqSchema]}
 >
   <Header brand="advisors" activePage="Home" />
 

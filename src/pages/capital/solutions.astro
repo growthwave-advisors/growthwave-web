@@ -127,6 +127,34 @@ const faqItems = [
   },
 ];
 
+const faqSchema = {
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": faqItems.map(item => ({
+    "@type": "Question",
+    "name": item.q,
+    "acceptedAnswer": {
+      "@type": "Answer",
+      "text": item.a,
+    }
+  }))
+};
+
+const serviceSchema = {
+  "@context": "https://schema.org",
+  "@type": "FinancialService",
+  "name": "GrowthWave Capital",
+  "url": "https://growthwavecapital.com",
+  "description": "Business financing consulting and lender placement for real estate investors and entrepreneurs.",
+  "provider": {
+    "@type": "Organization",
+    "name": "GrowthWave Capital",
+    "url": "https://growthwavecapital.com"
+  },
+  "areaServed": "US",
+  "serviceType": "Business Financing Consulting"
+};
+
 // Process steps
 const processSteps = [
   {
@@ -164,6 +192,7 @@ const turnstileSiteKey = import.meta.env.PUBLIC_TURNSTILE_SITE_KEY;
   brand="capital"
   title="Financing Solutions | GrowthWave Capital"
   description="Business credit cards, DSCR loans, bridge financing, lines of credit, and term loans. Pre-qualify in 3 minutes with no credit impact."
+  extraJsonLd={[faqSchema, serviceSchema]}
 >
   <Header brand="capital" activePage="Solutions" />
 
